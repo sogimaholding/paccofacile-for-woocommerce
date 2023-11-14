@@ -1,0 +1,784 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Paccofacile\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-12-16 08:47+0000\n"
+"PO-Revision-Date: 2023-10-27 10:06+0000\n"
+"Last-Translator: \n"
+"Language-Team: Italiano\n"
+"Language: it_IT\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.6.6; wp-6.3.1\n"
+"X-Domain: paccofacile"
+
+#: admin/partials/paccofacile-admin-display.php:339
+#: admin/partials/paccofacile-admin-display.php:534
+msgid " kg"
+msgstr " kg"
+
+#: admin/class-paccofacile-admin.php:179
+msgid "Account Number"
+msgstr "Numero Utente"
+
+#: admin/class-paccofacile-admin.php:240
+msgid "Account number is incorrect."
+msgstr "Il numero utente non è corretto."
+
+#: admin/partials/paccofacile-admin-display.php:359
+msgid "Actions"
+msgstr "Azioni"
+
+#: includes/settings-paccofacile-shipping.php:43
+msgid "Activation condition"
+msgstr "Condizioni di attivazione"
+
+#: includes/class-paccofacile.php:96
+msgid "Add New"
+msgstr "Aggiungi nuovo"
+
+#: includes/class-paccofacile.php:97
+msgid "Add New Carrier"
+msgstr "Aggiungi nuovo Corriere"
+
+#: includes/class-paccofacile.php:95
+msgctxt "Add New on Toolbar"
+msgid "Carrier"
+msgstr ""
+
+#: admin/partials/paccofacile-admin-display.php:246
+#: admin/partials/paccofacile-admin-display.php:346
+msgid "Add package"
+msgstr "Aggiungi imballaggio"
+
+#: admin/partials/paccofacile-admin-display.php:68
+#: admin/partials/paccofacile-admin-display.php:117
+msgid "Add service"
+msgstr "Aggiungi servizio"
+
+#: includes/class-paccofacile-woocommerce.php:872
+#: includes/class-paccofacile-woocommerce.php:938
+msgid "Address"
+msgstr "Indirizzo"
+
+#: includes/class-paccofacile.php:94
+msgctxt "Admin Menu text"
+msgid "Carriers"
+msgstr ""
+
+#: includes/class-paccofacile.php:101
+msgid "All Carriers"
+msgstr "Tutti i Corrieri"
+
+#: includes/settings-paccofacile-shipping.php:12
+msgid "All chosen couriers"
+msgstr "Tutti i corrieri scelti"
+
+#: includes/settings-paccofacile-shipping.php:50
+msgid "Always active"
+msgstr "Sempre attivo"
+
+#: includes/class-paccofacile-woocommerce.php:1340
+msgid "Amount (€)"
+msgstr "Valore (€)"
+
+#: admin/class-paccofacile-admin.php:248
+msgid "API credentials are not valid."
+msgstr "Le credenziali API non risultano valide."
+
+#: admin/class-paccofacile-admin.php:177
+msgid "API Key"
+msgstr "Chiave API"
+
+#: admin/class-paccofacile-admin.php:234
+msgid "API Key is incorrect."
+msgstr "La chiave API non è corretta."
+
+#: admin/class-paccofacile-admin.php:176
+#: admin/partials/paccofacile-admin-display.php:38
+msgid "API Settings"
+msgstr "Impostazioni API"
+
+#: admin/class-paccofacile-admin.php:384
+msgid "Attempt failed"
+msgstr "Tentativo fallito"
+
+#: includes/class-paccofacile-woocommerce.php:1281
+msgid "Billing address"
+msgstr "Indirizzo di fatturazione"
+
+#: includes/class-paccofacile-woocommerce.php:1254
+msgid "Billing details"
+msgstr "Dettagli di fatturazione"
+
+#: includes/class-paccofacile-woocommerce.php:833
+#: includes/class-paccofacile-woocommerce.php:839
+#: includes/class-paccofacile-woocommerce.php:1072
+msgid "Building number"
+msgstr "Numero civico"
+
+#: includes/settings-paccofacile-shipping.php:52
+msgid "By cart total price range"
+msgstr "Per fascia di prezzo totale carrello"
+
+#: includes/settings-paccofacile-shipping.php:51
+msgid "By weight range"
+msgstr "Per fascia di peso"
+
+#: includes/settings-paccofacile-shipping.php:34
+msgid "Carrier"
+msgstr ""
+
+#: admin/class-paccofacile-admin.php:296
+msgid ""
+"Check which notification you want to send to your customers to keep them "
+"updated on the tracking of their shipments."
+msgstr ""
+"Scegli quali notifiche vuoi inviare ai tuoi clienti per tenerli aggiornati "
+"sul tracciamento delle loro spedizioni."
+
+#: includes/settings-paccofacile-shipping.php:37
+msgid "Choose a carrier to activate it in checkout."
+msgstr "Scegli un corriere per attivarlo nel checkout."
+
+#: admin/partials/paccofacile-admin-display.php:155
+msgid "Choose a pickup locker"
+msgstr "Scegli un locker di partenza"
+
+#: includes/settings-paccofacile-shipping.php:84
+msgid "Choose if you want to increase or decrease the shipping price."
+msgstr "Scegli se vuoi aumentare o diminuire il costo della spedizione."
+
+#: includes/settings-paccofacile-shipping.php:98
+msgid "Choose the type of variation of the shipping price."
+msgstr "Scegli il tipo di variazione del costo della spedizione."
+
+#: includes/class-paccofacile-woocommerce.php:2211
+msgid "City / Locality"
+msgstr "Città / Località"
+
+#: includes/class-paccofacile-woocommerce.php:1329
+msgid "Commercial sample"
+msgstr "Campione commerciale"
+
+#: includes/settings-paccofacile-shipping.php:46
+msgid "Condition to activate this shipping method."
+msgstr "Condizione per attivare questo metodi di spedizione."
+
+#. Description of the plugin
+msgid ""
+"Connect in few clicks your Paccofacile.it PRO's account and start saving "
+"money and time with our automatic shipping manager software."
+msgstr ""
+"Collega in pochi click il tuo account Paccofacile.it PRO e inizia a "
+"risparmiare soldi e tempo con il nostro software automatico di gestione "
+"delle spedizioni."
+
+#: includes/class-paccofacile-woocommerce.php:1243
+#: includes/class-paccofacile-woocommerce.php:1249
+msgid "Continue on Paccofacile.it"
+msgstr "Continua su Paccofacile.it"
+
+#: includes/class-paccofacile-woocommerce.php:1213
+msgid "Credit left:"
+msgstr "Credito residuo:"
+
+#: includes/class-paccofacile-woocommerce.php:33
+msgid "Custom Shipping Method for Paccofacile.it"
+msgstr "Metodo di spedizione personalizzato per Paccofacile.it"
+
+#: includes/settings-paccofacile-shipping.php:90
+msgid "Decrease shipping price"
+msgstr "Diminuisci il costo della spedizione"
+
+#: admin/class-paccofacile-admin.php:546 admin/class-paccofacile-admin.php:613
+#: admin/partials/paccofacile-admin-display.php:187
+#: admin/partials/paccofacile-admin-display.php:408
+msgid "Delete"
+msgstr "Elimina"
+
+#: admin/class-paccofacile-admin.php:369
+msgid "Delivered"
+msgstr "Consegnato"
+
+#: includes/class-paccofacile-woocommerce.php:1341
+msgid "Description"
+msgstr "Descrizione"
+
+#: includes/class-paccofacile-woocommerce.php:1408
+#: admin/partials/paccofacile-admin-display.php:357
+msgid "Dimensions"
+msgstr "Dimensioni"
+
+#: includes/class-paccofacile-woocommerce.php:1328
+msgid "Document"
+msgstr "Documento"
+
+#: admin/class-paccofacile-admin.php:612
+#: admin/partials/paccofacile-admin-display.php:407
+msgid "Edit"
+msgstr "Modifica"
+
+#: includes/class-paccofacile.php:99
+msgid "Edit Carrier"
+msgstr "Modifica Corriere"
+
+#: admin/class-paccofacile-admin.php:622
+#: admin/partials/paccofacile-admin-display.php:560
+msgid "Edit package"
+msgstr "Modifica imballo"
+
+#: includes/class-paccofacile-woocommerce.php:1062
+msgid "Email Address"
+msgstr "Indirizzo email"
+
+#: includes/class-paccofacile-woocommerce.php:1307
+msgid "Enter customs information"
+msgstr "Inserisci le informazioni doganali"
+
+#: admin/partials/paccofacile-admin-display.php:332
+#: admin/partials/paccofacile-admin-display.php:527
+msgid "Envelope dimensions"
+msgstr "Dimensioni busta"
+
+#: admin/class-paccofacile-admin.php:798
+msgid "Error while saving customs info. Please check the fields and retry."
+msgstr ""
+"Errore nel salvataggio delle informazioni doganali. Controlla i campi e "
+"riprova."
+
+#: admin/class-paccofacile-admin.php:372
+msgid "Exception"
+msgstr "Eccezione"
+
+#: admin/class-paccofacile-admin.php:375
+msgid "Expired"
+msgstr "Scaduto"
+
+#: includes/settings-paccofacile-shipping.php:102
+msgid "Fixed amount €"
+msgstr "Costo fisso €"
+
+#: includes/settings-paccofacile-shipping.php:60
+msgid "From Kg"
+msgstr "Da Kg"
+
+#: includes/settings-paccofacile-shipping.php:72
+msgid "From €"
+msgstr "Da €"
+
+#: admin/partials/paccofacile-admin-display.php:254
+#: admin/partials/paccofacile-admin-display.php:418
+msgid "Give a name to the package."
+msgstr "Dai un nome all'imballo."
+
+#: includes/class-paccofacile-woocommerce.php:1330
+msgid "Goods not for sale"
+msgstr "Merce non in vendita"
+
+#: includes/class-paccofacile-woocommerce.php:1326
+msgid "Goods type"
+msgstr "Tipo di merce"
+
+#: includes/class-paccofacile-woocommerce.php:1243
+#: includes/class-paccofacile-woocommerce.php:1249
+msgid ""
+"https://pro.paccofacile.it/redirect_to?route=shipment.consolidation_list"
+msgstr ""
+"https://pro.paccofacile.it/redirect_to?route=shipment.consolidation_list"
+
+#. Author URI of the plugin
+msgid "https://www.paccofacile.it"
+msgstr "https://www.paccofacile.it"
+
+#. URI of the plugin
+msgid "https://www.paccofacile.it/integrazioni/woocommerce"
+msgstr "https://www.paccofacile.it/integrazioni/woocommerce"
+
+#: includes/settings-paccofacile-shipping.php:10
+msgid ""
+"If no costs are set for shipping classes, costs defined in Paccofacile "
+"configuration will be used."
+msgstr ""
+
+#: admin/class-paccofacile-admin.php:390
+msgid "In transit"
+msgstr "In transito"
+
+#: includes/settings-paccofacile-shipping.php:89
+msgid "Increase shipping price"
+msgstr "Aumenta il costo della spedizione"
+
+#: admin/class-paccofacile-admin.php:378
+msgid "Info received"
+msgstr "Informazioni ricevute"
+
+#: includes/class-paccofacile-woocommerce.php:845
+msgid "Intercom code"
+msgstr "Codice citofono"
+
+#: includes/class-paccofacile-woocommerce.php:1260
+msgid "Invoice"
+msgstr "Fattura"
+
+#: includes/class-paccofacile-woocommerce.php:871
+msgid "Locker ID"
+msgstr "Locker ID"
+
+#: admin/partials/paccofacile-admin-display.php:321
+#: admin/partials/paccofacile-admin-display.php:522
+msgid "Maximum height"
+msgstr "Altezza massima"
+
+#: includes/settings-paccofacile-shipping.php:75
+msgid "Maximum price (€)"
+msgstr "Prezzo massimo (€)"
+
+#: admin/partials/paccofacile-admin-display.php:300
+#: admin/partials/paccofacile-admin-display.php:472
+msgid "Maximum weight"
+msgstr "Peso massimo"
+
+#: includes/settings-paccofacile-shipping.php:63
+msgid "Maximum weight (Kg)"
+msgstr "Peso massimo (Kg)"
+
+#: includes/settings-paccofacile-shipping.php:69
+msgid "Minimum price (€)"
+msgstr "Prezzo minimo (€)"
+
+#: includes/settings-paccofacile-shipping.php:57
+msgid "Minimum weight (Kg)"
+msgstr "Peso minimo (Kg)"
+
+#: includes/class-paccofacile-woocommerce.php:1272
+msgid "Monthly (unique invoice recap of all orders of the current month)"
+msgstr ""
+"Mensile (Fattura unica e riepilogativa di tutti gli ordini del mese corrente)"
+
+#: includes/class-paccofacile.php:98
+msgid "New Carrier"
+msgstr "Nuovo Corriere"
+
+#: includes/class-paccofacile.php:105
+msgid "No Carriers found in Trash."
+msgstr "Nessun Corriere trovato nel cestino."
+
+#: includes/class-paccofacile.php:104
+msgid "No Carriers found."
+msgstr "Nessun Corriere trovato."
+
+#: includes/class-paccofacile-woocommerce.php:1750
+msgid "No pack needed"
+msgstr "Non necessita di imballo"
+
+#: includes/class-paccofacile-woocommerce.php:2055
+#: includes/class-paccofacile-woocommerce.php:2067
+msgid "no value"
+msgstr "nessun valore"
+
+#: includes/class-paccofacile-woocommerce.php:1257
+msgid "Non-fiscal receipt with order summary"
+msgstr "Ricevuta non fiscale con riepilogo dell'ordine"
+
+#: includes/settings-paccofacile-shipping.php:88
+#: includes/class-paccofacile-woocommerce.php:1226
+msgid "None"
+msgstr "Nessuno"
+
+#: includes/class-paccofacile-woocommerce.php:1327
+msgid "On sale goods"
+msgstr "Merce in vendita"
+
+#: includes/class-paccofacile-woocommerce.php:869
+msgid "Opening hours"
+msgstr "Orari di apertura"
+
+#: includes/class-paccofacile-woocommerce.php:1122
+msgid "Order Parcels"
+msgstr "Colli dell'ordine"
+
+#: includes/class-paccofacile-woocommerce.php:1110
+msgid "Order Tracking"
+msgstr "Tracciamento Ordine"
+
+#: emails/order-tracking-info.php:39
+#: includes/class-paccofacile-woocommerce.php:1449
+msgid "Order tracking"
+msgstr "Tracciamento ordine"
+
+#: includes/class-paccofacile-woocommerce.php:1331
+msgid "Other"
+msgstr "Altro"
+
+#: admin/class-paccofacile-admin.php:381
+msgid "Out for delivery"
+msgstr "In consegna"
+
+#: includes/class-paccofacile.php:106
+msgctxt ""
+"Overrides the “Featured Image” phrase for this post type. Added in 4.3"
+msgid "Carrier Cover Image"
+msgstr ""
+
+#: includes/class-paccofacile.php:111
+msgctxt ""
+"Overrides the “Insert into post”/”Insert into page” phrase (used when "
+"inserting media into a post). Added in 4.4"
+msgid "Insert into Carrier"
+msgstr ""
+
+#: includes/class-paccofacile.php:108
+msgctxt ""
+"Overrides the “Remove featured image” phrase for this post type. Added in 4.3"
+msgid "Remove cover image"
+msgstr ""
+
+#: includes/class-paccofacile.php:107
+msgctxt ""
+"Overrides the “Set featured image” phrase for this post type. Added in 4.3"
+msgid "Set cover image"
+msgstr ""
+
+#: includes/class-paccofacile.php:112
+msgctxt ""
+"Overrides the “Uploaded to this post”/”Uploaded to this page” phrase (used "
+"when viewing media attached to a post). Added in 4.4"
+msgid "Uploaded to this Carrier"
+msgstr ""
+
+#: includes/class-paccofacile.php:109
+msgctxt ""
+"Overrides the “Use as featured image” phrase for this post type. Added in 4.3"
+msgid "Use as cover image"
+msgstr ""
+
+#: includes/class-paccofacile-woocommerce.php:1099
+#: admin/partials/paccofacile-admin-display.php:26
+msgid "Paccofacile"
+msgstr "Paccofacile"
+
+#: paccofacile.php:56
+msgid "Paccofacile requires WooCommerce to be installed and active."
+msgstr "Paccofacile richiede che WooCommerce sia installato e attivo."
+
+#: includes/class-paccofacile-woocommerce.php:2029
+msgid "Paccofacile.it documents"
+msgstr "Documenti Paccofacile.it"
+
+#. Name of the plugin
+msgid "Paccofacile.it for WooCommerce"
+msgstr "Paccofacile.it for WooCommerce"
+
+#: includes/class-paccofacile-woocommerce.php:1231
+msgid "Paccofacile.it Order ID:"
+msgstr "ID Ordine Paccofacile.it"
+
+#: includes/class-paccofacile-woocommerce.php:56
+msgid "Paccofacile.it prices"
+msgstr "Prezzi di Paccofacile.it"
+
+#: includes/settings-paccofacile-shipping.php:30
+#: includes/class-paccofacile-woocommerce.php:30
+#: includes/class-paccofacile-woocommerce.php:31
+msgid "Paccofacile.it Shipping"
+msgstr "Spedizione Paccofacile.it"
+
+#: includes/class-paccofacile-woocommerce.php:103
+#: includes/class-paccofacile-woocommerce.php:121
+msgid "Paccofacile.it Shipping Method"
+msgstr "Metodo di spedizione Paccofacile.it"
+
+#: admin/partials/paccofacile-admin-display.php:252
+#: admin/partials/paccofacile-admin-display.php:356
+#: admin/partials/paccofacile-admin-display.php:417
+msgid "Package name"
+msgstr "Nome imballo"
+
+#: admin/partials/paccofacile-admin-display.php:260
+#: admin/partials/paccofacile-admin-display.php:434
+msgid "Package type"
+msgstr "Tipo imballo"
+
+#: admin/partials/paccofacile-admin-display.php:41
+msgid "Packages"
+msgstr "Imballi"
+
+#: admin/partials/paccofacile-admin-display.php:312
+#: admin/partials/paccofacile-admin-display.php:482
+msgid "Pallet dimensions"
+msgstr "Dimensioni pallet"
+
+#: includes/class-paccofacile-woocommerce.php:1407
+msgid "Parcels"
+msgstr "Colli"
+
+#: includes/class-paccofacile.php:103
+msgid "Parent Carrier:"
+msgstr ""
+
+#: includes/class-paccofacile-woocommerce.php:1311
+msgid "Pay the order with the remaining credit"
+msgstr "Paga l'ordine con il credito residuo"
+
+#: admin/class-paccofacile-admin.php:387
+msgid "Pending"
+msgstr "In sospeso"
+
+#: includes/settings-paccofacile-shipping.php:103
+msgid "Percentage %"
+msgstr "Percentuale %"
+
+#: includes/class-paccofacile-woocommerce.php:1053
+msgid "Phone Number"
+msgstr "Numero di telefono"
+
+#: includes/class-paccofacile.php:92
+msgctxt "Post type general name"
+msgid "Carriers"
+msgstr ""
+
+#: includes/class-paccofacile.php:93
+msgctxt "Post type singular name"
+msgid "Carrier"
+msgstr ""
+
+#: includes/settings-paccofacile-shipping.php:81
+msgid "Price variation"
+msgstr "Variazione di prezzo"
+
+#: includes/settings-paccofacile-shipping.php:107
+msgid "Price variation amount €"
+msgstr "Ammontare della variazione di prezzo €"
+
+#: includes/settings-paccofacile-shipping.php:113
+msgid "Price variation percentage %"
+msgstr "Percentuale della variazione di prezzo %"
+
+#: includes/settings-paccofacile-shipping.php:95
+msgid "Price variation type"
+msgstr "Tipo di variazione di prezzo"
+
+#: includes/class-paccofacile-woocommerce.php:1410
+msgid "Products"
+msgstr "Prodotti"
+
+#: includes/class-paccofacile-woocommerce.php:1338
+msgid "Quantity"
+msgstr "Quantità"
+
+#: includes/class-paccofacile-woocommerce.php:1377
+msgid "Save"
+msgstr "Salva"
+
+#: admin/partials/paccofacile-admin-display.php:168
+msgid "Save as departure locker"
+msgstr "Salva come locker di partenza"
+
+#: includes/class-paccofacile.php:113
+msgctxt ""
+"Screen reader text for the filter links heading on the post type listing "
+"screen. Default “Filter posts list”/”Filter pages list”. Added in 4.4"
+msgid "Filter Carriers list"
+msgstr ""
+
+#: includes/class-paccofacile.php:115
+msgctxt ""
+"Screen reader text for the items list heading on the post type listing "
+"screen. Default “Posts list”/”Pages list”. Added in 4.4"
+msgid "Carriers list"
+msgstr ""
+
+#: includes/class-paccofacile.php:114
+msgctxt ""
+"Screen reader text for the pagination heading on the post type listing "
+"screen. Default “Posts list navigation”/”Pages list navigation”. Added in 4.4"
+msgid "Carriers list navigation"
+msgstr ""
+
+#: includes/class-paccofacile.php:102
+msgid "Search Carriers"
+msgstr ""
+
+#: includes/class-paccofacile-woocommerce.php:2119
+msgid "Select a city/locality"
+msgstr "Scegli una città/località"
+
+#: includes/class-paccofacile.php:156
+msgid "Settings"
+msgstr "Impostazioni"
+
+#: includes/class-paccofacile-woocommerce.php:1208
+msgid "Ship with Paccofacile.it"
+msgstr "Spedisci con Paccofacile.it"
+
+#: includes/class-paccofacile-woocommerce.php:1228
+msgid "Shipment Draft ID:"
+msgstr "Shipment Draft ID:"
+
+#: includes/class-paccofacile-woocommerce.php:1226
+msgid "Shipment ID:"
+msgstr "ID Spedizione:"
+
+#: includes/class-paccofacile-woocommerce.php:1334
+msgid "Shipping articles details"
+msgstr "Dettagli degli articoli da spedire"
+
+#: includes/class-paccofacile-woocommerce.php:1237
+msgid "Shipping costs:"
+msgstr "Costi di spedizione:"
+
+#: includes/class-paccofacile-woocommerce.php:1324
+msgid "Shipping goods total amount (€)"
+msgstr "Valore totale merce (€)"
+
+#: admin/partials/paccofacile-admin-display.php:40
+msgid "Shipping services"
+msgstr "Servizi di spedizione"
+
+#: includes/class-paccofacile-woocommerce.php:2028
+msgid "Shipping status"
+msgstr "Stato spedizione"
+
+#: includes/class-paccofacile-woocommerce.php:1040
+msgid "Shop name"
+msgstr "Intestazione negozio"
+
+#: admin/partials/paccofacile-admin-display.php:291
+#: admin/partials/paccofacile-admin-display.php:451
+msgid "Side 1"
+msgstr "Lato 1"
+
+#: admin/partials/paccofacile-admin-display.php:294
+#: admin/partials/paccofacile-admin-display.php:458
+msgid "Side 2"
+msgstr "Lato 2"
+
+#: admin/partials/paccofacile-admin-display.php:297
+#: admin/partials/paccofacile-admin-display.php:465
+msgid "Side 3"
+msgstr "Lato 3"
+
+#: includes/class-paccofacile-woocommerce.php:1273
+msgid "Singular (invoice of this order only)"
+msgstr "Singola (Fattura relativa a questo ordine)"
+
+#. Author of the plugin
+msgid "Sogima Holding srl"
+msgstr "Sogima Holding srl"
+
+#: includes/class-paccofacile-woocommerce.php:1201
+msgid "The customer didn't choose a Paccofacile.it shipment."
+msgstr "Il cliente non ha scelto una spedizione Paccofacile.it"
+
+#: includes/class-paccofacile-woocommerce.php:1316
+msgid "The order on Paccofacile.it is paid"
+msgstr "L'ordine su Paccofacile.it risulta pagato"
+
+#: includes/class-paccofacile.php:110
+msgctxt ""
+"The post type archive label used in nav menus. Default “Post Archives”. "
+"Added in 4.4"
+msgid "Carrier archives"
+msgstr ""
+
+#: admin/class-paccofacile-admin.php:733
+#, php-format
+msgid ""
+"The sum of the articles weight must match the weight of the order. (%s Kg)"
+msgstr ""
+"La somma dei pesi degli articoli deve essere uguale al peso totale "
+"dell'ordine. (%s Kg)"
+
+#: admin/class-paccofacile-admin.php:730
+msgid "The total goods amount must match the amounts of the articles to ship."
+msgstr ""
+"L'importo totale della merce deve essere uguale agli importi degli articoli "
+"da spedire."
+
+#: includes/class-paccofacile-woocommerce.php:1247
+msgid ""
+"This is a consolidable shipment. You have to merge it with other shipments "
+"before you can proceed to the payment."
+msgstr ""
+"Questa è una spedizione consolidabile. Hai bisogno di unirla ad altre "
+"spedizioni prima di poter procedere al pagamento."
+
+#: includes/class-paccofacile-woocommerce.php:1241
+msgid ""
+"This shipment has been consolidated with others. To confirm your order you "
+"have to proceed to payment."
+msgstr ""
+"Questa spedizione è stata consolidata con altre. Per confermare il tuo "
+"ordine devi procedere al pagamento."
+
+#: includes/settings-paccofacile-shipping.php:66
+msgid "To Kg"
+msgstr "A Kg"
+
+#: includes/settings-paccofacile-shipping.php:78
+msgid "To €"
+msgstr "A €"
+
+#: admin/class-paccofacile-admin.php:178
+msgid "Token"
+msgstr "Token"
+
+#: admin/class-paccofacile-admin.php:181
+msgid "Tracking"
+msgstr "Tracciamento"
+
+#: includes/class-wc-tracking-info-email.php:31
+#: includes/class-wc-tracking-info-email.php:37
+#: includes/class-wc-tracking-info-email.php:38
+msgid "Tracking Info"
+msgstr "Informazioni tracciamento"
+
+#: includes/class-wc-tracking-info-email.php:34
+msgid ""
+"Tracking Info Notification emails are sent when tracking checkpoints are "
+"available for the client's order"
+msgstr ""
+"Le notifiche email con le informazioni di tracciamento vengono inviate "
+"quando sono disponibili aggiornamenti per l'ordine"
+
+#: admin/class-paccofacile-admin.php:182
+msgid "Tracking info to show"
+msgstr "Informazioni sul tracciamento da mostrare"
+
+#: includes/class-paccofacile.php:100
+msgid "View Carrier"
+msgstr "Visualizza Corriere"
+
+#: admin/partials/paccofacile-admin-display.php:358
+msgid "Volume"
+msgstr "Volume"
+
+#: includes/class-paccofacile-woocommerce.php:1409
+msgid "Weight"
+msgstr "Peso"
+
+#: includes/class-paccofacile-woocommerce.php:1339
+msgid "Weight (Kg)"
+msgstr "Peso (Kg)"
+
+#: admin/class-paccofacile-admin.php:292
+msgid ""
+"You will find the API Keys to activate Paccofacile.it PRO plugin in your "
+"Paccofacile.it account follow this path: Paccofacile PRO Dashboard -> "
+"Integrations -> WooCommerce -> Generate Keys."
+msgstr ""
+"Troverai le Chiavi API per attivare il plugin Paccofacile.it PRO nel tuo "
+"account di Paccofacile.it PRO seguendo il seguente percorso: Paccofacile PRO "
+"Dashboard -> Integrazioni -> WooCommerce -> Genera Chiavi."
+
+#: includes/class-paccofacile-woocommerce.php:1220
+msgid ""
+"Your Paccofacile.it order could not be saved due to a data error. Please "
+"check the shipping destination data."
+msgstr ""
+"Non è stato possibile salvare il tuo ordine Paccofacile.it a causa di errori "
+"nei dati. Controlla i dati di destinazione della spedizione."

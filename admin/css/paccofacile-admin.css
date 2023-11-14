@@ -1,0 +1,108 @@
+/**
+* All of the CSS for your admin-specific functionality should be
+* included in this file.
+*/
+
+.paccofacile_config * { box-sizing:border-box; }
+.lista_corrieri { margin:20px -20px; }
+.lista_imballi { margin:20px 0; }
+.lista_corrieri * { box-sizing:border-box; }
+.lista_corrieri:after { clear:both;display:block;visibility:hidden;content:''; }
+.lista_corrieri .corriere { float:left;width:50%;padding:0 20px;margin-bottom:20px;text-align:center; }
+.lista_corrieri .corriere .inner { padding:20px;background-color:#fff;border:1px solid #ddd;position:relative; }
+.lista_corrieri .corriere .inner .manage_pickup_modal_open { position:absolute;right:20px;top:20px; }
+.lista_corrieri .corriere.spento .inner { background-color:#e8e8e8;opacity:0.4; }
+.lista_corrieri .corriere .inner .spinner { position:absolute;top:20px;right:20px; }
+/* .lista_corrieri .corriere .image { text-align:center; } */
+.lista_corrieri .corriere .image img { height:50px;width:auto; }
+.lista_corrieri .corriere h3 { margin-bottom:0;min-height:55px; }
+.lista_corrieri .corriere p { margin-top:0; }
+
+.lista_imballi .imballo svg { height:25px; }
+ 
+.paccofacile_config .lista_corrieri .corriere { width:calc(100% * 1/3); }
+
+#paccofacile.postbox .paccofacile_billing_bill { display:none; }
+#paccofacile.postbox p.success { color:rgb(49, 145, 37); }
+#paccofacile.postbox .add_customs_modal_open { margin-bottom:10px; }
+
+.lista_customs input[type="text"],
+.lista_customs input[type="number"] { max-width:100%; }
+.customs_wrapper { padding:20px 0; }
+.customs_wrapper .notice { margin:5px 0px; }
+.customs_wrapper .customes_submit_button { margin-top:20px; }
+
+.thickbox-loading .form-field input[type="email"], 
+.thickbox-loading .form-field input[type="number"], 
+.thickbox-loading .form-field input[type="password"], 
+.thickbox-loading .form-field input[type="search"], 
+.thickbox-loading .form-field input[type="tel"], 
+.thickbox-loading .form-field input[type="text"], 
+.thickbox-loading .form-field input[type="url"], 
+.thickbox-loading .form-field textarea { width:100%; }
+
+.paccofacile-map {
+    height: 400px;
+    width: 100%;
+    margin-top:20px;
+}
+
+#popup-content {
+    background-color:#fff;
+    padding:15px;
+    border-radius:5px;
+    border:1px solid #ccc;
+    position:relative;
+    margin-bottom:10px;
+}
+#popup-content:after {
+    content:'';
+    display:block;
+    border-top: 15px solid #fff;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    position: absolute;
+    bottom: -10px;
+    left: calc(50% - 10px);
+}
+
+.paccofacile-active .cart-collaterals .cart_totals, 
+.paccofacile-active .cart-collaterals .shipping_calculator {
+    float:none;
+    width:100%;
+}
+
+.paccofacile-lockers-list .item {
+    border-bottom:1px solid #ccc;
+    padding:10px 0;
+}
+
+.paccofacile-lockers-list > :nth-child(even){
+    background-color: #f8f9fa;
+}
+.paccofacile-lockers-list > :nth-child(odd){
+    background-color: #fff;
+}
+
+.paccofacile-lockers-list .item input[name="shipping_locker"] {
+    margin-right:10px;
+}
+
+.paccofacile-lockers-list .item h4 {
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:0;
+}
+
+.paccofacile-lockers-list .item label {
+    padding:3px 0;
+}
+
+.paccofacile-lockers-list .item button {
+    line-height:1.2;
+}
+
+.justify-content-between {
+    display: flex;
+    justify-content: space-between;
+}

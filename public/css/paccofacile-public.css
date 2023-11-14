@@ -1,0 +1,100 @@
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+
+.paccofacile-map {
+    height: 400px;
+    width: 100%;
+    margin-top:20px;
+}
+
+#popup-content {
+    background-color:#fff;
+    padding:15px;
+    border-radius:5px;
+    border:1px solid #ccc;
+    position:relative;
+    margin-bottom:10px;
+}
+#popup-content:after {
+    content:'';
+    display:block;
+    border-top: 15px solid #fff;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    position: absolute;
+    bottom: -10px;
+    left: calc(50% - 10px);
+}
+
+.paccofacile-active .cart-collaterals .cart_totals, 
+.paccofacile-active .cart-collaterals .shipping_calculator {
+    float:none;
+    width:100%;
+}
+
+#paccofacile-lockers-list {
+
+}
+
+#paccofacile-lockers-list .item {
+    border-bottom:1px solid #ccc;
+    padding:10px 0;
+}
+
+#paccofacile-lockers-list > :nth-child(even){
+    background-color: #f8f9fa;
+}
+#paccofacile-lockers-list > :nth-child(odd){
+    background-color: #fff;
+}
+
+#paccofacile-lockers-list .item input[name="shipping_locker"] {
+    margin-right:10px;
+}
+
+#paccofacile-lockers-list .item h4 {
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:0;
+}
+
+#paccofacile-lockers-list .item label {
+    padding:3px 0;
+}
+
+#paccofacile-lockers-list .item button {
+    line-height:1.2;
+}
+
+.justify-content-between {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* #paccofacile-lockers-list .item {
+    border-bottom:1px solid #ccc;
+    padding:10px 0;
+}
+
+#paccofacile-lockers-list .item h4 {
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:0;
+}
+
+#paccofacile-lockers-list .item input,
+.woocommerce-shipping-fields #shipping_locker_field .woocommerce-input-wrapper .item input {
+    margin-right: .3342343017em;
+} */
+
+/* .woocommerce-checkout .woocommerce-shipping-fields #shipping_locker_field input[name="shipping_locker"] {
+    float: left;
+    margin: 5px 0;
+    margin-right: 10px;
+} */
+
+.woocommerce-checkout #shipping_locker_field {
+    display:none;
+}
