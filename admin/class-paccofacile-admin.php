@@ -39,9 +39,31 @@ class Paccofacile_Admin {
 	 */
 	private $version;
 
+	/**
+	 * The settings of this plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 * @var      string    $settings
+	 */
 	public $settings;
 
+	/**
+	 * The default tracking settings values.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 * @var      string    $default_tracking_to_show
+	 */
 	public $default_tracking_to_show;
+
+	/**
+	 * The tracking status labels.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 * @var      string    $tracking_status_label
+	 */
 	public $tracking_status_label;
 
 	/**
@@ -125,10 +147,10 @@ class Paccofacile_Admin {
 		wp_enqueue_script( 'locker-map', plugin_dir_url( __FILE__ ) . 'js/draw-map.js', array( 'jquery' ), $this->version, true );
 
 		// Add the Select2 CSS file!
-		wp_enqueue_style( 'select2-css', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', array(), '4.1.0-rc.0' );
+		wp_enqueue_style( 'select2-css', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', array(), '4.1.0-rc.0', false );
 
 		// Add the Select2 JavaScript file!
-		wp_enqueue_script( 'select2-js', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', 'jquery', '4.1.0-rc.0' );
+		wp_enqueue_script( 'select2-js', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', 'jquery', '4.1.0-rc.0', true );
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/paccofacile-admin.js', array( 'jquery' ), $this->version, false );
 
@@ -170,7 +192,7 @@ class Paccofacile_Admin {
 	 * @return void
 	 */
 	public function render_plugin_settings_page() {
-		include dirname( __FILE__ ) . '/partials/paccofacile-admin-display.php';
+		include __DIR__ . '/partials/paccofacile-admin-display.php';
 	}
 
 	/**
@@ -184,28 +206,28 @@ class Paccofacile_Admin {
 
 		register_setting( 'paccofacile_settings', 'paccofacile_settings', array( 'sanitize_callback' => array( $this, 'paccofacile_settings_validate' ) ) );
 
-		add_settings_section( 'api_settings', __( 'API Settings', 'paccofacile' ), array( $this, 'paccofacile_section_api_text' ), 'paccofacile' );
-		add_settings_field( 'paccofacile_setting_api_key', __( 'API Key', 'paccofacile' ), array( $this, 'paccofacile_setting_api_key' ), 'paccofacile', 'api_settings' );
-		add_settings_field( 'paccofacile_setting_token', __( 'Token', 'paccofacile' ), array( $this, 'paccofacile_setting_token' ), 'paccofacile', 'api_settings' );
-		add_settings_field( 'paccofacile_setting_account_number', __( 'Account Number', 'paccofacile' ), array( $this, 'paccofacile_setting_account_number' ), 'paccofacile', 'api_settings' );
+		add_settings_section( 'api_settings', esc_attr__( 'API Settings', 'paccofacile' ), array( $this, 'paccofacile_section_api_text' ), 'paccofacile' );
+		add_settings_field( 'paccofacile_setting_api_key', esc_attr__( 'API Key', 'paccofacile' ), array( $this, 'paccofacile_setting_api_key' ), 'paccofacile', 'api_settings' );
+		add_settings_field( 'paccofacile_setting_token', esc_attr__( 'Token', 'paccofacile' ), array( $this, 'paccofacile_setting_token' ), 'paccofacile', 'api_settings' );
+		add_settings_field( 'paccofacile_setting_account_number', esc_attr__( 'Account Number', 'paccofacile' ), array( $this, 'paccofacile_setting_account_number' ), 'paccofacile', 'api_settings' );
 
-		add_settings_section( 'tracking_settings', __( 'Tracking', 'paccofacile' ), array( $this, 'paccofacile_section_tracking_text' ), 'paccofacile_tracking' );
-		add_settings_field( 'paccofacile_tracking_to_show', __( 'Tracking info to show', 'paccofacile' ), array( $this, 'paccofacile_tracking_to_show' ), 'paccofacile_tracking', 'tracking_settings' );
+		add_settings_section( 'tracking_settings', esc_attr__( 'Tracking', 'paccofacile' ), array( $this, 'paccofacile_section_tracking_text' ), 'paccofacile_tracking' );
+		add_settings_field( 'paccofacile_tracking_to_show', esc_attr__( 'Tracking info to show', 'paccofacile' ), array( $this, 'paccofacile_tracking_to_show' ), 'paccofacile_tracking', 'tracking_settings' );
 
 		/* phpcs:ignore
 		Refund settings.
 		register_setting( 'paccofacile_settings_refund', 'paccofacile_settings_refund', array( 'sanitize_callback' => array($this, 'paccofacile_settings_refund_options') ) );
 
-		add_settings_section( 'refund_method', __('Refund methods', 'paccofacile'), array($this, 'paccofacile_section_refund_methods'), 'paccofacile_refund' );
+		add_settings_section( 'refund_method', esc_attr__('Refund methods', 'paccofacile'), array($this, 'paccofacile_section_refund_methods'), 'paccofacile_refund' );
 
-		add_settings_section( 'refund_method_paypal', __('PayPal refund', 'paccofacile'), array($this, 'paccofacile_section_refund_methods'), 'paccofacile_refund_paypal' );
-		add_settings_field( 'paccofacile_refund_paypal_email', __('Paypal email', 'paccofacile'), array($this, 'paccofacile_refund_paypal_email'), 'paccofacile_refund_paypal', 'refund_method_paypal' );
+		add_settings_section( 'refund_method_paypal', esc_attr__('PayPal refund', 'paccofacile'), array($this, 'paccofacile_section_refund_methods'), 'paccofacile_refund_paypal' );
+		add_settings_field( 'paccofacile_refund_paypal_email', esc_attr__('Paypal email', 'paccofacile'), array($this, 'paccofacile_refund_paypal_email'), 'paccofacile_refund_paypal', 'refund_method_paypal' );
 
-		add_settings_section( 'refund_method_wire_transfer', __('Wire Transfer refund', 'paccofacile'), array($this, 'paccofacile_section_refund_methods'), 'paccofacile_refund_wire_transfer' );
-		add_settings_field( 'paccofacile_refund_wire_transfer_header', __('Bank header', 'paccofacile'), array($this, 'paccofacile_refund_wire_transfer_header'), 'paccofacile_refund_wire_transfer', 'refund_method_wire_transfer' );
-		add_settings_field( 'paccofacile_refund_wire_transfer_bank', __('Bank', 'paccofacile'), array($this, 'paccofacile_refund_wire_transfer_bank'), 'paccofacile_refund_wire_transfer', 'refund_method_wire_transfer' );
-		add_settings_field( 'paccofacile_refund_wire_transfer_iban', __('IBAN', 'paccofacile'), array($this, 'paccofacile_refund_wire_transfer_iban'), 'paccofacile_refund_wire_transfer', 'refund_method_wire_transfer' );
-		add_settings_field( 'paccofacile_refund_wire_transfer_bic', __('BIC', 'paccofacile'), array($this, 'paccofacile_refund_wire_transfer_bic'), 'paccofacile_refund_wire_transfer', 'refund_method_wire_transfer' );
+		add_settings_section( 'refund_method_wire_transfer', esc_attr__('Wire Transfer refund', 'paccofacile'), array($this, 'paccofacile_section_refund_methods'), 'paccofacile_refund_wire_transfer' );
+		add_settings_field( 'paccofacile_refund_wire_transfer_header', esc_attr__('Bank header', 'paccofacile'), array($this, 'paccofacile_refund_wire_transfer_header'), 'paccofacile_refund_wire_transfer', 'refund_method_wire_transfer' );
+		add_settings_field( 'paccofacile_refund_wire_transfer_bank', esc_attr__('Bank', 'paccofacile'), array($this, 'paccofacile_refund_wire_transfer_bank'), 'paccofacile_refund_wire_transfer', 'refund_method_wire_transfer' );
+		add_settings_field( 'paccofacile_refund_wire_transfer_iban', esc_attr__('IBAN', 'paccofacile'), array($this, 'paccofacile_refund_wire_transfer_iban'), 'paccofacile_refund_wire_transfer', 'refund_method_wire_transfer' );
+		add_settings_field( 'paccofacile_refund_wire_transfer_bic', esc_attr__('BIC', 'paccofacile'), array($this, 'paccofacile_refund_wire_transfer_bic'), 'paccofacile_refund_wire_transfer', 'refund_method_wire_transfer' );
 		*/
 	}
 
@@ -257,20 +279,20 @@ class Paccofacile_Admin {
 
 		if ( empty( $newinput['api_key'] ) ) {
 			$valid = false;
-			add_settings_error( 'api_key', 'invalid_api_settings', __( 'API Key is incorrect.', 'paccofacile' ) );
+			add_settings_error( 'api_key', 'invalid_api_settings', esc_attr__( 'API Key is incorrect.', 'paccofacile' ) );
 			$newinput['api_key'] = '';
 		}
 
 		if ( empty( $newinput['account_number'] ) ) {
 			$valid = false;
-			add_settings_error( 'account_number', 'invalid_account_number', __( 'Account number is incorrect.', 'paccofacile' ) );
+			add_settings_error( 'account_number', 'invalid_account_number', esc_attr__( 'Account number is incorrect.', 'paccofacile' ) );
 		}
 
 		if ( true === $valid ) {
 			$valid = $this->paccofacile_check_api_auth( $newinput['api_key'], $newinput['token'], $newinput['account_number'] );
 			if ( false === $valid ) {
 				update_option( 'paccofacile_api_valid', '0' );
-				add_settings_error( 'api_auth', 'invalid_api_auth', __( 'API credentials are not valid.', 'paccofacile' ) );
+				add_settings_error( 'api_auth', 'invalid_api_auth', esc_attr__( 'API credentials are not valid.', 'paccofacile' ) );
 			} else {
 				update_option( 'paccofacile_api_valid', '1' );
 			}
@@ -321,7 +343,7 @@ class Paccofacile_Admin {
 	 * @return void
 	 */
 	public function paccofacile_section_api_text() {
-		echo '<p>' . __( 'You will find the API Keys to activate Paccofacile.it PRO plugin in your Paccofacile.it account follow this path: Paccofacile PRO Dashboard -> Integrations -> WooCommerce -> Generate Keys.', 'paccofacile' ) . '</p>';
+		echo '<p>' . esc_attr__( 'You will find the API Keys to activate Paccofacile.it PRO plugin in your Paccofacile.it account follow this path: Paccofacile PRO Dashboard -> Integrations -> WooCommerce -> Generate Keys.', 'paccofacile' ) . '</p>';
 	}
 
 	/**
@@ -330,7 +352,7 @@ class Paccofacile_Admin {
 	 * @return void
 	 */
 	public function paccofacile_section_tracking_text() {
-		echo '<p>' . __( 'Check which notification you want to send to your customers to keep them updated on the tracking of their shipments.', 'paccofacile' ) . '</p>';
+		echo '<p>' . esc_attr__( 'Check which notification you want to send to your customers to keep them updated on the tracking of their shipments.', 'paccofacile' ) . '</p>';
 	}
 
 	/**
@@ -390,6 +412,11 @@ class Paccofacile_Admin {
 	}
 	*/
 
+	/**
+	 * Token field
+	 *
+	 * @return void
+	 */
 	public function paccofacile_setting_token() {
 		$options = get_option( 'paccofacile_settings' );
 		if ( ! is_array( $options ) ) {
@@ -398,6 +425,11 @@ class Paccofacile_Admin {
 		echo "<input id='paccofacile_setting_token' name='paccofacile_settings[token]' type='text' value='" . esc_attr( $options['token'] ) . "' />";
 	}
 
+	/**
+	 * Account number field
+	 *
+	 * @return void
+	 */
 	public function paccofacile_setting_account_number() {
 		$options = get_option( 'paccofacile_settings' );
 		if ( ! is_array( $options ) ) {
@@ -406,38 +438,48 @@ class Paccofacile_Admin {
 		echo "<input id='paccofacile_setting_account_number' name='paccofacile_settings[account_number]' type='text' value='" . esc_attr( $options['account_number'] ) . "' />";
 	}
 
+	/**
+	 * Tracking status labels
+	 *
+	 * @return void
+	 */
 	public function paccofacile_tracking_status_key_to_label() {
 		$this->tracking_status_label = array();
 		foreach ( $this->default_tracking_to_show as $key => $value ) {
 			switch ( $key ) {
 				case 'delivered':
-					$this->tracking_status_label['delivered'] = __( 'Delivered', 'paccofacile' );
+					$this->tracking_status_label['delivered'] = esc_attr__( 'Delivered', 'paccofacile' );
 					break;
 				case 'exception':
-					$this->tracking_status_label['exception'] = __( 'Exception', 'paccofacile' );
+					$this->tracking_status_label['exception'] = esc_attr__( 'Exception', 'paccofacile' );
 					break;
 				case 'expired':
-					$this->tracking_status_label['expired'] = __( 'Expired', 'paccofacile' );
+					$this->tracking_status_label['expired'] = esc_attr__( 'Expired', 'paccofacile' );
 					break;
 				case 'inforeceived':
-					$this->tracking_status_label['inforeceived'] = __( 'Info received', 'paccofacile' );
+					$this->tracking_status_label['inforeceived'] = esc_attr__( 'Info received', 'paccofacile' );
 					break;
 				case 'outfordelivery':
-					$this->tracking_status_label['outfordelivery'] = __( 'Out for delivery', 'paccofacile' );
+					$this->tracking_status_label['outfordelivery'] = esc_attr__( 'Out for delivery', 'paccofacile' );
 					break;
 				case 'attemptfail':
-					$this->tracking_status_label['attemptfail'] = __( 'Attempt failed', 'paccofacile' );
+					$this->tracking_status_label['attemptfail'] = esc_attr__( 'Attempt failed', 'paccofacile' );
 					break;
 				case 'pending':
-					$this->tracking_status_label['pending'] = __( 'Pending', 'paccofacile' );
+					$this->tracking_status_label['pending'] = esc_attr__( 'Pending', 'paccofacile' );
 					break;
 				case 'intransit':
-					$this->tracking_status_label['intransit'] = __( 'In transit', 'paccofacile' );
+					$this->tracking_status_label['intransit'] = esc_attr__( 'In transit', 'paccofacile' );
 					break;
 			}
 		}
 	}
 
+	/**
+	 * Tracking settings fields
+	 *
+	 * @return void
+	 */
 	public function paccofacile_tracking_to_show() {
 		$options = get_option( 'paccofacile_settings' );
 		if ( ! is_array( $options ) ) {
@@ -451,11 +493,16 @@ class Paccofacile_Admin {
 				$checked = '';
 			}
 
-			echo '<div><label><input id="paccofacile_setting_tracking_to_show" name="paccofacile_settings[tracking_to_show][' . $key . ']" type="checkbox" value="1" ' . $checked . ' /> ' . $this->tracking_status_label[ $key ] . '</label></div>';
+			echo '<div><label><input id="paccofacile_setting_tracking_to_show" name="paccofacile_settings[tracking_to_show][' . esc_attr( $key ) . ']" type="checkbox" value="1" ' . esc_html( $checked ) . ' /> ' . esc_html( $this->tracking_status_label[ $key ] ) . '</label></div>';
 		}
 		echo '</div>';
 	}
 
+	/**
+	 * Pay Order ajax handler.
+	 *
+	 * @return void
+	 */
 	public function paccofacile_pay_order_ajax_handler() {
 
 		// Check if our nonce is set (and our cutom field)!
@@ -464,11 +511,11 @@ class Paccofacile_Admin {
 		}
 
 		// Verify that the nonce is valid.
-		if ( ! wp_verify_nonce( $_POST['paccofacile_meta_field_nonce'] ) ) {
+		if ( ! wp_verify_nonce( filter_var( wp_unslash( $_POST['paccofacile_meta_field_nonce'] ), FILTER_SANITIZE_STRING ) ) ) {
 			return;
 		}
 
-		$post_id = absint( $_POST['order_id'] );
+		$post_id   = ( array_key_exists( 'order_id', $_POST ) && isset( $_POST['order_id'] ) ) ? absint( $_POST['order_id'] ) : 0;
 
 		// maybe check some permissions here, depending on your app!
 		if ( ! current_user_can( 'edit_shop_order', $post_id ) && ! current_user_can( 'edit_shop_orders', $post_id ) ) {
@@ -477,19 +524,28 @@ class Paccofacile_Admin {
 
 		$paccofacile_api = Paccofacile_Api::getInstance();
 
-		$data_fattura      = ( ! array_key_exists( 'paccofacile_billing_detail', $_POST ) || '1' === $_POST['paccofacile_billing_detail'] ) ? "" : $_POST['paccofacile_billing_date'];
-		$address_id_select = ( ! array_key_exists( 'paccofacile_billing_detail', $_POST ) || '1' === $_POST['paccofacile_billing_detail'] ) ? "" : $_POST['paccofacile_billing_address'];
+		$data_fattura      = '';
+		$address_id_select = '';
 
-		$payload = array(
-			'shipments'         => array( $_POST['shipment_id'] ),
-			'fattura'           => $_POST['paccofacile_billing_detail'],
-			'data_fattura'      => $data_fattura,
-			'address_id_select' => $address_id_select,
-			'payment_method'    => 'CREDIT',
-		);
+		if ( array_key_exists( 'paccofacile_billing_date', $_POST ) && array_key_exists( 'paccofacile_billing_address', $_POST ) ) {
+			$data_fattura      = ( ! array_key_exists( 'paccofacile_billing_detail', $_POST ) || '1' === $_POST['paccofacile_billing_detail'] ) ? '' : filter_var( wp_unslash( $_POST['paccofacile_billing_date'] ), FILTER_SANITIZE_STRING );
+			$address_id_select = ( ! array_key_exists( 'paccofacile_billing_detail', $_POST ) || '1' === $_POST['paccofacile_billing_detail'] ) ? '' : filter_var( wp_unslash( $_POST['paccofacile_billing_address'] ), FILTER_SANITIZE_STRING );
+		}
 
-		$response = $paccofacile_api->post( 'shipment/buy', array(), $payload );
-		$response = $response['data'];
+		$response = array();
+
+		if ( array_key_exists( 'shipment_id', $_POST ) && array_key_exists( 'paccofacile_billing_detail', $_POST ) ) {
+			$payload = array(
+				'shipments'         => array( filter_var( wp_unslash( $_POST['shipment_id'] ), FILTER_SANITIZE_NUMBER_INT ) ),
+				'fattura'           => filter_var( wp_unslash( $_POST['paccofacile_billing_detail'] ), FILTER_SANITIZE_STRING ),
+				'data_fattura'      => $data_fattura,
+				'address_id_select' => $address_id_select,
+				'payment_method'    => 'CREDIT',
+			);
+
+			$response = $paccofacile_api->post( 'shipment/buy', array(), $payload );
+			$response = $response['data'];
+		}
 
 		if ( array_key_exists( 'order', $response ) && $response['order']['order_id'] ) {
 			update_post_meta( $post_id, 'paccofacile_order_id', $response['order']['order_id'] );
@@ -502,20 +558,24 @@ class Paccofacile_Admin {
 		exit; // important!
 	}
 
-
+	/**
+	 * Ship With Ajax Handler
+	 *
+	 * @return void
+	 */
 	public function paccofacile_ship_with_ajax_handler() {
 
 		// Check if our nonce is set (and our cutom field)!
-		if ( ! isset( $_POST[ 'paccofacile_meta_field_nonce' ] ) && isset( $_POST['paccofacile_ship_with'] ) ) {
+		if ( ! isset( $_POST['paccofacile_meta_field_nonce'] ) && isset( $_POST['paccofacile_ship_with'] ) ) {
 			return;
 		}
 
 		// Verify that the nonce is valid.
-		if ( ! wp_verify_nonce( $_POST[ 'paccofacile_meta_field_nonce' ] ) ) {
+		if ( ! wp_verify_nonce( filter_var( wp_unslash( $_POST['paccofacile_meta_field_nonce'] ), FILTER_SANITIZE_STRING ) ) ) {
 			return;
 		}
 
-		$post_id   = absint( $_POST['order_id'] );
+		$post_id   = ( array_key_exists( 'order_id', $_POST ) && isset( $_POST['order_id'] ) ) ? absint( $_POST['order_id'] ) : 0;
 		$order_obj = wc_get_order( $post_id );
 
 		// maybe check some permissions here, depending on your app.
@@ -528,6 +588,11 @@ class Paccofacile_Admin {
 		exit; // important!
 	}
 
+	/**
+	 * Add carrier Ajax Handler
+	 *
+	 * @return void
+	 */
 	public function add_carrier_ajax_handler() {
 		// maybe check some permissions here, depending on your app.
 
@@ -535,8 +600,12 @@ class Paccofacile_Admin {
 			return;
 		}
 
+		$carrier_name = ( array_key_exists( 'carrier_name', $_POST ) ) ? filter_var( wp_unslash( $_POST['carrier_name'] ), FILTER_SANITIZE_STRING ) : '';
+		$service_name = ( array_key_exists( 'service_name', $_POST ) ) ? filter_var( wp_unslash( $_POST['service_name'] ), FILTER_SANITIZE_STRING ) : '';
+		$box_type     = ( array_key_exists( 'box_type', $_POST ) ) ? filter_var( wp_unslash( $_POST['box_type'] ), FILTER_SANITIZE_STRING ) : '';
+
 		$data = array(
-			'post_title'  => $_POST['carrier_name'] . ' ' . $_POST['service_name'] . ' | ' . $_POST['box_type'],
+			'post_title'  => $carrier_name . ' ' . $service_name . ' | ' . $box_type,
 			'post_type'   => 'carrier',
 			'post_status' => 'publish',
 		);
@@ -555,7 +624,7 @@ class Paccofacile_Admin {
 				'message'             => 'OK',
 				'new_post_ID'         => $new_post_id,
 				'nonce'               => wp_create_nonce( 'form-nonce' ),
-				'delete_button_label' => __( 'Delete', 'paccofacile' ),
+				'delete_button_label' => esc_attr__( 'Delete', 'paccofacile' ),
 			);
 			foreach ( $_POST as $key => $value ) {
 				$response[ $key ] = $value;
@@ -574,6 +643,11 @@ class Paccofacile_Admin {
 		exit; // important!
 	}
 
+	/**
+	 * Add box management Ajax Handler
+	 *
+	 * @return void
+	 */
 	public function add_box_ajax_handler() {
 
 		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['_wpnonce'] ), 'add_box_nonce' ) ) {
@@ -582,15 +656,15 @@ class Paccofacile_Admin {
 
 		$plugin = new Paccofacile();
 
-		$action = $_POST['action'];
+		$action = ( array_key_exists( 'action', $_POST ) ) ? filter_var( wp_unslash( $_POST['action'] ), FILTER_SANITIZE_STRING ) : '';
 		unset( $_POST['action'] );
 
-		$box_type = absint( $_POST['tipo'] );
+		$box_type = ( array_key_exists( 'tipo', $_POST ) ) ? absint( $_POST['tipo'] ) : '';
 
 		if ( 'add_box' === $action ) {
 			$imballo = $plugin->create_package( $_POST );
 		} elseif ( 'edit_box' === $action ) {
-			$imballo_id = absint( $_POST['imballo_id'] );
+			$imballo_id = ( array_key_exists( 'imballo_id', $_POST ) ) ? absint( $_POST['imballo_id'] ) : '';
 			unset( $_POST['imballo_id'] );
 
 			$imballo = $plugin->update_package( $imballo_id, $_POST );
@@ -615,8 +689,8 @@ class Paccofacile_Admin {
 			'message'                   => 'OK',
 			'new_post_ID'               => $imballo['imballo_id'],
 			'nonce'                     => wp_create_nonce( 'form-nonce' ),
-			'edit_button_label'         => __( 'Edit', 'paccofacile' ),
-			'delete_button_label'       => __( 'Delete', 'paccofacile' ),
+			'edit_button_label'         => esc_attr__( 'Edit', 'paccofacile' ),
+			'delete_button_label'       => esc_attr__( 'Delete', 'paccofacile' ),
 			'icon'                      => $icon,
 			'box_name'                  => $imballo['nome'],
 			'box_type'                  => $imballo['tipo'],
@@ -625,11 +699,11 @@ class Paccofacile_Admin {
 			'dim3'                      => $imballo['dim3'],
 			'volume'                    => $imballo['volume'],
 			'action'                    => $action,
-			'confirm_edit_button_label' => __( 'Edit package', 'paccofacile' ),
+			'confirm_edit_button_label' => esc_attr__( 'Edit package', 'paccofacile' ),
 		);
 
-		$response['max_weight'] = ( isset( $_POST['peso_max'] ) ) ? $_POST['peso_max'] : 0;
-		$response['max_height'] = ( isset( $_POST['altezza_max'] ) ) ? $_POST['altezza_max'] : null;
+		$response['max_weight'] = ( isset( $_POST['peso_max'] ) ) ? filter_var( wp_unslash( $_POST['peso_max'] ), FILTER_SANITIZE_STRING ) : 0;
+		$response['max_height'] = ( isset( $_POST['altezza_max'] ) ) ? filter_var( wp_unslash( $_POST['altezza_max'] ), FILTER_SANITIZE_STRING ) : null;
 
 		// send some information back to the javascipt handler.
 		if ( ! $imballo ) {
@@ -646,13 +720,18 @@ class Paccofacile_Admin {
 		exit; // important!
 	}
 
+	/**
+	 * Delete carrier Ajax Handler
+	 *
+	 * @return void
+	 */
 	public function delete_carrier_ajax_handler() {
 
 		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['_wpnonce'] ), 'delete_carrier_nonce' ) ) {
 			return;
 		}
 
-		$post_id = absint( $_POST['post_id'] );
+		$post_id = ( array_key_exists( 'post_id', $_POST ) && isset( $_POST['post_id'] ) ) ? absint( $_POST['post_id'] ) : 0;
 
 		$return = wp_delete_post( $post_id, true );
 
@@ -676,6 +755,11 @@ class Paccofacile_Admin {
 		exit; // important!
 	}
 
+	/**
+	 * Delete box Ajax Handler
+	 *
+	 * @return void
+	 */
 	public function delete_box_ajax_handler() {
 
 		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['_wpnonce'] ), 'delete_box_nonce' ) ) {
@@ -684,7 +768,7 @@ class Paccofacile_Admin {
 
 		$plugin = new Paccofacile();
 
-		$imballo_id = absint( $_POST['imballo_id'] );
+		$imballo_id = ( array_key_exists( 'imballo_id', $_POST ) && isset( $_POST['imballo_id'] ) ) ? absint( $_POST['imballo_id'] ) : 0;
 
 		$return = $plugin->delete_package( $imballo_id );
 
@@ -708,6 +792,11 @@ class Paccofacile_Admin {
 		exit; // important!
 	}
 
+	/**
+	 * Add shipping customes Ajax Handler
+	 *
+	 * @return void
+	 */
 	public function add_shipping_customes_ajax_handler() {
 
 		$paccofacile_api = Paccofacile_Api::getInstance();
@@ -744,10 +833,10 @@ class Paccofacile_Admin {
 				'status' => '400',
 			);
 			if ( $_POST['total_goods_value'] !== $items_amount_sum ) {
-				$response['message'][] = __( 'The total goods amount must match the amounts of the articles to ship.', 'paccofacile' );
+				$response['message'][] = esc_attr__( 'The total goods amount must match the amounts of the articles to ship.', 'paccofacile' );
 			}
 			if ( $_POST['order_weight'] !== $items_weight_sum ) {
-				$response['message'][] = __( 'The sum of the articles weight must match the weight of the order. (%s Kg)', 'paccofacile' );
+				$response['message'][] = esc_attr__( 'The sum of the articles weight must match the weight of the order. (%s Kg)', 'paccofacile' );
 			}
 		} else {
 			// SALVO LE INFO DOGANALI NELL'ORDINE.
@@ -807,7 +896,7 @@ class Paccofacile_Admin {
 
 				$response = array(
 					'status'  => '400',
-					'message' => array( __( 'Error while saving customs info. Please check the fields and retry.', 'paccofacile' ) ),
+					'message' => array( esc_attr__( 'Error while saving customs info. Please check the fields and retry.', 'paccofacile' ) ),
 				);
 			}
 		}
@@ -820,6 +909,11 @@ class Paccofacile_Admin {
 		exit; // important!
 	}
 
+	/**
+	 * Search locality Ajax Handler
+	 *
+	 * @return void
+	 */
 	public function search_locality_ajax_handler() {
 
 		if ( ! ( isset( $_POST['woocommerce_meta_nonce'] ) || wp_verify_nonce( sanitize_key( $_POST['woocommerce_meta_nonce'] ), 'woocommerce_save_data' ) ) ) {
@@ -852,6 +946,11 @@ class Paccofacile_Admin {
 		exit; // important!
 	}
 
+	/**
+	 * Add store locker Ajax Handler
+	 *
+	 * @return void
+	 */
 	public function add_store_locker_ajax_handler() {
 
 		if ( ! ( isset( $_POST['_wpnonce'] ) || wp_verify_nonce( sanitize_key( $_POST['_wpnonce'] ), 'add_store_locker_nonce' ) ) ) {
@@ -884,7 +983,11 @@ class Paccofacile_Admin {
 		exit; // important!
 	}
 
-
+	/**
+	 * Get lockers Ajax Handler
+	 *
+	 * @return void
+	 */
 	public function get_lockers_ajax_handler() {
 
 		if ( ! ( isset( $_POST['_wpnonce'] ) || wp_verify_nonce( sanitize_key( $_POST['_wpnonce'] ), 'get_store_locker_nonce' ) ) ) {
