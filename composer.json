@@ -1,0 +1,16 @@
+{
+    "name": "paccofacile/paccofacile-for-woocommerce",
+    "description": "Plugin ufficiale spedizioni Paccofacile per Woocommerce",
+    "type": "project",
+    "require-dev": {
+        "wp-coding-standards/wpcs": "^3.0",
+        "phpcompatibility/php-compatibility": "^9.3"
+    },
+    "license": "GPL-2.0",
+    "minimum-stability": "stable",
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

@@ -9,7 +9,9 @@
  * maintain compatibility. We try to do this as little as possible, but it does
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
- *
+
+ * @package Paccofacile
+ * @subpackage Paccofacile/emails/plain
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -24,28 +26,29 @@ do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 <p><?php esc_html_e( 'The following note has been added to your order:', 'woocommerce' ); ?></p>
 
 <?php
-/* 
+/*
 <pre><?php print_r($tracking_info); ?></pre>
 
 <blockquote><?php echo wpautop( wptexturize( make_clickable( $tracking_info ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></blockquote>
 */
 
-if(!empty($tracking_info['elenco']['checkpoints'])) :
-	$checkpoints = $tracking_info['elenco']['checkpoints']; 
+if ( ! empty( $tracking_info['elenco']['checkpoints'] ) ) :
+	$checkpoints      = $tracking_info['elenco']['checkpoints'];
 	$options_tracking = get_option( 'paccofacile_settings' )['tracking_to_show'];
-	$text_align  = is_rtl() ? 'right' : 'left';
+	$text_align       = is_rtl() ? 'right' : 'left';
 	?>
 
-	<h2><?php echo apply_filters( 'paccofacile_order_tracking_title', __('Order tracking', 'paccofacile') ); ?></h2>
+	<h2><?php echo apply_filters( 'paccofacile_order_tracking_title', __( 'Order tracking', 'paccofacile' ) ); ?></h2>
 
 	<div style="margin-bottom: 40px;">
 		<table class="td" cellspacing="0" cellpadding="6" style="width: 100%; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;" border="1">
 			<tbody>
-				<?php for( $i=0; $i<sizeof($checkpoints); $i++ ) : ?>
-					<?php if( array_key_exists( $checkpoints[$i]['tag'], $options_tracking ) && $options_tracking[$checkpoints[$i]['tag']] == 1 ) : ?>
+				<?php $count_checkpoints = count( $checkpoints ); ?>
+				<?php for ( $i = 0; $i < $count_checkpoints; $i++ ) : ?>
+					<?php if ( array_key_exists( $checkpoints[ $i ]['tag'], $options_tracking ) && 1 === $options_tracking[ $checkpoints[ $i ]['tag'] ] ) : ?>
 						<tr>
 							<td class="td" style="text-align:<?php echo esc_attr( $text_align ); ?>; vertical-align: middle; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; word-wrap:break-word;">
-								<?php echo '<b>'.$checkpoints[$i]['checkpoint_time'].'</b><br />- '.$checkpoints[$i]['message'].' ['.$checkpoints[$i]['city'].']'; ?>
+								<?php echo '<b>' . $checkpoints[ $i ]['checkpoint_time'] . '</b><br />- ' . $checkpoints[ $i ]['message'] . ' [' . $checkpoints[ $i ]['city'] . ']'; ?>
 							</td>
 						</tr>
 					<?php endif; ?>
@@ -59,7 +62,6 @@ if(!empty($tracking_info['elenco']['checkpoints'])) :
 <p><?php esc_html_e( 'As a reminder, here are your order details:', 'woocommerce' ); ?></p>
 
 <?php
-
 /*
  * @hooked WC_Emails::order_details() Shows the order details table.
  * @hooked WC_Structured_Data::generate_order_data() Generates structured data.

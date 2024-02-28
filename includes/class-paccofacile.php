@@ -281,7 +281,7 @@ class Paccofacile {
 	}
 
 	public function paccofacile_register_session() {
-		if( !session_id() ) {
+		if ( !session_id() ) {
 			session_start();
 		}
 	}
@@ -334,7 +334,7 @@ class Paccofacile {
 
 		//error_log('shipping_boxes --> '.json_encode($shipping_boxes));
 
-		if( $shipping_boxes['data'] && array_key_exists('items', $shipping_boxes['data']) ) return $shipping_boxes['data']['items'];
+		if ( $shipping_boxes['data'] && array_key_exists('items', $shipping_boxes['data']) ) return $shipping_boxes['data']['items'];
 		else return array();
 
 	}

@@ -32,19 +32,19 @@ define( 'PACCOFACILE_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ));
 define( 'PACCOFACILE_BASENAME_FILE', plugin_basename( __FILE__ ) );
 
 if (!function_exists('is_plugin_active')) {
-    include_once(ABSPATH . '/wp-admin/includes/plugin.php');
+	include_once(ABSPATH . '/wp-admin/includes/plugin.php');
 }
 
 /**
 * Check for the existence of WooCommerce and any other requirements
 */
 function paccofacile_check_requirements() {
-    if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
-        return true;
-    } else {
-        add_action( 'admin_notices', 'paccofacile_missing_wc_notice' );
-        return false;
-    }
+	if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+		return true;
+	} else {
+		add_action( 'admin_notices', 'paccofacile_missing_wc_notice' );
+		return false;
+	}
 }
 
 
@@ -52,10 +52,10 @@ function paccofacile_check_requirements() {
 * Display a message advising WooCommerce is required
 */
 function paccofacile_missing_wc_notice() { 
-    $class = 'notice notice-error';
-    $message = __( 'Paccofacile requires WooCommerce to be installed and active.', 'paccofacile' );
+	$class = 'notice notice-error';
+	$message = __( 'Paccofacile requires WooCommerce to be installed and active.', 'paccofacile' );
  
-    printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) ); 
+	printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) ); 
 }
 
 /**

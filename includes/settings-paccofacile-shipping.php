@@ -12,8 +12,8 @@ $desc .= ' ' . __( 'If no costs are set for shipping classes, costs defined in P
 $array_carriers = array('none'    => __( 'All chosen couriers', 'paccofacile' ));
 $carriers = get_available_shipping_methods();
 
-if( $carriers->have_posts() ) {
-	foreach( $carriers->posts as $corriere ) {
+if ( $carriers->have_posts() ) {
+	foreach ( $carriers->posts as $corriere ) {
 		$service_id = get_post_meta( $corriere->ID, 'service_id', true );
 		$array_carriers[get_post_field( 'post_name', $corriere->ID ).'_'.$service_id] = $corriere->post_title;
 	}

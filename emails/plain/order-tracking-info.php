@@ -9,7 +9,8 @@
  * maintain compatibility. We try to do this as little as possible, but it does
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
- *
+
+ * @package Paccofacile
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -24,14 +25,15 @@ echo esc_html__( 'The following note has been added to your order:', 'woocommerc
 
 echo "----------\n\n";
 
-//echo wptexturize( $tracking_info ) . "\n\n"; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
-if(!empty($tracking_info['elenco']['checkpoints'])) :
-	$checkpoints = $tracking_info['elenco']['checkpoints']; 
-	$options_tracking = get_option( 'paccofacile_settings' )['tracking_to_show'];
-	
-	for( $i=0; $i<sizeof($checkpoints); $i++ ) :
-		if( array_key_exists( $checkpoints[$i]['tag'], $options_tracking ) && $options_tracking[$checkpoints[$i]['tag']] == 1 ) :
-			echo wp_kses_post( $checkpoints[$i]['checkpoint_time'] . '\t ' . $checkpoints[$i]['message'].' ['.$checkpoints[$i]['city'].']' );
+// echo wptexturize( $tracking_info ) . "\n\n"; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped.
+if ( ! empty( $tracking_info['elenco']['checkpoints'] ) ) :
+	$checkpoints       = $tracking_info['elenco']['checkpoints'];
+	$options_tracking  = get_option( 'paccofacile_settings' )['tracking_to_show'];
+	$count_checkpoints = count( $checkpoints );
+
+	for ( $i = 0; $i < $count_checkpoints; $i++ ) :
+		if ( array_key_exists( $checkpoints[ $i ]['tag'], $options_tracking ) && 1 === $options_tracking[ $checkpoints[ $i ]['tag'] ] ) :
+			echo wp_kses_post( $checkpoints[ $i ]['checkpoint_time'] . '\t ' . $checkpoints[ $i ]['message'] . ' [' . $checkpoints[ $i ]['city'] . ']' );
 		endif;
 	endfor;
 	echo "\n\n";

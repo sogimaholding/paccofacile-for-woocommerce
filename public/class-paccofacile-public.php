@@ -109,7 +109,7 @@ class Paccofacile_Public {
 		wp_localize_script( 'locker-map', 'paccofacile_ajax_object', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 
 		$paccofacile_help_var = array( 'site_url' => get_site_url(), 'pluginUrl' => plugins_url('', __FILE__) );
-    	wp_localize_script( $this->plugin_name, 'paccofacile_help_var', $paccofacile_help_var );
+		wp_localize_script( $this->plugin_name, 'paccofacile_help_var', $paccofacile_help_var );
 
 	}
 
@@ -144,7 +144,7 @@ class Paccofacile_Public {
 
 		$pickup_type = 1;
 		$carrier_id = '';
-		if( $carriers->have_posts() ) :
+		if ( $carriers->have_posts() ) :
 			while( $carriers->have_posts() ) :
 				$carriers->the_post();
 				$pickup_type = get_post_meta( get_the_ID(), 'pickup_type', true );
@@ -156,10 +156,10 @@ class Paccofacile_Public {
 		/* var_dump($pickup_type); */
 
 		/* @todo: controllare se il metodo di spedizione scelto è compatibile con locker (meta data?) */
-		if($pickup_type == 4 || $pickup_type == 5) :
+		if ($pickup_type == 4 || $pickup_type == 5) :
 		
 			?>
-			<div id="paccofacile-map" class="paccofacile-map" data-postcode="<?php echo $postcode; ?>" data-city="<?php echo $city; ?>" data-carrier-id="<?php echo $carrier_id; ?>" data-store-nonce="<?php echo wp_create_nonce( 'get_store_locker_nonce' );?>">
+			<div id="paccofacile-map" class="paccofacile-map" data-postcode="<?php echo $postcode; ?>" data-city="<?php echo $city; ?>" data-carrier-id="<?php echo $carrier_id; ?>" data-store-nonce="<?php echo wp_create_nonce( 'get_store_locker_nonce' ); ?>">
 				<div id="popup" class="ol-popup">
 					<a href="#" id="popup-closer" class="ol-popup-closer"></a>
 					<div id="popup-content"></div>
@@ -176,7 +176,7 @@ class Paccofacile_Public {
 	
 	public function paccofacile_body_classes( $classes ) {
 
-		if( is_cart() ) {
+		if ( is_cart() ) {
 			$classes[] = 'paccofacile-active';
 		}
 		
@@ -203,7 +203,7 @@ class Paccofacile_Public {
 		//error_log( print_r( $return, true ) );
 
 		// send some information back to the javascipt handler
-		if( $return ) {
+		if ( $return ) {
 			$response = array(
 				'status' => '200',
 				'message' => 'OK',
@@ -220,10 +220,10 @@ class Paccofacile_Public {
 		header( 'Content-Type: application/json; charset=utf-8' );
 		echo wp_json_encode( $response );
 
-		exit; // important
+		exit; // important!
 	}
-	
-	
+
+
 	public function getCityCoordinates_ajax_handler() {
 		// maybe check some permissions here, depending on your app
 		//if ( ! current_user_can( 'edit_posts' ) ) exit;
@@ -242,7 +242,7 @@ class Paccofacile_Public {
 		//error_log( print_r( $return, true ) );
 
 		// send some information back to the javascipt handler
-		if( $return ) {
+		if ( $return ) {
 			$response = array(
 				'status' => '200',
 				'message' => 'OK',
@@ -259,13 +259,11 @@ class Paccofacile_Public {
 		header( 'Content-Type: application/json; charset=utf-8' );
 		echo wp_json_encode( $response );
 
-		exit; // important
+		exit; // important!
 	}
-	
-	
+
+
 	public function locker_id_session_ajax_handler() {
-		// maybe check some permissions here, depending on your app
-		//if ( ! current_user_can( 'edit_posts' ) ) exit;
 
 		if ( ! ( isset( $_POST['_wpnonce'] ) || wp_verify_nonce( sanitize_key( $_POST['_wpnonce'] ), 'woocommerce-cart-nonce' ) ) ) {
 			return;
@@ -275,19 +273,14 @@ class Paccofacile_Public {
 
 		$locker_id = (array_key_exists('locker_id', $_POST)) ? $_POST['locker_id'] : '';
 
-		//error_log( 'ajax handler' );
+		WC()->session->set( 'locker_id', $locker_id );
 
-		WC()->session->set('locker_id', $locker_id);
-		//WC()->session->__unset('locker_id');
-
-		// normally, the script expects a json respone
+		// normally, the script expects a json response.
 		header( 'Content-Type: application/json; charset=utf-8' );
 		echo wp_json_encode( array( 'header' => array('success'=>true), 'data' => true ) );
 
-		exit; // important
+		exit; // important!
 	}
-
-	
 
 
 }
