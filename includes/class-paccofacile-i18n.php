@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Define the internationalization functionality
  *
@@ -24,7 +23,7 @@
  * @subpackage Paccofacile/includes
  * @author     Francesco Barberini <supporto.tecnico@paccofacile.it>
  */
-class Paccofacile_i18n {
+class Paccofacile_I18n {
 
 
 	/**
@@ -39,9 +38,5 @@ class Paccofacile_i18n {
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);
-
 	}
-
-
-
 }

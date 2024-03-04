@@ -10,19 +10,61 @@
  * @subpackage Paccofacile/includes
  * @author     Francesco Barberini <supporto.tecnico@paccofacile.it>
  */
+
+/**
+ * The service class for managing the API calls to Paccofacile.
+ *
+ * Method get and post to Paccofacile.
+ *
+ * @package    Paccofacile
+ * @subpackage Paccofacile/includes
+ * @author     Francesco Barberini <supporto.tecnico@paccofacile.it>
+ */
 class Paccofacile_Api {
 
+	/**
+	 * The class instance
+	 *
+	 * @var [obj]
+	 */
 	private static $instance;
+
+	/**
+	 * The api base url
+	 *
+	 * @var [string]
+	 */
 	private $api_base_url;
+
+	/**
+	 * The api keys
+	 *
+	 * @var [array]
+	 */
 	private $keys;
+
+	/**
+	 * Calls headers
+	 *
+	 * @var [array]
+	 */
 	private $httpheader;
+
+	/**
+	 * Want to write logs?
+	 *
+	 * @var [bool]
+	 */
 	private $debug;
 
+	/**
+	 * Class constructor
+	 */
 	public function __construct() {
 
 		$this->api_base_url = 'https://paccofacile.tecnosogima.cloud/live/v1/service/';
 
-		$this->keys = get_option(
+		$this->keys       = get_option(
 			'paccofacile_settings',
 			array(
 				'account_number' => '',
@@ -40,6 +82,14 @@ class Paccofacile_Api {
 		$this->debug = false;
 	}
 
+	/**
+	 * Call method get.
+	 *
+	 * @param string $endpoint The endpoint to call.
+	 * @param array  $headers The http headers.
+	 * @param array  $params The additional parameters to pass.
+	 * @return array
+	 */
 	public function get( $endpoint = '', $headers = array(), $params = array() ) {
 		$headers = array_merge( $this->httpheader, $headers );
 
@@ -84,6 +134,14 @@ class Paccofacile_Api {
 		return $response_body;
 	}
 
+	/**
+	 * Call method post.
+	 *
+	 * @param string $endpoint The endpoint to call.
+	 * @param array  $headers The http headers.
+	 * @param array  $payload The additional parameters to pass.
+	 * @return array
+	 */
 	public function post( $endpoint = '', $headers = array(), $payload = array() ) {
 
 		$headers = array_merge( $this->httpheader, $headers );
@@ -125,6 +183,14 @@ class Paccofacile_Api {
 		return $response_body;
 	}
 
+	/**
+	 * Call method delete.
+	 *
+	 * @param string $endpoint The endpoint to call.
+	 * @param array  $headers The http headers.
+	 * @param array  $payload The additional parameters to pass.
+	 * @return array
+	 */
 	public function delete( $endpoint = '', $headers = array(), $payload = array() ) {
 
 		$headers = array_merge( $this->httpheader, $headers );
@@ -164,6 +230,14 @@ class Paccofacile_Api {
 		return $response_body;
 	}
 
+	/**
+	 * Call method put.
+	 *
+	 * @param string $endpoint The endpoint to call.
+	 * @param array  $headers The http headers.
+	 * @param array  $payload The additional parameters to pass.
+	 * @return array
+	 */
 	public function put( $endpoint = '', $headers = array(), $payload = array() ) {
 
 		$headers = array_merge( $this->httpheader, $headers );
@@ -203,6 +277,21 @@ class Paccofacile_Api {
 		return $response_body;
 	}
 
+	/**
+	 * Calculate quote method
+	 *
+	 * @param string  $pickup_contry         pickup country iso code.
+	 * @param string  $pickup_state          pickup state or province code.
+	 * @param string  $pickup_postcode       pickup postalcode.
+	 * @param string  $pickup_city           pickup city.
+	 * @param string  $destination_country   destination country name.
+	 * @param string  $destination_state     destination state or province code.
+	 * @param string  $destination_postcode  destination postalcode.
+	 * @param string  $destination_city      destination city.
+	 * @param array   $parcels               shipping parcels.
+	 * @param boolean $service_id            service id.
+	 * @return string
+	 */
 	public function calculate_quote( $pickup_contry, $pickup_state, $pickup_postcode, $pickup_city, $destination_country, $destination_state, $destination_postcode, $destination_city, $parcels = array(), $service_id = false ) {
 		$payload = array(
 			'shipment_service' => array(
@@ -231,6 +320,11 @@ class Paccofacile_Api {
 		return $response;
 	}
 
+	/**
+	 * Get instance method.
+	 *
+	 * @return [class obj]
+	 */
 	public static function get_instance() {
 		if ( null === self::$instance ) {
 			self::$instance = new Paccofacile_Api();

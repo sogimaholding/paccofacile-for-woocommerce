@@ -515,7 +515,7 @@ class Paccofacile_Admin {
 			return;
 		}
 
-		$post_id   = ( array_key_exists( 'order_id', $_POST ) && isset( $_POST['order_id'] ) ) ? absint( $_POST['order_id'] ) : 0;
+		$post_id = ( array_key_exists( 'order_id', $_POST ) && isset( $_POST['order_id'] ) ) ? absint( $_POST['order_id'] ) : 0;
 
 		// maybe check some permissions here, depending on your app!
 		if ( ! current_user_can( 'edit_shop_order', $post_id ) && ! current_user_can( 'edit_shop_orders', $post_id ) ) {
@@ -614,11 +614,22 @@ class Paccofacile_Admin {
 
 		// send some information back to the javascipt handler.
 		if ( ! is_wp_error( $new_post_id ) ) {
-			add_post_meta( $new_post_id, 'service_id', $_POST['service_id'] );
-			add_post_meta( $new_post_id, 'pickup_type', $_POST['pickup_type'] );
-			add_post_meta( $new_post_id, 'carrier_id', $_POST['carrier_id'] );
-			add_post_meta( $new_post_id, 'image_url', $_POST['image_url'] );
-			add_post_meta( $new_post_id, 'carrier_ship_time', $_POST['carrier_ship_time'] );
+			if ( array_key_exists( 'service_id', $_POST ) ) {
+				add_post_meta( $new_post_id, 'service_id', filter_var( wp_unslash( $_POST['service_id'] ), FILTER_SANITIZE_NUMBER_INT ) );
+			}
+			if ( array_key_exists( 'pickup_type', $_POST ) ) {
+				add_post_meta( $new_post_id, 'pickup_type', filter_var( wp_unslash( $_POST['pickup_type'] ), FILTER_SANITIZE_NUMBER_INT ) );
+			}
+			if ( array_key_exists( 'carrier_id', $_POST ) ) {
+				add_post_meta( $new_post_id, 'carrier_id', filter_var( wp_unslash( $_POST['carrier_id'] ), FILTER_SANITIZE_NUMBER_INT ) );
+			}
+			if ( array_key_exists( 'image_url', $_POST ) ) {
+				add_post_meta( $new_post_id, 'image_url', filter_var( wp_unslash( $_POST['image_url'] ), FILTER_SANITIZE_URL ) );
+			}
+			if ( array_key_exists( 'carrier_ship_time', $_POST ) ) {
+				add_post_meta( $new_post_id, 'carrier_ship_time', filter_var( wp_unslash( $_POST['carrier_ship_time'] ), FILTER_SANITIZE_STRING ) );
+			}
+
 			$response = array(
 				'status'              => '200',
 				'message'             => 'OK',
@@ -823,12 +834,12 @@ class Paccofacile_Admin {
 				$_POST[ 'customs' . $i . '_amount' ] = 0;
 			}
 
-			$items_weight_sum += $_POST[ 'customs_' . $i . '_weight' ];
-			$items_amount_sum += $_POST[ 'customs_' . $i . '_amount' ];
+			$items_weight_sum += filter_var( wp_unslash( $_POST[ 'customs_' . $i . '_weight' ] ), FILTER_SANITIZE_NUMBER_INT );
+			$items_amount_sum += filter_var( wp_unslash( $_POST[ 'customs_' . $i . '_amount' ] ), FILTER_SANITIZE_NUMBER_INT );
 		}
 
 		// VALIDAZIONE!
-		if ( $_POST['total_goods_value'] !== $items_amount_sum || $_POST['order_weight'] !== $items_weight_sum ) {
+		if ( $_POST['total_goods_value'] !== $items_amount_sum || ! isset( $_POST['order_weight'] ) || $_POST['order_weight'] !== $items_weight_sum ) {
 			$response = array(
 				'status' => '400',
 			);
@@ -836,25 +847,34 @@ class Paccofacile_Admin {
 				$response['message'][] = esc_attr__( 'The total goods amount must match the amounts of the articles to ship.', 'paccofacile' );
 			}
 			if ( $_POST['order_weight'] !== $items_weight_sum ) {
-				$response['message'][] = esc_attr__( 'The sum of the articles weight must match the weight of the order. (%s Kg)', 'paccofacile' );
+				/* translators: %s is replaced with the amount in Kg */
+				$response['message'][] = esc_attr( sprintf( __( 'The sum of the articles weight must match the weight of the order. (%s Kg)', 'paccofacile' ), filter_var( wp_unslash( $_POST['order_weight'] ), FILTER_SANITIZE_STRING ) ) );
 			}
 		} else {
 			// SALVO LE INFO DOGANALI NELL'ORDINE.
 
-			$payload_ordine = get_post_meta( $_POST['woo_order_id'], 'paccofacile_order_payload', true );
+			if ( isset( $_POST['woo_order_id'] ) ) {
+				$payload_ordine = get_post_meta( filter_var( wp_unslash( $_POST['woo_order_id'] ), FILTER_SANITIZE_STRING ), 'paccofacile_order_payload', true );
+			}
 
 			$articles = array();
 
 			for ( $i = 1; $i < 5; $i++ ) {
 				if ( 0 !== $_POST[ 'customs_' . $i . '_quantity' ] && 0 !== $_POST[ 'customs_' . $i . '_weight' ] && 0 !== $_POST[ 'customs_' . $i . '_amount' ] ) {
+
+					$amount      = ( array_key_exists( 'customs_' . $i . '_amount', $_POST ) ) ? filter_var( wp_unslash( $_POST[ 'customs_' . $i . '_amount' ] ), FILTER_SANITIZE_NUMBER_INT ) : 0;
+					$quantity    = ( array_key_exists( 'customs_' . $i . '_quantity', $_POST ) ) ? filter_var( wp_unslash( $_POST[ 'customs_' . $i . '_quantity' ] ), FILTER_SANITIZE_NUMBER_INT ) : 0;
+					$weight      = ( array_key_exists( 'customs_' . $i . '_weight', $_POST ) ) ? filter_var( wp_unslash( $_POST[ 'customs_' . $i . '_weight' ] ), FILTER_SANITIZE_NUMBER_INT ) : 0;
+					$description = ( array_key_exists( 'customs_' . $i . '_description', $_POST ) ) ? filter_var( wp_unslash( $_POST[ 'customs_' . $i . '_description' ] ) ) : '';
+
 					$article = array(
 						'amount'                        => array(
-							'value'    => $_POST[ 'customs_' . $i . '_amount' ],
+							'value'    => $amount,
 							'currency' => 'EUR',
 						),
-						'quantity'                      => $_POST[ 'customs_' . $i . '_quantity' ],
-						'weight'                        => $_POST[ 'customs_' . $i . '_weight' ],
-						'description'                   => $_POST[ 'customs_' . $i . '_description' ],
+						'quantity'                      => $quantity,
+						'weight'                        => $weight,
+						'description'                   => $description,
 						'iso_code_country_manufactured' => 'IT',
 					);
 
@@ -862,9 +882,14 @@ class Paccofacile_Admin {
 				}
 			}
 
+			if ( array_key_exists( 'total_goods_value', $_POST ) ) {
+				$total_goods_value = filter_var( wp_unslash( $_POST['total_goods_value'] ), FILTER_SANITIZE_STRING );
+			} else {
+				$total_goods_value = 0;
+			}
 			$customs = array(
 				'amount'   => array(
-					'value'    => $_POST['total_goods_value'],
+					'value'    => $total_goods_value,
 					'currency' => 'EUR',
 				),
 				'articles' => $articles,
@@ -872,11 +897,11 @@ class Paccofacile_Admin {
 
 			$payload_ordine['customs'] = $customs;
 
-			if ( array_key_exists( 'shipment_id', $_POST ) && $_POST['shipment_id'] ) {
+			if ( array_key_exists( 'shipment_id', $_POST ) && isset( $_POST['shipment_id'] ) ) {
 				$response_ordine = $paccofacile_api->post( 'shipment/save', array(), $payload_ordine );
-				update_post_meta( $_POST['woo_order_id'], 'paccofacile_order_payload', $payload_ordine );
+				update_post_meta( filter_var( wp_unslash( $_POST['woo_order_id'] ), FILTER_SANITIZE_NUMBER_INT ), 'paccofacile_order_payload', $payload_ordine );
 			} else {
-				$shipment_draft_id = get_post_meta( $_POST['woo_order_id'], 'shipment_draft_id', true );
+				$shipment_draft_id = get_post_meta( filter_var( wp_unslash( $_POST['woo_order_id'] ), FILTER_SANITIZE_NUMBER_INT ), 'shipment_draft_id', true );
 
 				$payload_ordine['shipment_draft_id'] = $shipment_draft_id;
 
@@ -884,9 +909,9 @@ class Paccofacile_Admin {
 			}
 
 			if ( 200 === $response_ordine['code'] ) {
-				update_post_meta( $_POST['woo_order_id'], 'customes', $customs );
+				update_post_meta( filter_var( wp_unslash( $_POST['woo_order_id'] ), FILTER_SANITIZE_NUMBER_INT ), 'customes', $customs );
 
-				delete_post_meta( $_POST['woo_order_id'], 'shipment_draft_id' );
+				delete_post_meta( filter_var( wp_unslash( $_POST['woo_order_id'] ), FILTER_SANITIZE_NUMBER_INT ), 'shipment_draft_id' );
 
 				$response = array(
 					'status'  => '200',
@@ -903,7 +928,7 @@ class Paccofacile_Admin {
 
 		// normally, the script expects a json response.
 		header( 'Content-Type: application/json; charset=utf-8' );
-		$response['order_weight'] = $_POST['order_weight'];
+		$response['order_weight'] = filter_var( wp_unslash( $_POST['order_weight'] ), FILTER_SANITIZE_STRING );
 		echo wp_json_encode( $response );
 
 		exit; // important!
@@ -920,8 +945,8 @@ class Paccofacile_Admin {
 			return;
 		}
 
-		$iso_code = $_POST['iso_code'];
-		$city     = $_POST['city'];
+		$iso_code = ( array_key_exists( 'iso_code', $_POST ) && isset( $_POST['iso_code'] ) ) ? filter_var( wp_unslash( $_POST['iso_code'] ), FILTER_SANITIZE_STRING ) : '';
+		$city     = ( array_key_exists( 'city', $_POST ) && isset( $_POST['city'] ) ) ? filter_var( wp_unslash( $_POST['city'] ), FILTER_SANITIZE_STRING ) : '';
 
 		$return = paccofacile_search_locality( $iso_code, $city );
 
@@ -957,8 +982,8 @@ class Paccofacile_Admin {
 			return;
 		}
 
-		$carrier_id = absint( $_POST['carrier_id'] );
-		$locker_id  = $_POST['shipping_locker'];
+		$carrier_id = ( array_key_exists( 'carrier_id', $_POST ) && isset( $_POST['carrier_id'] ) ) ? filter_var( wp_unslash( $_POST['carrier_id'] ), FILTER_SANITIZE_NUMBER_INT ) : '';
+		$locker_id  = ( array_key_exists( 'shipping_locker', $_POST ) && isset( $_POST['shipping_locker'] ) ) ? filter_var( wp_unslash( $_POST['shipping_locker'] ), FILTER_SANITIZE_STRING ) : '';
 
 		$return = paccofacile_add_store_locker( $carrier_id, $locker_id );
 
@@ -994,8 +1019,8 @@ class Paccofacile_Admin {
 			return;
 		}
 
-		$postcode = ( isset( $_POST['postcode'] ) ) ? $_POST['postcode'] : '';
-		$city     = ( isset( $_POST['city'] ) ) ? $_POST['city'] : '';
+		$postcode = ( isset( $_POST['postcode'] ) ) ? filter_var( wp_unslash( $_POST['postcode'] ), FILTER_SANITIZE_STRING ) : '';
+		$city     = ( isset( $_POST['city'] ) ) ? filter_var( wp_unslash( $_POST['city'] ), FILTER_SANITIZE_STRING ) : '';
 
 		$return = paccofacile_get_lockers( $postcode, $city );
 

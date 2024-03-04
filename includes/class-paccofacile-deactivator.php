@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Fired during plugin deactivation
  *
@@ -23,14 +22,12 @@
 class Paccofacile_Deactivator {
 
 	/**
-	 * Short Description. (use period)
+	 * Deactivate method.
 	 *
 	 * Long Description.
 	 *
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
-
 	}
-
 }

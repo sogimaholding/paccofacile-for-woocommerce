@@ -35,17 +35,17 @@ $paccofacile_api = Paccofacile_Api::getInstance();
 	<?php
 	$active_tab = '';
 	if ( isset( $_GET['tab'] ) ) {
-		$active_tab = wp_unslash( $_GET['tab'] );
+		$active_tab = filter_var( wp_unslash( $_GET['tab'] ), FILTER_SANITIZE_STRING );
 	} else {
 		$active_tab = 'api_settings';
 	}
 	?>
 
 	<h2 class="nav-tab-wrapper">
-		<a href="?page=paccofacile&tab=api_settings&nonce=<?php esc_attr_e( wp_create_nonce( 'paccofacile_settings_nonce' ) ); ?>" class="nav-tab <?php echo 'api_settings' === $active_tab ? 'nav-tab-active' : ''; ?>"><?php esc_html_e( 'API Settings', 'paccofacile' ); ?></a>
+		<a href="?page=paccofacile&tab=api_settings&nonce=<?php echo esc_attr( wp_create_nonce( 'paccofacile_settings_nonce' ) ); ?>" class="nav-tab <?php echo 'api_settings' === $active_tab ? 'nav-tab-active' : ''; ?>"><?php esc_html_e( 'API Settings', 'paccofacile' ); ?></a>
 		<?php if ( get_option( 'paccofacile_api_valid' ) == 1 ) : ?>
-			<a href="?page=paccofacile&tab=shipping_services&nonce=<?php esc_attr_e( wp_create_nonce( 'paccofacile_settings_nonce' ) ); ?>" class="nav-tab <?php echo 'shipping_services' === $active_tab ? 'nav-tab-active' : ''; ?>"><?php esc_html_e( 'Shipping services', 'paccofacile' ); ?></a>
-			<a href="?page=paccofacile&tab=manage_boxes&nonce=<?php esc_attr_e( wp_create_nonce( 'paccofacile_settings_nonce' ) ); ?>" class="nav-tab <?php echo 'manage_boxes' === $active_tab ? 'nav-tab-active' : ''; ?>"><?php esc_html_e( 'Packages', 'paccofacile' ); ?></a>
+			<a href="?page=paccofacile&tab=shipping_services&nonce=<?php echo esc_attr( wp_create_nonce( 'paccofacile_settings_nonce' ) ); ?>" class="nav-tab <?php echo 'shipping_services' === $active_tab ? 'nav-tab-active' : ''; ?>"><?php esc_html_e( 'Shipping services', 'paccofacile' ); ?></a>
+			<a href="?page=paccofacile&tab=manage_boxes&nonce=<?php echo esc_attr( wp_create_nonce( 'paccofacile_settings_nonce' ) ); ?>" class="nav-tab <?php echo 'manage_boxes' === $active_tab ? 'nav-tab-active' : ''; ?>"><?php esc_html_e( 'Packages', 'paccofacile' ); ?></a>
 			<?php /* <a href="?page=paccofacile&tab=refund_method" class="nav-tab <?php echo $active_tab == 'refund_method' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Refund method', 'paccofacile' ); ?></a> */ ?>
 		<?php endif; ?>
 	</h2>
@@ -106,25 +106,25 @@ $paccofacile_api = Paccofacile_Api::getInstance();
 										esc_attr_e( 'spento' );
 									}
 									?>
-									serviceid_<?php esc_attr_e( $corrieri[ $i ]['service_id'] ); ?>">
+									serviceid_<?php echo esc_attr( $corrieri[ $i ]['service_id'] ); ?>">
 									<div class="inner">
 										<?php if ( $corrieri[ $i ]['image_url'] ) : ?>
 											<div class="image">
-												<img src="<?php esc_attr_e( $corrieri[ $i ]['image_url'] ); ?>" alt="<?php esc_attr_e( $corrieri[ $i ]['carrier_name'] ); ?>">
+												<img src="<?php echo esc_attr( $corrieri[ $i ]['image_url'] ); ?>" alt="<?php echo esc_attr( $corrieri[ $i ]['carrier_name'] ); ?>">
 											</div>
 										<?php endif; ?>
-										<h3><?php esc_html_e( $corrieri[ $i ]['carrier_name'] ); ?> <?php esc_html_e( $corrieri[ $i ]['service_name'] ); ?> | <?php esc_html_e( $corrieri[ $i ]['box_type'] ); ?></h3>
-										<p><?php esc_html_e( $corrieri[ $i ]['carrier_ship_time'] ); ?></p>
+										<h3><?php echo esc_html( $corrieri[ $i ]['carrier_name'] ); ?> <?php echo esc_html( $corrieri[ $i ]['service_name'] ); ?> | <?php echo esc_html( $corrieri[ $i ]['box_type'] ); ?></h3>
+										<p><?php echo esc_html( $corrieri[ $i ]['carrier_ship_time'] ); ?></p>
 										<form action="" class="add_carrier_form" method="post">
-											<input type="hidden" name="carrier_name" value="<?php esc_attr_e( $corrieri[ $i ]['carrier_name'] ); ?>">
-											<input type="hidden" name="service_name" value="<?php esc_attr_e( $corrieri[ $i ]['service_name'] ); ?>">
-											<input type="hidden" name="pickup_type" value="<?php esc_attr_e( $corrieri[ $i ]['pickup_type'] ); ?>">
-											<input type="hidden" name="box_type" value="<?php esc_attr_e( $corrieri[ $i ]['box_type'] ); ?>">
-											<input type="hidden" name="image_url" value="<?php esc_attr_e( $corrieri[ $i ]['image_url'] ); ?>">
-											<input type="hidden" name="carrier_ship_time" value="<?php esc_attr_e( $corrieri[ $i ]['carrier_ship_time'] ); ?>">
-											<input type="hidden" name="service_id" value="<?php esc_attr_e( $corrieri[ $i ]['service_id'] ); ?>">
-											<input type="hidden" name="carrier_id" value="<?php esc_attr_e( $corrieri[ $i ]['carrier_id'] ); ?>">
-											<input type="hidden" name="_wpnonce" value="<?php esc_attr_e( wp_create_nonce( 'add_carrier_nonce' ) ); ?>" />
+											<input type="hidden" name="carrier_name" value="<?php echo esc_attr( $corrieri[ $i ]['carrier_name'] ); ?>">
+											<input type="hidden" name="service_name" value="<?php echo esc_attr( $corrieri[ $i ]['service_name'] ); ?>">
+											<input type="hidden" name="pickup_type" value="<?php echo esc_attr( $corrieri[ $i ]['pickup_type'] ); ?>">
+											<input type="hidden" name="box_type" value="<?php echo esc_attr( $corrieri[ $i ]['box_type'] ); ?>">
+											<input type="hidden" name="image_url" value="<?php echo esc_attr( $corrieri[ $i ]['image_url'] ); ?>">
+											<input type="hidden" name="carrier_ship_time" value="<?php echo esc_attr( $corrieri[ $i ]['carrier_ship_time'] ); ?>">
+											<input type="hidden" name="service_id" value="<?php echo esc_attr( $corrieri[ $i ]['service_id'] ); ?>">
+											<input type="hidden" name="carrier_id" value="<?php echo esc_attr( $corrieri[ $i ]['carrier_id'] ); ?>">
+											<input type="hidden" name="_wpnonce" value="<?php echo esc_attr( wp_create_nonce( 'add_carrier_nonce' ) ); ?>" />
 											<input type="hidden" name="action" value="add_carrier" />
 											<input type="submit" 
 												<?php
@@ -152,7 +152,7 @@ $paccofacile_api = Paccofacile_Api::getInstance();
 							$carriers->the_post();
 							?>
 						
-							<div class="corriere serviceid_<?php esc_attr_e( get_post_meta( get_the_ID(), 'service_id' )[0] ); ?>" data-service-id="<?php esc_attr_e( get_post_meta( get_the_ID(), 'service_id' )[0] ); ?>">
+							<div class="corriere serviceid_<?php echo esc_attr( get_post_meta( get_the_ID(), 'service_id' )[0] ); ?>" data-service-id="<?php echo esc_attr( get_post_meta( get_the_ID(), 'service_id' )[0] ); ?>">
 								<div class="inner">
 									<?php
 									$pickup_type    = get_post_meta( get_the_ID(), 'pickup_type' )[0];
@@ -163,8 +163,8 @@ $paccofacile_api = Paccofacile_Api::getInstance();
 									if ( 4 === $pickup_type || 6 === $pickup_type ) :
 										?>
 										<a href="#TB_inline?width=600&height=550&inlineId=manage_pickup_modal" name="<?php esc_attr_e( 'Choose a pickup locker', 'paccofacile' ); ?>" class="thickbox manage_pickup_modal_open"><i class="fa-solid fa-lg fa-gears"></i></a>
-										<div id="manage_pickup_modal" style="display:none;" data-carrier-id="<?php esc_attr_e( $carrier_id ); ?>">
-											<div id="paccofacile-map" class="paccofacile-map" data-postcode="<?php esc_attr_e( $store_postcode ); ?>" data-city="<?php esc_attr_e( $store_city ); ?>" data-carrier-id="<?php esc_attr_e( $carrier_id ); ?>" data-store-nonce="<?php esc_attr_e( wp_create_nonce( 'get_store_locker_nonce' ) ); ?>">
+										<div id="manage_pickup_modal" style="display:none;" data-carrier-id="<?php echo esc_attr( $carrier_id ); ?>">
+											<div id="paccofacile-map" class="paccofacile-map" data-postcode="<?php echo esc_attr( $store_postcode ); ?>" data-city="<?php echo esc_attr( $store_city ); ?>" data-carrier-id="<?php echo esc_attr( $carrier_id ); ?>" data-store-nonce="<?php echo esc_attr( wp_create_nonce( 'get_store_locker_nonce' ) ); ?>">
 												<div id="popup" class="ol-popup">
 													<a href="#" id="popup-closer" class="ol-popup-closer"></a>
 													<div id="popup-content"></div>
@@ -179,8 +179,8 @@ $paccofacile_api = Paccofacile_Api::getInstance();
 													?>
 													>
 													</div>
-												<input type="hidden" name="carrier_id" value="<?php esc_attr_e( $carrier_id ); ?>">
-												<input type="hidden" name="_wpnonce" value="<?php esc_attr_e( wp_create_nonce( 'add_store_locker_nonce' ) ); ?>">
+												<input type="hidden" name="carrier_id" value="<?php echo esc_attr( $carrier_id ); ?>">
+												<input type="hidden" name="_wpnonce" value="<?php echo esc_attr( wp_create_nonce( 'add_store_locker_nonce' ) ); ?>">
 												<input type="hidden" name="action" value="add_store_locker" />
 												<input type="submit" name="add_store_locker_submit" class="button button-primary add_store_locker_button" value="<?php esc_attr_e( 'Save as departure locker', 'paccofacile' ); ?>">
 											</form>
@@ -191,14 +191,14 @@ $paccofacile_api = Paccofacile_Api::getInstance();
 									if ( get_post_meta( get_the_ID(), 'image_url' ) ) :
 										?>
 										<div class="image">
-											<img src="<?php esc_attr_e( get_post_meta( get_the_ID(), 'image_url' )[0] ); ?>" alt="<?php the_title(); ?>">
+											<img src="<?php echo esc_attr( get_post_meta( get_the_ID(), 'image_url' )[0] ); ?>" alt="<?php the_title(); ?>">
 										</div>
 									<?php endif; ?>
 									<h3><?php the_title(); ?></h3>
-									<p><?php esc_html_e( get_post_meta( get_the_ID(), 'carrier_ship_time' )[0] ); ?></p>
+									<p><?php echo esc_html( get_post_meta( get_the_ID(), 'carrier_ship_time' )[0] ); ?></p>
 
 									<form action="" class="delete_carrier_form" method="post">
-										<input type="hidden" name="_wpnonce" value="<?php esc_attr_e( wp_create_nonce( 'delete_carrier_nonce' ) ); ?>" />
+										<input type="hidden" name="_wpnonce" value="<?php echo esc_attr( wp_create_nonce( 'delete_carrier_nonce' ) ); ?>" />
 										<input type="hidden" name="action" value="delete_carrier" />
 										<input type="hidden" name="post_id" value="<?php the_ID(); ?>">
 										<?php /* <a href="<?php echo get_edit_post_link(); ?>" class="button button-primary"><?php _e('Manage', 'paccofacile'); ?></a> */ ?>
@@ -260,7 +260,7 @@ $paccofacile_api = Paccofacile_Api::getInstance();
 										$array_nome_type = json_decode( $package_type['nome'], true );
 										$nome_type       = $array_nome_type['en'];
 									?>
-									<li><label><input name="paccofacile_box_type" value="<?php esc_attr_e( $package_type['imballi_tipo_id'] ); ?>" type="radio" class="select short" style="width:16px"> <?php esc_html_e( $nome_type, 'paccofacile' ); ?></label></li>
+									<li><label><input name="paccofacile_box_type" value="<?php echo esc_attr( $package_type['imballi_tipo_id'] ); ?>" type="radio" class="select short" style="width:16px"> <?php esc_html_e( $nome_type, 'paccofacile' ); ?></label></li>
 								<?php endforeach; ?>
 							</ul>
 						</fieldset>
@@ -290,7 +290,7 @@ $paccofacile_api = Paccofacile_Api::getInstance();
 							<label for="pallet_type"><?php esc_html_e( 'Pallet dimensions', 'paccofacile' ); ?></label>
 							<select style="" id="pallet_type" name="pallet_type" class="select short">
 								<?php foreach ( $pallet_options as $variazione ) : ?>
-									<option data-dim1="<?php esc_attr_e( $variazione['dim1'] ); ?>" data-dim2="<?php esc_attr_e( $variazione['dim2'] ); ?>" data-pesomax="<?php esc_attr_e( $variazione['peso_max'] ); ?>" value="<?php esc_attr_e( $variazione['variante_id'] ); ?>">
+									<option data-dim1="<?php echo esc_attr( $variazione['dim1'] ); ?>" data-dim2="<?php echo esc_attr( $variazione['dim2'] ); ?>" data-pesomax="<?php echo esc_attr( $variazione['peso_max'] ); ?>" value="<?php echo esc_attr( $variazione['variante_id'] ); ?>">
 										<?php esc_html_e( 'Base ' . floatval( $variazione['dim1'] ) . 'x' . floatval( $variazione['dim2'] ), 'paccofacile' ); ?>
 									</option>
 								<?php endforeach; ?>
@@ -316,14 +316,14 @@ $paccofacile_api = Paccofacile_Api::getInstance();
 										$array_nome_variante = json_decode( $variazione['nome_variante'], true );
 										$nome_variante       = $array_nome_variante['en'];
 									?>
-									<option data-dim1="<?php esc_attr_e( $variazione['dim1'] ); ?>" data-dim2="<?php esc_attr_e( $variazione['dim2'] ); ?>" data-dim3="<?php esc_attr_e( $variazione['dim3'] ); ?>" data-pesomax="<?php esc_attr_e( $variazione['peso_max'] ); ?>" value="<?php esc_attr_e( $variazione['variante_id'] ); ?>">
+									<option data-dim1="<?php echo esc_attr( $variazione['dim1'] ); ?>" data-dim2="<?php echo esc_attr( $variazione['dim2'] ); ?>" data-dim3="<?php echo esc_attr( $variazione['dim3'] ); ?>" data-pesomax="<?php echo esc_attr( $variazione['peso_max'] ); ?>" value="<?php echo esc_attr( $variazione['variante_id'] ); ?>">
 										<?php esc_html_e( $nome_variante . ' ' . floatval( $variazione['dim1'] ) . 'x' . floatval( $variazione['dim2'] ) . 'x' . floatval( $variazione['dim3'] ) . ' cm - Max ' . floatval( $variazione['peso_max'] ) . ' kg', 'paccofacile' ); ?>
 									</option>
 								<?php endforeach; ?>
 							</select>
 						</p>
 						
-						<input type="hidden" name="_wpnonce" value="<?php esc_attr_e( wp_create_nonce( 'add_box_nonce' ) ); ?>" />
+						<input type="hidden" name="_wpnonce" value="<?php echo esc_attr( wp_create_nonce( 'add_box_nonce' ) ); ?>" />
 						<input type="hidden" name="action" value="add_box" />
 						<input type="submit" name="add_box_submit" class="button button-primary add_box_button" value="<?php esc_attr_e( 'Add package', 'paccofacile' ); ?>">
 					</form>
@@ -373,22 +373,22 @@ $paccofacile_api = Paccofacile_Api::getInstance();
 
 									?>
 
-									<tr class="imballo imballo_<?php esc_attr_e( $package_id ); ?>">
-										<td><?php esc_html_e( $icon ); ?></td>
-										<td><?php esc_html_e( $package_name ); ?></td>
-										<td><?php esc_html_e( $dimensions ); ?></td>
-										<td><?php esc_html_e( $volume ); ?></td>
+									<tr class="imballo imballo_<?php echo esc_attr( $package_id ); ?>">
+										<td><?php echo esc_html( $icon ); ?></td>
+										<td><?php echo esc_html( $package_name ); ?></td>
+										<td><?php echo esc_html( $dimensions ); ?></td>
+										<td><?php echo esc_html( $volume ); ?></td>
 										<td>
 											<form action="" class="delete_box_form" method="post">
-												<input type="hidden" name="_wpnonce" value="<?php esc_attr_e( wp_create_nonce( 'delete_box_nonce' ) ); ?>" />
+												<input type="hidden" name="_wpnonce" value="<?php echo esc_attr( wp_create_nonce( 'delete_box_nonce' ) ); ?>" />
 												<input type="hidden" name="action" value="delete_box" />
-												<input type="hidden" name="imballo_id" value="<?php esc_attr_e( $package_id ); ?>">
+												<input type="hidden" name="imballo_id" value="<?php echo esc_attr( $package_id ); ?>">
 												<?php /* <a href="<?php echo get_edit_post_link(); ?>" class="button button-primary"><?php _e('Edit', 'paccofacile'); ?></a> */ ?>
-												<a href="#TB_inline?width=600&height=550&inlineId=edit_box_modal_<?php esc_attr_e( $package_id ); ?>" class="button button-primary thickbox modale-modifica" data-imballo-id="<?php esc_attr_e( $package_id ); ?>"><?php esc_html_e( 'Edit', 'paccofacile' ); ?></a>
+												<a href="#TB_inline?width=600&height=550&inlineId=edit_box_modal_<?php echo esc_attr( $package_id ); ?>" class="button button-primary thickbox modale-modifica" data-imballo-id="<?php echo esc_attr( $package_id ); ?>"><?php esc_html_e( 'Edit', 'paccofacile' ); ?></a>
 												<input type="submit" class="button button-primary delete_box" value="<?php esc_attr_e( 'Delete', 'paccofacile' ); ?>">
 												<span class="spinner"></span>
 											</form>
-											<div id="edit_box_modal_<?php esc_attr_e( $package_id ); ?>" style="display:none;">
+											<div id="edit_box_modal_<?php echo esc_attr( $package_id ); ?>" style="display:none;">
 												<form action="" class="add_box_form" method="post">
 													<?php
 													woocommerce_wp_text_input(
@@ -471,7 +471,7 @@ $paccofacile_api = Paccofacile_Api::getInstance();
 														<label for="pallet_type"><?php esc_html_e( 'Pallet dimensions', 'paccofacile' ); ?></label>
 														<select style="" id="pallet_type" name="pallet_type" class="select short">
 															<?php foreach ( $pallet_options as $variazione ) : ?>
-																<option data-dim1="<?php esc_attr_e( $variazione['dim1'] ); ?>" data-dim2="<?php esc_attr_e( $variazione['dim2'] ); ?>" data-pesomax="<?php esc_attr_e( $variazione['peso_max'] ); ?>" value="<?php esc_attr_e( $variazione['variante_id'] ); ?>">
+																<option data-dim1="<?php echo esc_attr( $variazione['dim1'] ); ?>" data-dim2="<?php echo esc_attr( $variazione['dim2'] ); ?>" data-pesomax="<?php echo esc_attr( $variazione['peso_max'] ); ?>" value="<?php echo esc_attr( $variazione['variante_id'] ); ?>">
 																	<?php esc_html_e( 'Base ' . floatval( $variazione['dim1'] ) . 'x' . floatval( $variazione['dim2'] ), 'paccofacile' ); ?>
 																</option>
 															<?php endforeach; ?>
@@ -500,7 +500,7 @@ $paccofacile_api = Paccofacile_Api::getInstance();
 																	$array_nome_variante = json_decode( $variazione['nome_variante'], true );
 																	$nome_variante       = $array_nome_variante['en'];
 																?>
-																<option data-dim1="<?php esc_attr_e( $variazione['dim1'] ); ?>" data-dim2="<?php esc_attr_e( $variazione['dim2'] ); ?>" data-dim3="<?php esc_attr_e( $variazione['dim3'] ); ?>" data-pesomax="<?php esc_attr_e( $variazione['peso_max'] ); ?>" value="<?php esc_attr_e( $variazione['variante_id'] ); ?>">
+																<option data-dim1="<?php echo esc_attr( $variazione['dim1'] ); ?>" data-dim2="<?php echo esc_attr( $variazione['dim2'] ); ?>" data-dim3="<?php echo esc_attr( $variazione['dim3'] ); ?>" data-pesomax="<?php echo esc_attr( $variazione['peso_max'] ); ?>" value="<?php echo esc_attr( $variazione['variante_id'] ); ?>">
 																	<?php esc_attr_e( $nome_variante . ' ' . floatval( $variazione['dim1'] ) . 'x' . floatval( $variazione['dim2'] ) . 'x' . floatval( $variazione['dim3'] ) . ' cm - Max ' . floatval( $variazione['peso_max'] ) . ' kg', 'paccofacile' ); ?>
 																</option>
 															<?php endforeach; ?>
@@ -508,7 +508,7 @@ $paccofacile_api = Paccofacile_Api::getInstance();
 													</p>
 
 													
-													<input type="hidden" name="nonce" value="<?php esc_attr_e( wp_create_nonce( 'form-nonce' ) ); ?>" />
+													<input type="hidden" name="nonce" value="<?php echo esc_attr( wp_create_nonce( 'form-nonce' ) ); ?>" />
 													<input type="hidden" name="action" value="edit_box" />
 													<input type="hidden" name="imballo_id" value="<?php echo esc_attr( $package_id ); ?>" />
 													<input type="submit" name="add_box_submit" class="button button-primary add_box_button" value="<?php esc_attr_e( 'Edit package', 'paccofacile' ); ?>">

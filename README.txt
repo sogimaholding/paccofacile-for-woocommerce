@@ -4,7 +4,7 @@ Tags: paccofacile,woocommerce,shipping,spedizioni
 Requires at least: 5.0.0
 Tested up to: 6.3.2
 Requires PHP: 7.2
-Stable tag: 1.0.3
+Stable tag: 1.0.5
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 

@@ -1,6 +1,20 @@
 <?php
+/**
+ * Tracking info email class
+ *
+ * A class definition that includes attributes and functions used across both the
+ * public-facing side of the site and the admin area.
+ *
+ * @link       #
+ * @since      1.0.0
+ *
+ * @package    Paccofacile
+ * @subpackage Paccofacile/includes
+ */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 if ( ! class_exists( 'WC_Tracking_Info_Order_Email', false ) ) :
 
@@ -12,6 +26,11 @@ if ( ! class_exists( 'WC_Tracking_Info_Order_Email', false ) ) :
 	 */
 	class WC_Tracking_Info_Order_Email extends WC_Email {
 
+		/**
+		 * Tracking info
+		 *
+		 * @var [type]
+		 */
 		public $tracking_info;
 
 		/**
@@ -21,71 +40,71 @@ if ( ! class_exists( 'WC_Tracking_Info_Order_Email', false ) ) :
 		 */
 		public function __construct() {
 
-			//define( 'PACCOFACILE_TEMPLATE_PATH', PACCOFACILE_PATH . '/' );
-
-			// set ID, this simply needs to be a unique name
-			$this->id = 'wc_tracking_info_order';
+			// set ID, this simply needs to be a unique name.
+			$this->id             = 'wc_tracking_info_order';
 			$this->customer_email = true;
 
-			// this is the title in WooCommerce Email settings
-			$this->title = __('Tracking Info', 'paccofacile');
+			// this is the title in WooCommerce Email settings.
+			$this->title = __( 'Tracking Info', 'paccofacile' );
 
-			// this is the description in WooCommerce email settings
-			$this->description = __('Tracking Info Notification emails are sent when tracking checkpoints are available for the client\'s order', 'paccofacile');
+			// this is the description in WooCommerce email settings.
+			$this->description = __( 'Tracking Info Notification emails are sent when tracking checkpoints are available for the client\'s order', 'paccofacile' );
 
-			// these are the default heading and subject lines that can be overridden using the settings
-			$this->heading = __('Tracking Info', 'paccofacile');
-			$this->subject = __('Tracking Info', 'paccofacile');
+			// these are the default heading and subject lines that can be overridden using the settings.
+			$this->heading = __( 'Tracking Info', 'paccofacile' );
+			$this->subject = __( 'Tracking Info', 'paccofacile' );
 
-			// these define the locations of the templates that this email should use, we'll just use the new order template since this email is similar
+			// these define the locations of the templates that this email should use, we'll just use the new order template since this email is similar.
 			$this->template_html  = 'emails/order-tracking-info.php';
 			$this->template_plain = 'emails/plain/order-tracking-info.php';
 
-			// Trigger on new paid orders
+			// Trigger on new paid orders.
 			add_action( 'paccofacile_order_tracking_info_sent', array( $this, 'trigger' ), 10, 2 );
 
-			// Call parent constructor to load any other defaults not explicity defined here
+			// Call parent constructor to load any other defaults not explicity defined here.
 			parent::__construct();
 
-			// this sets the recipient to the settings defined below in init_form_fields()
+			// this sets the recipient to the settings defined below in init_form_fields().
 			$this->recipient = $this->get_option( 'recipient' );
 
-			// if none was entered, just use the WP admin email as a fallback
-			if ( ! $this->recipient )
+			// if none was entered, just use the WP admin email as a fallback.
+			if ( ! $this->recipient ) {
 				$this->recipient = get_option( 'admin_email' );
+			}
 
-			$this->template_base = PACCOFACILE_PATH.'/';
+			$this->template_base = PACCOFACILE_PATH . '/';
 		}
 
 		/**
 		 * Determine if the email should actually be sent and setup email merge variables
 		 *
 		 * @since 0.1
-		 * @param int $order_id
+		 * @param int   $order_id Order id.
+		 * @param mixed $response_tracking Tracking response.
 		 */
 		public function trigger( $order_id, $response_tracking ) {
 			$this->setup_locale();
 
-			// bail if no order ID is present
-			if ( ! $order_id )
+			// bail if no order ID is present.
+			if ( ! $order_id ) {
 				return;
+			}
 
-			// setup order object
+			// setup order object.
 			$this->object = wc_get_order( $order_id );
 
 			$this->tracking_info = $response_tracking;
 
-			// replace variables in the subject/headings
-			$this->find[] = '{order_date}';
+			// replace variables in the subject/headings.
+			$this->find[]    = '{order_date}';
 			$this->replace[] = date_i18n( wc_date_format(), strtotime( $this->object->get_date_created() ) );
 
-			$this->find[] = '{order_number}';
+			$this->find[]    = '{order_number}';
 			$this->replace[] = $this->object->get_order_number();
 
-			if ( ! $this->is_enabled() || ! $this->get_recipient() )
+			if ( ! $this->is_enabled() || ! $this->get_recipient() ) {
 				return;
-
-			error_log('trigger');
+			}
 
 			// woohoo, send the email!
 			$this->send( $this->get_recipient(), $this->get_subject(), $this->get_content(), $this->get_headers(), $this->get_attachments() );
@@ -109,7 +128,9 @@ if ( ! class_exists( 'WC_Tracking_Info_Order_Email', false ) ) :
 					'sent_to_admin'      => false,
 					'plain_text'         => false,
 					'email'              => $this,
-				), '', $this->template_base
+				),
+				'',
+				$this->template_base
 			);
 		}
 
@@ -129,14 +150,11 @@ if ( ! class_exists( 'WC_Tracking_Info_Order_Email', false ) ) :
 					'sent_to_admin'      => false,
 					'plain_text'         => true,
 					'email'              => $this,
-				), '', $this->template_base
+				),
+				'',
+				$this->template_base
 			);
 		}
-		
-
-
-	} // end \WC_Tracking_Info_Order_Email class
+	} // End \WC_Tracking_Info_Order_Email class.
 
 endif;
-
-//return new WC_Tracking_Info_Order_Email();

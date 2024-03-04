@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The file that defines the core plugin class
  *
@@ -77,16 +76,18 @@ class Paccofacile {
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->define_admin_hooks();
-		
+
 		$this->define_public_hooks();
 		$this->add_settings_link();
-		
-		
-		add_action( 'init', array($this, 'register_courier_post_type') );
 
+		add_action( 'init', array( $this, 'register_courier_post_type' ) );
 	}
 
-
+	/**
+	 * Register carrier post type
+	 *
+	 * @return void
+	 */
 	public function register_courier_post_type() {
 		$labels = array(
 			'name'                  => _x( 'Carriers', 'Post type general name', 'paccofacile' ),
@@ -114,14 +115,14 @@ class Paccofacile {
 			'items_list_navigation' => _x( 'Carriers list navigation', 'Screen reader text for the pagination heading on the post type listing screen. Default “Posts list navigation”/”Pages list navigation”. Added in 4.4', 'paccofacile' ),
 			'items_list'            => _x( 'Carriers list', 'Screen reader text for the items list heading on the post type listing screen. Default “Posts list”/”Pages list”. Added in 4.4', 'paccofacile' ),
 		);
-	 
+
 		$args = array(
 			'labels'             => $labels,
 			'public'             => true,
 			'publicly_queryable' => true,
 			'show_ui'            => true,
 			'show_in_menu'       => false,
-			'show_in_rest'		 => true,
+			'show_in_rest'       => true,
 			'query_var'          => true,
 			'rewrite'            => array( 'slug' => 'carrier' ),
 			'capability_type'    => 'post',
@@ -130,30 +131,29 @@ class Paccofacile {
 			'menu_position'      => null,
 			'supports'           => array( 'title', 'thumbnail', 'excerpt', 'custom-fields' ),
 		);
-	 
+
 		register_post_type( 'carrier', $args );
 	}
-	
 
 
 	/**
 	 * Register filter for links on the plugin screen.
 	 */
 	public function add_settings_link() {
-		add_filter( 'plugin_action_links_'.PACCOFACILE_BASENAME_FILE, array($this, 'create_configuration_link'), 10, 5 );
+		add_filter( 'plugin_action_links_' . PACCOFACILE_BASENAME_FILE, array( $this, 'create_configuration_link' ), 10, 5 );
 	}
 
-	
 	/**
 	 * Show action links on the plugin screen.
 	 *
 	 * @param array $links Plugin Action links.
+	 * @param array $plugin_file Plugin file.
 	 *
 	 * @return array
 	 */
 	public function create_configuration_link( array $links, $plugin_file ) {
 		$action_links = array(
-			'settings' => '<a href="'.esc_attr( get_admin_url( null, 'admin.php?page='.$this->plugin_name )).'">' . esc_html__( 'Settings', 'paccofacile' ) . '</a>',
+			'settings' => '<a href="' . esc_attr( get_admin_url( null, 'admin.php?page=' . $this->plugin_name ) ) . '">' . esc_html__( 'Settings', 'paccofacile' ) . '</a>',
 		);
 
 		return array_merge( $action_links, $links );
@@ -166,7 +166,7 @@ class Paccofacile {
 	 * Include the following files that make up the plugin:
 	 *
 	 * - Paccofacile_Loader. Orchestrates the hooks of the plugin.
-	 * - Paccofacile_i18n. Defines internationalization functionality.
+	 * - Paccofacile_I18n. Defines internationalization functionality.
 	 * - Paccofacile_Admin. Defines all hooks for the admin area.
 	 * - Paccofacile_Public. Defines all hooks for the public side of the site.
 	 *
@@ -182,39 +182,37 @@ class Paccofacile {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-paccofacile-loader.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-paccofacile-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-paccofacile-i18n.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/class-paccofacile-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-paccofacile-admin.php';
+		require_once plugin_dir_path( __DIR__ ) . 'admin/class-paccofacile-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-paccofacile-public.php';
-		
+		require_once plugin_dir_path( __DIR__ ) . 'public/class-paccofacile-public.php';
+
 		/**
 		 * The class responsible for defining all actions that occur for integrate with WooCommerce
-		 * 
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-paccofacile-woocommerce.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/paccofacile-woocommerce.php';
 
 		$this->loader = new Paccofacile_Loader();
-
 	}
 
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Paccofacile_i18n class in order to set the domain and to register the hook
+	 * Uses the Paccofacile_I18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -222,10 +220,9 @@ class Paccofacile {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Paccofacile_i18n();
+		$plugin_i18n = new Paccofacile_I18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
 	}
 
 	/**
@@ -238,7 +235,6 @@ class Paccofacile {
 	private function define_admin_hooks() {
 
 		$plugin_admin = new Paccofacile_Admin( $this->get_plugin_name(), $this->get_version() );
-		//$plugin_public = new Paccofacile_Public( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -255,7 +251,6 @@ class Paccofacile {
 		$this->loader->add_action( 'wp_ajax_get_lockers', $plugin_admin, 'get_lockers_ajax_handler' );
 		$this->loader->add_action( 'wp_ajax_add_store_locker', $plugin_admin, 'add_store_locker_ajax_handler' );
 		$plugin_admin->load_admin_menu();
-
 	}
 
 	/**
@@ -276,12 +271,15 @@ class Paccofacile {
 		$this->loader->add_action( 'wp_ajax_get_lockers', $plugin_public, 'get_lockers_ajax_handler' );
 		$this->loader->add_action( 'wp_ajax_getCityCoordinates', $plugin_public, 'getCityCoordinates_ajax_handler' );
 		$this->loader->add_action( 'wp_ajax_locker_id_session', $plugin_public, 'locker_id_session_ajax_handler' );
-		//$this->loader->add_action( 'wp_ajax_nopriv_get_lockers', $plugin_public, 'get_lockers_ajax_handler' );
-		
 	}
 
+	/**
+	 * Register session
+	 *
+	 * @return void
+	 */
 	public function paccofacile_register_session() {
-		if ( !session_id() ) {
+		if ( ! session_id() ) {
 			session_start();
 		}
 	}
@@ -326,70 +324,105 @@ class Paccofacile {
 		return $this->version;
 	}
 
+	/**
+	 * Get shipping boxes
+	 *
+	 * @return array
+	 */
 	public function get_shipping_boxes() {
 
 		$paccofacile_api = Paccofacile_Api::getInstance();
 
-		$shipping_boxes = $paccofacile_api->get('packaging/list', array(), array());
+		$shipping_boxes = $paccofacile_api->get( 'packaging/list', array(), array() );
 
-		//error_log('shipping_boxes --> '.json_encode($shipping_boxes));
-
-		if ( $shipping_boxes['data'] && array_key_exists('items', $shipping_boxes['data']) ) return $shipping_boxes['data']['items'];
-		else return array();
-
+		if ( $shipping_boxes['data'] && array_key_exists( 'items', $shipping_boxes['data'] ) ) {
+			return $shipping_boxes['data']['items'];
+		} else {
+			return array();
+		}
 	}
-	
+
+	/**
+	 * Get package
+	 *
+	 * @param [type] $id Package id.
+	 * @return string
+	 */
 	public function get_package( $id ) {
 		$paccofacile_api = Paccofacile_Api::getInstance();
 
-		$package = $paccofacile_api->get('packaging/'.$id, array(), array());
+		$package = $paccofacile_api->get( 'packaging/' . $id, array(), array() );
 
 		return $package['data'];
 	}
 
-
+	/**
+	 * Get package types
+	 *
+	 * @return string
+	 */
 	public function get_package_types() {
 		$paccofacile_api = Paccofacile_Api::getInstance();
 
-		$types = $paccofacile_api->get('packaging/list_types', array(), array());
+		$types = $paccofacile_api->get( 'packaging/list_types', array(), array() );
 
 		return $types['data'];
 	}
 
-
+	/**
+	 * Get package variations
+	 *
+	 * @param string $type Type id.
+	 * @return string
+	 */
 	public function get_package_type_variation( $type ) {
 		$paccofacile_api = Paccofacile_Api::getInstance();
 
-		$variations = $paccofacile_api->get('packaging/list_variation/'.$type, array(), array());
+		$variations = $paccofacile_api->get( 'packaging/list_variation/' . $type, array(), array() );
 
 		return $variations['data'];
 	}
 
-
+	/**
+	 * Delete package
+	 *
+	 * @param [type] $id Package id.
+	 * @return string
+	 */
 	public function delete_package( $id ) {
 		$paccofacile_api = Paccofacile_Api::getInstance();
 
-		$response = $paccofacile_api->delete('packaging/'.$id, array(), array());
+		$response = $paccofacile_api->delete( 'packaging/' . $id, array(), array() );
 
 		return $response['data'];
 	}
-	
-	
+
+	/**
+	 * Create Package
+	 *
+	 * @param [type] $payload Payload.
+	 * @return string
+	 */
 	public function create_package( $payload ) {
 		$paccofacile_api = Paccofacile_Api::getInstance();
 
-		$response = $paccofacile_api->post('packaging', array(), $payload);
+		$response = $paccofacile_api->post( 'packaging', array(), $payload );
 
 		return $response['data'];
 	}
-	
-	
+
+	/**
+	 * Update package
+	 *
+	 * @param [type] $id Package id.
+	 * @param [type] $payload Payload.
+	 * @return string
+	 */
 	public function update_package( $id, $payload ) {
 		$paccofacile_api = Paccofacile_Api::getInstance();
 
-		$response = $paccofacile_api->put('packaging/'.$id, array(), $payload);
+		$response = $paccofacile_api->put( 'packaging/' . $id, array(), $payload );
 
 		return $response['data'];
 	}
-
 }

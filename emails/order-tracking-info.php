@@ -38,7 +38,7 @@ if ( ! empty( $tracking_info['elenco']['checkpoints'] ) ) :
 	$text_align       = is_rtl() ? 'right' : 'left';
 	?>
 
-	<h2><?php echo apply_filters( 'paccofacile_order_tracking_title', __( 'Order tracking', 'paccofacile' ) ); ?></h2>
+	<h2><?php echo esc_html( apply_filters( 'paccofacile_order_tracking_title', __( 'Order tracking', 'paccofacile' ) ) ); ?></h2>
 
 	<div style="margin-bottom: 40px;">
 		<table class="td" cellspacing="0" cellpadding="6" style="width: 100%; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;" border="1">
@@ -48,7 +48,7 @@ if ( ! empty( $tracking_info['elenco']['checkpoints'] ) ) :
 					<?php if ( array_key_exists( $checkpoints[ $i ]['tag'], $options_tracking ) && 1 === $options_tracking[ $checkpoints[ $i ]['tag'] ] ) : ?>
 						<tr>
 							<td class="td" style="text-align:<?php echo esc_attr( $text_align ); ?>; vertical-align: middle; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; word-wrap:break-word;">
-								<?php echo '<b>' . $checkpoints[ $i ]['checkpoint_time'] . '</b><br />- ' . $checkpoints[ $i ]['message'] . ' [' . $checkpoints[ $i ]['city'] . ']'; ?>
+								<?php echo '<b>' . esc_html( $checkpoints[ $i ]['checkpoint_time'] ) . '</b><br />- ' . esc_html( $checkpoints[ $i ]['message'] ) . ' [' . esc_html( $checkpoints[ $i ]['city'] ) . ']'; ?>
 							</td>
 						</tr>
 					<?php endif; ?>
