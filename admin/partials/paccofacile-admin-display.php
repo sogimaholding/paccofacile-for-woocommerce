@@ -18,7 +18,7 @@
 <?php
 
 require_once PACCOFACILE_PATH . '/includes/class-paccofacile-api.php';
-$paccofacile_api = Paccofacile_Api::getInstance();
+$paccofacile_api = Paccofacile_Api::get_instance();
 
 ?>
 
@@ -85,8 +85,14 @@ $paccofacile_api = Paccofacile_Api::getInstance();
 
 					$carriers          = new WP_Query( $args_carrier );
 					$response_corrieri = $paccofacile_api->get( 'carriers' );
-					$corrieri          = $response_corrieri['data'];
-					$carriers_ids      = wp_list_pluck( $carriers->posts, 'ID' );
+
+					if ( array_key_exists( 'data', $response_corrieri ) ) {
+						$corrieri = $response_corrieri['data'];
+					} else {
+						$corrieri = array();
+					}
+
+					$carriers_ids = wp_list_pluck( $carriers->posts, 'ID' );
 
 					$carriers_service_ids = array();
 					$count_carrier_ids    = count( $carriers_ids );
@@ -103,7 +109,7 @@ $paccofacile_api = Paccofacile_Api::getInstance();
 								<div class="corriere 
 									<?php
 									if ( in_array( $corrieri[ $i ]['service_id'], $carriers_service_ids, true ) ) {
-										esc_attr_e( 'spento' );
+										echo esc_attr( 'spento' );
 									}
 									?>
 									serviceid_<?php echo esc_attr( $corrieri[ $i ]['service_id'] ); ?>">
@@ -129,7 +135,7 @@ $paccofacile_api = Paccofacile_Api::getInstance();
 											<input type="submit" 
 												<?php
 												if ( in_array( $corrieri[ $i ]['service_id'], $carriers_service_ids, true ) ) {
-													esc_attr_e( 'disabled' );
+													echo esc_attr( 'disabled' );
 												}
 												?>
 												name="add_carrier_submit" class="button button-primary add_carrier_button" value="<?php esc_attr_e( 'Add service', 'paccofacile' ); ?>">
@@ -201,7 +207,7 @@ $paccofacile_api = Paccofacile_Api::getInstance();
 										<input type="hidden" name="_wpnonce" value="<?php echo esc_attr( wp_create_nonce( 'delete_carrier_nonce' ) ); ?>" />
 										<input type="hidden" name="action" value="delete_carrier" />
 										<input type="hidden" name="post_id" value="<?php the_ID(); ?>">
-										<?php /* <a href="<?php echo get_edit_post_link(); ?>" class="button button-primary"><?php _e('Manage', 'paccofacile'); ?></a> */ ?>
+										<?php /* <a href="<?php echo get_edit_post_link(); ?>" class="button button-primary"><?php esc_attr_e('Manage', 'paccofacile'); ?></a> */ ?>
 										<input type="submit" class="button button-primary delete_carrier" value="<?php esc_attr_e( 'Delete', 'paccofacile' ); ?>">
 										<span class="spinner"></span>
 									</form>

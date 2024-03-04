@@ -240,7 +240,7 @@ class Paccofacile_Admin {
 	 * @return bool
 	 */
 	public function paccofacile_check_api_auth( $api_key, $token, $account_number ) {
-		$paccofacile_api = Paccofacile_Api::getInstance();
+		$paccofacile_api = Paccofacile_Api::get_instance();
 
 		$headers = array(
 			'Account-Number' => $account_number,
@@ -271,10 +271,10 @@ class Paccofacile_Admin {
 	 * @return mixed array
 	 */
 	public function paccofacile_settings_validate( $input ) {
-		$newinput['api_key']          = trim( $input['api_key'] );
-		$newinput['account_number']   = trim( $input['account_number'] );
-		$newinput['token']            = trim( $input['token'] );
-		$newinput['tracking_to_show'] = $input['tracking_to_show'];
+		$newinput['api_key']          = ( array_key_exists( 'api_key', $input ) ) ? trim( $input['api_key'] ) : '';
+		$newinput['account_number']   = ( array_key_exists( 'account_number', $input ) ) ? trim( $input['account_number'] ) : '';
+		$newinput['token']            = ( array_key_exists( 'token', $input ) ) ? trim( $input['token'] ) : '';
+		$newinput['tracking_to_show'] = ( array_key_exists( 'tracking_to_show', $input ) ) ? $input['tracking_to_show'] : '';
 		$valid                        = true;
 
 		if ( empty( $newinput['api_key'] ) ) {
@@ -286,6 +286,11 @@ class Paccofacile_Admin {
 		if ( empty( $newinput['account_number'] ) ) {
 			$valid = false;
 			add_settings_error( 'account_number', 'invalid_account_number', esc_attr__( 'Account number is incorrect.', 'paccofacile' ) );
+		}
+		
+		if ( empty( $newinput['token'] ) ) {
+			$valid = false;
+			add_settings_error( 'token', 'invalid_token', esc_attr__( 'Token is incorrect.', 'paccofacile' ) );
 		}
 
 		if ( true === $valid ) {
@@ -487,7 +492,7 @@ class Paccofacile_Admin {
 		}
 		echo '<div id="paccofacile_setting_tracking_to_show">';
 		foreach ( $this->default_tracking_to_show as $key => $value ) {
-			if ( array_key_exists( 'tracking_to_show', $options ) && array_key_exists( $key, $options['tracking_to_show'] ) && 1 === $options['tracking_to_show'][ $key ] ) {
+			if ( array_key_exists( 'tracking_to_show', $options ) && $options['tracking_to_show'] && array_key_exists( $key, $options['tracking_to_show'] ) && 1 === $options['tracking_to_show'][ $key ] ) {
 				$checked = 'checked="checked"';
 			} else {
 				$checked = '';
@@ -522,7 +527,7 @@ class Paccofacile_Admin {
 			exit;
 		}
 
-		$paccofacile_api = Paccofacile_Api::getInstance();
+		$paccofacile_api = Paccofacile_Api::get_instance();
 
 		$data_fattura      = '';
 		$address_id_select = '';
@@ -810,7 +815,7 @@ class Paccofacile_Admin {
 	 */
 	public function add_shipping_customes_ajax_handler() {
 
-		$paccofacile_api = Paccofacile_Api::getInstance();
+		$paccofacile_api = Paccofacile_Api::get_instance();
 
 		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['_wpnonce'] ), 'add_shipping_customes' ) ) {
 			return;

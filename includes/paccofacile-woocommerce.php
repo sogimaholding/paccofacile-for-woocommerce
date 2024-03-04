@@ -276,7 +276,7 @@ function create_parcels_object( $products ) {
 
 	$boxes = prepare_boxes_payload_bin_packing();
 
-	$paccofacile_api = Paccofacile_Api::getInstance();
+	$paccofacile_api = Paccofacile_Api::get_instance();
 
 	$payload_binpacking = array(
 		'unit_misure_weight'    => 'kg',
@@ -540,7 +540,7 @@ add_filter( 'woocommerce_package_rates', 'paccofacile_package_rates', 10, 2 );
  */
 function paccofacile_package_rates( $rates, $package ) {
 
-	$paccofacile_api = Paccofacile_Api::getInstance();
+	$paccofacile_api = Paccofacile_Api::get_instance();
 
 	// Initializing.
 	$volume = 0;
@@ -712,7 +712,7 @@ function paccofacile_create_order( $order_id, $posted_data, $order ) {
 	global $woocommerce;
 	$cart = $woocommerce->cart->get_cart();
 
-	$paccofacile_api = Paccofacile_Api::getInstance();
+	$paccofacile_api = Paccofacile_Api::get_instance();
 
 	$shipping_method       = $posted_data['shipping_method'][0];
 	$array_shipping_method = explode( '_', $shipping_method );
@@ -939,7 +939,7 @@ add_action( 'woocommerce_admin_order_data_after_shipping_address', 'paccofacile_
 function paccofacile_shipping_locker_info( $order ) {
 	$destination_locker_id = get_post_meta( $order->get_id(), 'destination_locker_id', true );
 
-	$paccofacile_api = Paccofacile_Api::getInstance();
+	$paccofacile_api = Paccofacile_Api::get_instance();
 
 	if ( $destination_locker_id ) {
 		$locker_details = $paccofacile_api->get( 'lockers/' . $destination_locker_id );
@@ -1239,7 +1239,7 @@ add_action( 'add_meta_boxes_shop_order', 'paccofacile_order_meta_box' );
 function paccofacile_credit_meta_box() {
 	global $post;
 
-	$paccofacile_api = Paccofacile_Api::getInstance();
+	$paccofacile_api = Paccofacile_Api::get_instance();
 
 	$response_credito      = $paccofacile_api->get( 'customers/credit', array(), array() );
 	$response_credito_data = $response_credito['data'];
@@ -1653,7 +1653,7 @@ function paccofacile_validate_shipping_methods( $services_list ) {
  */
 function paccofacile_quote_and_save_by_woo_order( $order, $action = null ) {
 
-	$paccofacile_api = Paccofacile_Api::getInstance();
+	$paccofacile_api = Paccofacile_Api::get_instance();
 
 	$items  = $order->get_items();
 	$volume = 0;
@@ -1943,7 +1943,7 @@ if ( ! function_exists( 'paccofacile_pay_order' ) ) {
 	function paccofacile_pay_order( $post_id ) {
 
 		if ( is_admin() ) {
-			$paccofacile_api = Paccofacile_Api::getInstance();
+			$paccofacile_api = Paccofacile_Api::get_instance();
 
 			// Only for shop order
 			if ( array_key_exists( 'post_type', $_POST ) && $_POST[ 'post_type' ] != 'shop_order' )
@@ -2330,7 +2330,7 @@ function print_shipping_info() {
  * @return array
  */
 function paccofacile_search_locality( $iso_code, $city ) {
-	$paccofacile_api = Paccofacile_Api::getInstance();
+	$paccofacile_api = Paccofacile_Api::get_instance();
 
 	$payload = array(
 		'iso_code' => $iso_code,
@@ -2396,7 +2396,7 @@ function paccofacile_get_pickup_locker( $carrier_id ) {
  * @return array
  */
 function paccofacile_get_lockers( $postcode, $city ) {
-	$paccofacile_api = Paccofacile_Api::getInstance();
+	$paccofacile_api = Paccofacile_Api::get_instance();
 
 	// prendo le coordinate del comune indicato.
 	$locality = paccofacile_get_location_info( $postcode, $city );
@@ -2429,7 +2429,7 @@ function paccofacile_get_lockers( $postcode, $city ) {
  * @return array
  */
 function paccofacile_get_location_info( $postcode, $city ) {
-	$paccofacile_api = Paccofacile_Api::getInstance();
+	$paccofacile_api = Paccofacile_Api::get_instance();
 
 	$payload = array(
 		'postcode' => $postcode,

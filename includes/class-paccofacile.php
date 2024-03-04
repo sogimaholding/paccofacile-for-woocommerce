@@ -331,7 +331,7 @@ class Paccofacile {
 	 */
 	public function get_shipping_boxes() {
 
-		$paccofacile_api = Paccofacile_Api::getInstance();
+		$paccofacile_api = Paccofacile_Api::get_instance();
 
 		$shipping_boxes = $paccofacile_api->get( 'packaging/list', array(), array() );
 
@@ -349,7 +349,7 @@ class Paccofacile {
 	 * @return string
 	 */
 	public function get_package( $id ) {
-		$paccofacile_api = Paccofacile_Api::getInstance();
+		$paccofacile_api = Paccofacile_Api::get_instance();
 
 		$package = $paccofacile_api->get( 'packaging/' . $id, array(), array() );
 
@@ -362,7 +362,7 @@ class Paccofacile {
 	 * @return string
 	 */
 	public function get_package_types() {
-		$paccofacile_api = Paccofacile_Api::getInstance();
+		$paccofacile_api = Paccofacile_Api::get_instance();
 
 		$types = $paccofacile_api->get( 'packaging/list_types', array(), array() );
 
@@ -376,7 +376,7 @@ class Paccofacile {
 	 * @return string
 	 */
 	public function get_package_type_variation( $type ) {
-		$paccofacile_api = Paccofacile_Api::getInstance();
+		$paccofacile_api = Paccofacile_Api::get_instance();
 
 		$variations = $paccofacile_api->get( 'packaging/list_variation/' . $type, array(), array() );
 
@@ -390,7 +390,7 @@ class Paccofacile {
 	 * @return string
 	 */
 	public function delete_package( $id ) {
-		$paccofacile_api = Paccofacile_Api::getInstance();
+		$paccofacile_api = Paccofacile_Api::get_instance();
 
 		$response = $paccofacile_api->delete( 'packaging/' . $id, array(), array() );
 
@@ -404,7 +404,7 @@ class Paccofacile {
 	 * @return string
 	 */
 	public function create_package( $payload ) {
-		$paccofacile_api = Paccofacile_Api::getInstance();
+		$paccofacile_api = Paccofacile_Api::get_instance();
 
 		$response = $paccofacile_api->post( 'packaging', array(), $payload );
 
@@ -419,7 +419,7 @@ class Paccofacile {
 	 * @return string
 	 */
 	public function update_package( $id, $payload ) {
-		$paccofacile_api = Paccofacile_Api::getInstance();
+		$paccofacile_api = Paccofacile_Api::get_instance();
 
 		$response = $paccofacile_api->put( 'packaging/' . $id, array(), $payload );
 
