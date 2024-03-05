@@ -22,8 +22,8 @@ defined( 'ABSPATH' ) || exit;
 do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 
 <?php /* translators: %s: Customer first name */ ?>
-<p><?php printf( esc_html__( 'Hi %s,', 'woocommerce' ), esc_html( $order->get_billing_first_name() ) ); ?></p>
-<p><?php esc_html_e( 'The following note has been added to your order:', 'woocommerce' ); ?></p>
+<p><?php printf( esc_html__( 'Hi %s,', 'paccofacile-for-woocommerce' ), esc_html( $order->get_billing_first_name() ) ); ?></p>
+<p><?php esc_html_e( 'The following note has been added to your order:', 'paccofacile-for-woocommerce' ); ?></p>
 
 <?php
 /*
@@ -38,7 +38,7 @@ if ( ! empty( $tracking_info['elenco']['checkpoints'] ) ) :
 	$text_align       = is_rtl() ? 'right' : 'left';
 	?>
 
-	<h2><?php echo esc_html( apply_filters( 'paccofacile_order_tracking_title', __( 'Order tracking', 'paccofacile' ) ) ); ?></h2>
+	<h2><?php echo esc_html( apply_filters( 'paccofacile_order_tracking_title', __( 'Order tracking', 'paccofacile-for-woocommerce' ) ) ); ?></h2>
 
 	<div style="margin-bottom: 40px;">
 		<table class="td" cellspacing="0" cellpadding="6" style="width: 100%; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;" border="1">
@@ -59,7 +59,7 @@ if ( ! empty( $tracking_info['elenco']['checkpoints'] ) ) :
 
 <?php endif; ?>
 
-<p><?php esc_html_e( 'As a reminder, here are your order details:', 'woocommerce' ); ?></p>
+<p><?php esc_html_e( 'As a reminder, here are your order details:', 'paccofacile-for-woocommerce' ); ?></p>
 
 <?php
 /*

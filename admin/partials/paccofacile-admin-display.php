@@ -23,7 +23,7 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 ?>
 
 <div class="wrap paccofacile_config">
-	<h2><?php esc_html_e( 'Paccofacile', 'paccofacile' ); ?></h2>
+	<h2><?php esc_html_e( 'Paccofacile', 'paccofacile-for-woocommerce' ); ?></h2>
 	<?php settings_errors(); ?>
 
 	<?php
@@ -42,11 +42,11 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 	?>
 
 	<h2 class="nav-tab-wrapper">
-		<a href="?page=paccofacile&tab=api_settings&nonce=<?php echo esc_attr( wp_create_nonce( 'paccofacile_settings_nonce' ) ); ?>" class="nav-tab <?php echo 'api_settings' === $active_tab ? 'nav-tab-active' : ''; ?>"><?php esc_html_e( 'API Settings', 'paccofacile' ); ?></a>
+		<a href="?page=paccofacile&tab=api_settings&nonce=<?php echo esc_attr( wp_create_nonce( 'paccofacile_settings_nonce' ) ); ?>" class="nav-tab <?php echo 'api_settings' === $active_tab ? 'nav-tab-active' : ''; ?>"><?php esc_html_e( 'API Settings', 'paccofacile-for-woocommerce' ); ?></a>
 		<?php if ( get_option( 'paccofacile_api_valid' ) == 1 ) : ?>
-			<a href="?page=paccofacile&tab=shipping_services&nonce=<?php echo esc_attr( wp_create_nonce( 'paccofacile_settings_nonce' ) ); ?>" class="nav-tab <?php echo 'shipping_services' === $active_tab ? 'nav-tab-active' : ''; ?>"><?php esc_html_e( 'Shipping services', 'paccofacile' ); ?></a>
-			<a href="?page=paccofacile&tab=manage_boxes&nonce=<?php echo esc_attr( wp_create_nonce( 'paccofacile_settings_nonce' ) ); ?>" class="nav-tab <?php echo 'manage_boxes' === $active_tab ? 'nav-tab-active' : ''; ?>"><?php esc_html_e( 'Packages', 'paccofacile' ); ?></a>
-			<?php /* <a href="?page=paccofacile&tab=refund_method" class="nav-tab <?php echo $active_tab == 'refund_method' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Refund method', 'paccofacile' ); ?></a> */ ?>
+			<a href="?page=paccofacile&tab=shipping_services&nonce=<?php echo esc_attr( wp_create_nonce( 'paccofacile_settings_nonce' ) ); ?>" class="nav-tab <?php echo 'shipping_services' === $active_tab ? 'nav-tab-active' : ''; ?>"><?php esc_html_e( 'Shipping services', 'paccofacile-for-woocommerce' ); ?></a>
+			<a href="?page=paccofacile&tab=manage_boxes&nonce=<?php echo esc_attr( wp_create_nonce( 'paccofacile_settings_nonce' ) ); ?>" class="nav-tab <?php echo 'manage_boxes' === $active_tab ? 'nav-tab-active' : ''; ?>"><?php esc_html_e( 'Packages', 'paccofacile-for-woocommerce' ); ?></a>
+			<?php /* <a href="?page=paccofacile&tab=refund_method" class="nav-tab <?php echo $active_tab == 'refund_method' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Refund method', 'paccofacile-for-woocommerce' ); ?></a> */ ?>
 		<?php endif; ?>
 	</h2>
 
@@ -72,7 +72,7 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 			<?php add_thickbox(); ?>
 
 			<div class="wrap">
-				<a href="#TB_inline?width=600&height=550&inlineId=add_courier_modal" class="button button-primary thickbox"><?php esc_html_e( 'Add service', 'paccofacile' ); ?></a>
+				<a href="#TB_inline?width=600&height=550&inlineId=add_courier_modal" class="button button-primary thickbox"><?php esc_html_e( 'Add service', 'paccofacile-for-woocommerce' ); ?></a>
 
 				<div id="add_courier_modal" style="display:none;">
 
@@ -138,7 +138,7 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 													echo esc_attr( 'disabled' );
 												}
 												?>
-												name="add_carrier_submit" class="button button-primary add_carrier_button" value="<?php esc_attr_e( 'Add service', 'paccofacile' ); ?>">
+												name="add_carrier_submit" class="button button-primary add_carrier_button" value="<?php esc_attr_e( 'Add service', 'paccofacile-for-woocommerce' ); ?>">
 										</form>
 										
 									</div>
@@ -168,7 +168,7 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 									$pickup_locker  = get_option( 'paccofacile_pickup_locker_' . $carrier_id );
 									if ( 4 === $pickup_type || 6 === $pickup_type ) :
 										?>
-										<a href="#TB_inline?width=600&height=550&inlineId=manage_pickup_modal" name="<?php esc_attr_e( 'Choose a pickup locker', 'paccofacile' ); ?>" class="thickbox manage_pickup_modal_open"><i class="fa-solid fa-lg fa-gears"></i></a>
+										<a href="#TB_inline?width=600&height=550&inlineId=manage_pickup_modal" name="<?php esc_attr_e( 'Choose a pickup locker', 'paccofacile-for-woocommerce' ); ?>" class="thickbox manage_pickup_modal_open"><i class="fa-solid fa-lg fa-gears"></i></a>
 										<div id="manage_pickup_modal" style="display:none;" data-carrier-id="<?php echo esc_attr( $carrier_id ); ?>">
 											<div id="paccofacile-map" class="paccofacile-map" data-postcode="<?php echo esc_attr( $store_postcode ); ?>" data-city="<?php echo esc_attr( $store_city ); ?>" data-carrier-id="<?php echo esc_attr( $carrier_id ); ?>" data-store-nonce="<?php echo esc_attr( wp_create_nonce( 'get_store_locker_nonce' ) ); ?>">
 												<div id="popup" class="ol-popup">
@@ -188,7 +188,7 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 												<input type="hidden" name="carrier_id" value="<?php echo esc_attr( $carrier_id ); ?>">
 												<input type="hidden" name="_wpnonce" value="<?php echo esc_attr( wp_create_nonce( 'add_store_locker_nonce' ) ); ?>">
 												<input type="hidden" name="action" value="add_store_locker" />
-												<input type="submit" name="add_store_locker_submit" class="button button-primary add_store_locker_button" value="<?php esc_attr_e( 'Save as departure locker', 'paccofacile' ); ?>">
+												<input type="submit" name="add_store_locker_submit" class="button button-primary add_store_locker_button" value="<?php esc_attr_e( 'Save as departure locker', 'paccofacile-for-woocommerce' ); ?>">
 											</form>
 											
 										</div>
@@ -207,8 +207,8 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 										<input type="hidden" name="_wpnonce" value="<?php echo esc_attr( wp_create_nonce( 'delete_carrier_nonce' ) ); ?>" />
 										<input type="hidden" name="action" value="delete_carrier" />
 										<input type="hidden" name="post_id" value="<?php the_ID(); ?>">
-										<?php /* <a href="<?php echo get_edit_post_link(); ?>" class="button button-primary"><?php esc_attr_e('Manage', 'paccofacile'); ?></a> */ ?>
-										<input type="submit" class="button button-primary delete_carrier" value="<?php esc_attr_e( 'Delete', 'paccofacile' ); ?>">
+										<?php /* <a href="<?php echo get_edit_post_link(); ?>" class="button button-primary"><?php esc_attr_e('Manage', 'paccofacile-for-woocommerce'); ?></a> */ ?>
+										<input type="submit" class="button button-primary delete_carrier" value="<?php esc_attr_e( 'Delete', 'paccofacile-for-woocommerce' ); ?>">
 										<span class="spinner"></span>
 									</form>
 									
@@ -245,28 +245,28 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 
 			?>
 			<div class="wrap">
-				<a href="#TB_inline?width=600&height=550&inlineId=add_box_modal" class="button button-primary thickbox"><?php esc_html_e( 'Add package', 'paccofacile' ); ?></a>
+				<a href="#TB_inline?width=600&height=550&inlineId=add_box_modal" class="button button-primary thickbox"><?php esc_html_e( 'Add package', 'paccofacile-for-woocommerce' ); ?></a>
 
 				<div id="add_box_modal" style="display:none;">
 					<form action="" class="add_box_form" method="post">
 
 						<p class="form-field box_name_field ">
-							<label for="box_name"><?php esc_html_e( 'Package name', 'paccofacile' ); ?></label>
+							<label for="box_name"><?php esc_html_e( 'Package name', 'paccofacile-for-woocommerce' ); ?></label>
 							<input type="text" class="short" style="" required name="box_name" id="box_name" value="" placeholder=""> 
-							<span class="description"><?php esc_html_e( 'Give a name to the package.', 'paccofacile' ); ?></span>
+							<span class="description"><?php esc_html_e( 'Give a name to the package.', 'paccofacile-for-woocommerce' ); ?></span>
 						</p>
 
 						<?php $package_types = $plugin_paccofacile->get_package_types(); ?>
 
 						<fieldset class="form-field paccofacile_box_type_field form-field-wide">
-							<legend><?php esc_html_e( 'Package type', 'paccofacile' ); ?></legend>
+							<legend><?php esc_html_e( 'Package type', 'paccofacile-for-woocommerce' ); ?></legend>
 							<ul class="wc-radios">
 								<?php foreach ( $package_types as $package_type ) : ?>
 									<?php
 										$array_nome_type = json_decode( $package_type['nome'], true );
 										$nome_type       = $array_nome_type['en'];
 									?>
-									<li><label><input name="paccofacile_box_type" value="<?php echo esc_attr( $package_type['imballi_tipo_id'] ); ?>" type="radio" class="select short" style="width:16px"> <?php esc_html_e( $nome_type, 'paccofacile' ); ?></label></li>
+									<li><label><input name="paccofacile_box_type" value="<?php echo esc_attr( $package_type['imballi_tipo_id'] ); ?>" type="radio" class="select short" style="width:16px"> <?php esc_html_e( $nome_type, 'paccofacile-for-woocommerce' ); ?></label></li>
 								<?php endforeach; ?>
 							</ul>
 						</fieldset>
@@ -274,16 +274,16 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 						<div class="paccofacile_box_fields">
 
 							<p class="form-field dim1_field ">
-								<label for="dim1"><?php esc_html_e( 'Side 1', 'paccofacile' ); ?> (cm)</label><input type="text" class="short" style="" name="dim1" id="dim1" value="" placeholder=""> 
+								<label for="dim1"><?php esc_html_e( 'Side 1', 'paccofacile-for-woocommerce' ); ?> (cm)</label><input type="text" class="short" style="" name="dim1" id="dim1" value="" placeholder=""> 
 							</p>
 							<p class="form-field dim2_field ">
-								<label for="dim2"><?php esc_html_e( 'Side 2', 'paccofacile' ); ?> (cm)</label><input type="text" class="short" style="" name="dim2" id="dim2" value="" placeholder=""> 
+								<label for="dim2"><?php esc_html_e( 'Side 2', 'paccofacile-for-woocommerce' ); ?> (cm)</label><input type="text" class="short" style="" name="dim2" id="dim2" value="" placeholder=""> 
 							</p>
 							<p class="form-field dim3_field ">
-								<label for="dim3"><?php esc_html_e( 'Side 3', 'paccofacile' ); ?> (cm)</label><input type="text" class="short" style="" name="dim3" id="dim3" value="" placeholder=""> 
+								<label for="dim3"><?php esc_html_e( 'Side 3', 'paccofacile-for-woocommerce' ); ?> (cm)</label><input type="text" class="short" style="" name="dim3" id="dim3" value="" placeholder=""> 
 							</p>
 							<p class="form-field max_weight_field ">
-								<label for="max_weight"><?php esc_html_e( 'Maximum weight', 'paccofacile' ); ?> (kg)</label><input type="text" class="short" style="" name="max_weight" id="max_weight" value="" placeholder=""> 
+								<label for="max_weight"><?php esc_html_e( 'Maximum weight', 'paccofacile-for-woocommerce' ); ?> (kg)</label><input type="text" class="short" style="" name="max_weight" id="max_weight" value="" placeholder=""> 
 							</p>
 						
 						</div>
@@ -293,18 +293,18 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 						?>
 
 						<p class="paccofacile_pallet_type form-field pallet_type_field">
-							<label for="pallet_type"><?php esc_html_e( 'Pallet dimensions', 'paccofacile' ); ?></label>
+							<label for="pallet_type"><?php esc_html_e( 'Pallet dimensions', 'paccofacile-for-woocommerce' ); ?></label>
 							<select style="" id="pallet_type" name="pallet_type" class="select short">
 								<?php foreach ( $pallet_options as $variazione ) : ?>
 									<option data-dim1="<?php echo esc_attr( $variazione['dim1'] ); ?>" data-dim2="<?php echo esc_attr( $variazione['dim2'] ); ?>" data-pesomax="<?php echo esc_attr( $variazione['peso_max'] ); ?>" value="<?php echo esc_attr( $variazione['variante_id'] ); ?>">
-										<?php esc_html_e( 'Base ' . floatval( $variazione['dim1'] ) . 'x' . floatval( $variazione['dim2'] ), 'paccofacile' ); ?>
+										<?php esc_html_e( 'Base ' . floatval( $variazione['dim1'] ) . 'x' . floatval( $variazione['dim2'] ), 'paccofacile-for-woocommerce' ); ?>
 									</option>
 								<?php endforeach; ?>
 							</select>
 						</p>
 
 						<p class="form-field max_height_field paccofacile_pallet_max_height">
-							<label for="max_height"><?php esc_html_e( 'Maximum height', 'paccofacile' ); ?> (cm)</label>
+							<label for="max_height"><?php esc_html_e( 'Maximum height', 'paccofacile-for-woocommerce' ); ?> (cm)</label>
 							<input type="text" class="short" style="" name="max_height" id="max_height" value="" placeholder=""> 
 						</p>
 
@@ -315,7 +315,7 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 						?>
 
 						<p class="paccofacile_envelope_type form-field envelope_type_field">
-							<label for="envelope_type"><?php esc_html_e( 'Envelope dimensions', 'paccofacile' ); ?></label>
+							<label for="envelope_type"><?php esc_html_e( 'Envelope dimensions', 'paccofacile-for-woocommerce' ); ?></label>
 							<select style="" id="envelope_type" name="envelope_type" class="select short">
 								<?php foreach ( $envelope_options as $variazione ) : ?>
 									<?php
@@ -323,7 +323,7 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 										$nome_variante       = $array_nome_variante['en'];
 									?>
 									<option data-dim1="<?php echo esc_attr( $variazione['dim1'] ); ?>" data-dim2="<?php echo esc_attr( $variazione['dim2'] ); ?>" data-dim3="<?php echo esc_attr( $variazione['dim3'] ); ?>" data-pesomax="<?php echo esc_attr( $variazione['peso_max'] ); ?>" value="<?php echo esc_attr( $variazione['variante_id'] ); ?>">
-										<?php esc_html_e( $nome_variante . ' ' . floatval( $variazione['dim1'] ) . 'x' . floatval( $variazione['dim2'] ) . 'x' . floatval( $variazione['dim3'] ) . ' cm - Max ' . floatval( $variazione['peso_max'] ) . ' kg', 'paccofacile' ); ?>
+										<?php esc_html_e( $nome_variante . ' ' . floatval( $variazione['dim1'] ) . 'x' . floatval( $variazione['dim2'] ) . 'x' . floatval( $variazione['dim3'] ) . ' cm - Max ' . floatval( $variazione['peso_max'] ) . ' kg', 'paccofacile-for-woocommerce' ); ?>
 									</option>
 								<?php endforeach; ?>
 							</select>
@@ -331,7 +331,7 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 						
 						<input type="hidden" name="_wpnonce" value="<?php echo esc_attr( wp_create_nonce( 'add_box_nonce' ) ); ?>" />
 						<input type="hidden" name="action" value="add_box" />
-						<input type="submit" name="add_box_submit" class="button button-primary add_box_button" value="<?php esc_attr_e( 'Add package', 'paccofacile' ); ?>">
+						<input type="submit" name="add_box_submit" class="button button-primary add_box_button" value="<?php esc_attr_e( 'Add package', 'paccofacile-for-woocommerce' ); ?>">
 					</form>
 				</div>
 				
@@ -341,10 +341,10 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 						<thead>
 							<tr>
 								<th width="80px"></th>
-								<th><?php esc_html_e( 'Package name', 'paccofacile' ); ?></th>
-								<th><?php esc_html_e( 'Dimensions', 'paccofacile' ); ?> (cm)</th>
-								<th><?php esc_html_e( 'Volume', 'paccofacile' ); ?> (cm<sup>3</sup>)</th>
-								<th><?php esc_html_e( 'Actions', 'paccofacile' ); ?></th>
+								<th><?php esc_html_e( 'Package name', 'paccofacile-for-woocommerce' ); ?></th>
+								<th><?php esc_html_e( 'Dimensions', 'paccofacile-for-woocommerce' ); ?> (cm)</th>
+								<th><?php esc_html_e( 'Volume', 'paccofacile-for-woocommerce' ); ?> (cm<sup>3</sup>)</th>
+								<th><?php esc_html_e( 'Actions', 'paccofacile-for-woocommerce' ); ?></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -389,9 +389,9 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 												<input type="hidden" name="_wpnonce" value="<?php echo esc_attr( wp_create_nonce( 'delete_box_nonce' ) ); ?>" />
 												<input type="hidden" name="action" value="delete_box" />
 												<input type="hidden" name="imballo_id" value="<?php echo esc_attr( $package_id ); ?>">
-												<?php /* <a href="<?php echo get_edit_post_link(); ?>" class="button button-primary"><?php _e('Edit', 'paccofacile'); ?></a> */ ?>
-												<a href="#TB_inline?width=600&height=550&inlineId=edit_box_modal_<?php echo esc_attr( $package_id ); ?>" class="button button-primary thickbox modale-modifica" data-imballo-id="<?php echo esc_attr( $package_id ); ?>"><?php esc_html_e( 'Edit', 'paccofacile' ); ?></a>
-												<input type="submit" class="button button-primary delete_box" value="<?php esc_attr_e( 'Delete', 'paccofacile' ); ?>">
+												<?php /* <a href="<?php echo get_edit_post_link(); ?>" class="button button-primary"><?php _e('Edit', 'paccofacile-for-woocommerce'); ?></a> */ ?>
+												<a href="#TB_inline?width=600&height=550&inlineId=edit_box_modal_<?php echo esc_attr( $package_id ); ?>" class="button button-primary thickbox modale-modifica" data-imballo-id="<?php echo esc_attr( $package_id ); ?>"><?php esc_html_e( 'Edit', 'paccofacile-for-woocommerce' ); ?></a>
+												<input type="submit" class="button button-primary delete_box" value="<?php esc_attr_e( 'Delete', 'paccofacile-for-woocommerce' ); ?>">
 												<span class="spinner"></span>
 											</form>
 											<div id="edit_box_modal_<?php echo esc_attr( $package_id ); ?>" style="display:none;">
@@ -400,8 +400,8 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 													woocommerce_wp_text_input(
 														array(
 															'id'          => 'box_name',
-															'label'       => __( 'Package name', 'paccofacile' ),
-															'description' => __( 'Give a name to the package.', 'paccofacile' ),
+															'label'       => __( 'Package name', 'paccofacile-for-woocommerce' ),
+															'description' => __( 'Give a name to the package.', 'paccofacile-for-woocommerce' ),
 															'value'       => $package_name,
 														)
 													);
@@ -412,13 +412,13 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 														$array_nome_type = json_decode( $package_type['nome'], true );
 														$nome_type       = $array_nome_type['en'];
 
-														$options_tipo[ $package_type['imballi_tipo_id'] ] = __( $nome_type, 'paccofacile' );
+														$options_tipo[ $package_type['imballi_tipo_id'] ] = __( $nome_type, 'paccofacile-for-woocommerce' );
 													}
 
 													woocommerce_wp_radio(
 														array(
 															'id'      => 'paccofacile_box_type',
-															'label'   => __( 'Package type', 'paccofacile' ),
+															'label'   => __( 'Package type', 'paccofacile-for-woocommerce' ),
 															'value'   => $paccofacile_box_type,
 															'options' => $options_tipo,
 															'style'   => 'width:16px', // required for checkboxes and radio buttons!
@@ -439,28 +439,28 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 														woocommerce_wp_text_input(
 															array(
 																'id'          => 'dim1',
-																'label'       => __( 'Side 1', 'paccofacile' ) . ' (cm)',
+																'label'       => __( 'Side 1', 'paccofacile-for-woocommerce' ) . ' (cm)',
 																'value'       => $dim1,
 															)
 														);
 														woocommerce_wp_text_input(
 															array(
 																'id'          => 'dim2',
-																'label'       => __( 'Side 2', 'paccofacile' ) . ' (cm)',
+																'label'       => __( 'Side 2', 'paccofacile-for-woocommerce' ) . ' (cm)',
 																'value'       => $dim2,
 															)
 														);
 														woocommerce_wp_text_input(
 															array(
 																'id'          => 'dim3',
-																'label'       => __( 'Side 3', 'paccofacile' ) . ' (cm)',
+																'label'       => __( 'Side 3', 'paccofacile-for-woocommerce' ) . ' (cm)',
 																'value'       => $dim3,
 															)
 														);
 														woocommerce_wp_text_input(
 															array(
 																'id'          => 'max_weight',
-																'label'       => __( 'Maximum weight', 'paccofacile' ) . ' (kg)',
+																'label'       => __( 'Maximum weight', 'paccofacile-for-woocommerce' ) . ' (kg)',
 																'value'       => $max_weight,
 															)
 														);
@@ -474,11 +474,11 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 															style="display:none;"
 														<?php } ?>
 														>
-														<label for="pallet_type"><?php esc_html_e( 'Pallet dimensions', 'paccofacile' ); ?></label>
+														<label for="pallet_type"><?php esc_html_e( 'Pallet dimensions', 'paccofacile-for-woocommerce' ); ?></label>
 														<select style="" id="pallet_type" name="pallet_type" class="select short">
 															<?php foreach ( $pallet_options as $variazione ) : ?>
 																<option data-dim1="<?php echo esc_attr( $variazione['dim1'] ); ?>" data-dim2="<?php echo esc_attr( $variazione['dim2'] ); ?>" data-pesomax="<?php echo esc_attr( $variazione['peso_max'] ); ?>" value="<?php echo esc_attr( $variazione['variante_id'] ); ?>">
-																	<?php esc_html_e( 'Base ' . floatval( $variazione['dim1'] ) . 'x' . floatval( $variazione['dim2'] ), 'paccofacile' ); ?>
+																	<?php esc_html_e( 'Base ' . floatval( $variazione['dim1'] ) . 'x' . floatval( $variazione['dim2'] ), 'paccofacile-for-woocommerce' ); ?>
 																</option>
 															<?php endforeach; ?>
 														</select>
@@ -490,7 +490,7 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 														<?php if ( 3 !== $paccofacile_box_type ) { ?>
 															style="display:none;"
 														<?php } ?>>
-														<label for="max_height"><?php esc_html_e( 'Maximum height', 'paccofacile' ); ?> (cm)</label>
+														<label for="max_height"><?php esc_html_e( 'Maximum height', 'paccofacile-for-woocommerce' ); ?> (cm)</label>
 														<input type="text" class="short" style="" name="max_height" id="max_height" value="<?php echo floatval( $max_height ); ?>" placeholder=""> 
 													</p>
 
@@ -499,7 +499,7 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 															style="display:none;"
 														<?php } ?>
 														>
-														<label for="envelope_type"><?php esc_html_e( 'Envelope dimensions', 'paccofacile' ); ?></label>
+														<label for="envelope_type"><?php esc_html_e( 'Envelope dimensions', 'paccofacile-for-woocommerce' ); ?></label>
 														<select style="" id="envelope_type" name="envelope_type" class="select short">
 															<?php foreach ( $envelope_options as $variazione ) : ?>
 																<?php
@@ -507,7 +507,7 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 																	$nome_variante       = $array_nome_variante['en'];
 																?>
 																<option data-dim1="<?php echo esc_attr( $variazione['dim1'] ); ?>" data-dim2="<?php echo esc_attr( $variazione['dim2'] ); ?>" data-dim3="<?php echo esc_attr( $variazione['dim3'] ); ?>" data-pesomax="<?php echo esc_attr( $variazione['peso_max'] ); ?>" value="<?php echo esc_attr( $variazione['variante_id'] ); ?>">
-																	<?php esc_attr_e( $nome_variante . ' ' . floatval( $variazione['dim1'] ) . 'x' . floatval( $variazione['dim2'] ) . 'x' . floatval( $variazione['dim3'] ) . ' cm - Max ' . floatval( $variazione['peso_max'] ) . ' kg', 'paccofacile' ); ?>
+																	<?php esc_attr_e( $nome_variante . ' ' . floatval( $variazione['dim1'] ) . 'x' . floatval( $variazione['dim2'] ) . 'x' . floatval( $variazione['dim3'] ) . ' cm - Max ' . floatval( $variazione['peso_max'] ) . ' kg', 'paccofacile-for-woocommerce' ); ?>
 																</option>
 															<?php endforeach; ?>
 														</select>
@@ -517,7 +517,7 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 													<input type="hidden" name="nonce" value="<?php echo esc_attr( wp_create_nonce( 'form-nonce' ) ); ?>" />
 													<input type="hidden" name="action" value="edit_box" />
 													<input type="hidden" name="imballo_id" value="<?php echo esc_attr( $package_id ); ?>" />
-													<input type="submit" name="add_box_submit" class="button button-primary add_box_button" value="<?php esc_attr_e( 'Edit package', 'paccofacile' ); ?>">
+													<input type="submit" name="add_box_submit" class="button button-primary add_box_button" value="<?php esc_attr_e( 'Edit package', 'paccofacile-for-woocommerce' ); ?>">
 												</form>
 											</div>
 										</td>

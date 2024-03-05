@@ -36,7 +36,7 @@ class Paccofacile_I18n {
 		load_plugin_textdomain(
 			'paccofacile',
 			false,
-			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
+			dirname( PACCOFACILE_BASENAME_FILE ) . '/languages/'
 		);
 	}
 }

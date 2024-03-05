@@ -53,7 +53,7 @@ function paccofacile_check_requirements() {
  */
 function paccofacile_missing_wc_notice() {
 	$class   = 'notice notice-error';
-	$message = __( 'Paccofacile requires WooCommerce to be installed and active.', 'paccofacile' );
+	$message = __( 'Paccofacile requires WooCommerce to be installed and active.', 'paccofacile-for-woocommerce' );
 
 	printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) );
 }

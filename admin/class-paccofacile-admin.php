@@ -206,28 +206,28 @@ class Paccofacile_Admin {
 
 		register_setting( 'paccofacile_settings', 'paccofacile_settings', array( 'sanitize_callback' => array( $this, 'paccofacile_settings_validate' ) ) );
 
-		add_settings_section( 'api_settings', esc_attr__( 'API Settings', 'paccofacile' ), array( $this, 'paccofacile_section_api_text' ), 'paccofacile' );
-		add_settings_field( 'paccofacile_setting_api_key', esc_attr__( 'API Key', 'paccofacile' ), array( $this, 'paccofacile_setting_api_key' ), 'paccofacile', 'api_settings' );
-		add_settings_field( 'paccofacile_setting_token', esc_attr__( 'Token', 'paccofacile' ), array( $this, 'paccofacile_setting_token' ), 'paccofacile', 'api_settings' );
-		add_settings_field( 'paccofacile_setting_account_number', esc_attr__( 'Account Number', 'paccofacile' ), array( $this, 'paccofacile_setting_account_number' ), 'paccofacile', 'api_settings' );
+		add_settings_section( 'api_settings', esc_attr__( 'API Settings', 'paccofacile-for-woocommerce' ), array( $this, 'paccofacile_section_api_text' ), 'paccofacile' );
+		add_settings_field( 'paccofacile_setting_api_key', esc_attr__( 'API Key', 'paccofacile-for-woocommerce' ), array( $this, 'paccofacile_setting_api_key' ), 'paccofacile', 'api_settings' );
+		add_settings_field( 'paccofacile_setting_token', esc_attr__( 'Token', 'paccofacile-for-woocommerce' ), array( $this, 'paccofacile_setting_token' ), 'paccofacile', 'api_settings' );
+		add_settings_field( 'paccofacile_setting_account_number', esc_attr__( 'Account Number', 'paccofacile-for-woocommerce' ), array( $this, 'paccofacile_setting_account_number' ), 'paccofacile', 'api_settings' );
 
-		add_settings_section( 'tracking_settings', esc_attr__( 'Tracking', 'paccofacile' ), array( $this, 'paccofacile_section_tracking_text' ), 'paccofacile_tracking' );
-		add_settings_field( 'paccofacile_tracking_to_show', esc_attr__( 'Tracking info to show', 'paccofacile' ), array( $this, 'paccofacile_tracking_to_show' ), 'paccofacile_tracking', 'tracking_settings' );
+		add_settings_section( 'tracking_settings', esc_attr__( 'Tracking', 'paccofacile-for-woocommerce' ), array( $this, 'paccofacile_section_tracking_text' ), 'paccofacile_tracking' );
+		add_settings_field( 'paccofacile_tracking_to_show', esc_attr__( 'Tracking info to show', 'paccofacile-for-woocommerce' ), array( $this, 'paccofacile_tracking_to_show' ), 'paccofacile_tracking', 'tracking_settings' );
 
 		/* phpcs:ignore
 		Refund settings.
 		register_setting( 'paccofacile_settings_refund', 'paccofacile_settings_refund', array( 'sanitize_callback' => array($this, 'paccofacile_settings_refund_options') ) );
 
-		add_settings_section( 'refund_method', esc_attr__('Refund methods', 'paccofacile'), array($this, 'paccofacile_section_refund_methods'), 'paccofacile_refund' );
+		add_settings_section( 'refund_method', esc_attr__('Refund methods', 'paccofacile-for-woocommerce'), array($this, 'paccofacile_section_refund_methods'), 'paccofacile_refund' );
 
-		add_settings_section( 'refund_method_paypal', esc_attr__('PayPal refund', 'paccofacile'), array($this, 'paccofacile_section_refund_methods'), 'paccofacile_refund_paypal' );
-		add_settings_field( 'paccofacile_refund_paypal_email', esc_attr__('Paypal email', 'paccofacile'), array($this, 'paccofacile_refund_paypal_email'), 'paccofacile_refund_paypal', 'refund_method_paypal' );
+		add_settings_section( 'refund_method_paypal', esc_attr__('PayPal refund', 'paccofacile-for-woocommerce'), array($this, 'paccofacile_section_refund_methods'), 'paccofacile_refund_paypal' );
+		add_settings_field( 'paccofacile_refund_paypal_email', esc_attr__('Paypal email', 'paccofacile-for-woocommerce'), array($this, 'paccofacile_refund_paypal_email'), 'paccofacile_refund_paypal', 'refund_method_paypal' );
 
-		add_settings_section( 'refund_method_wire_transfer', esc_attr__('Wire Transfer refund', 'paccofacile'), array($this, 'paccofacile_section_refund_methods'), 'paccofacile_refund_wire_transfer' );
-		add_settings_field( 'paccofacile_refund_wire_transfer_header', esc_attr__('Bank header', 'paccofacile'), array($this, 'paccofacile_refund_wire_transfer_header'), 'paccofacile_refund_wire_transfer', 'refund_method_wire_transfer' );
-		add_settings_field( 'paccofacile_refund_wire_transfer_bank', esc_attr__('Bank', 'paccofacile'), array($this, 'paccofacile_refund_wire_transfer_bank'), 'paccofacile_refund_wire_transfer', 'refund_method_wire_transfer' );
-		add_settings_field( 'paccofacile_refund_wire_transfer_iban', esc_attr__('IBAN', 'paccofacile'), array($this, 'paccofacile_refund_wire_transfer_iban'), 'paccofacile_refund_wire_transfer', 'refund_method_wire_transfer' );
-		add_settings_field( 'paccofacile_refund_wire_transfer_bic', esc_attr__('BIC', 'paccofacile'), array($this, 'paccofacile_refund_wire_transfer_bic'), 'paccofacile_refund_wire_transfer', 'refund_method_wire_transfer' );
+		add_settings_section( 'refund_method_wire_transfer', esc_attr__('Wire Transfer refund', 'paccofacile-for-woocommerce'), array($this, 'paccofacile_section_refund_methods'), 'paccofacile_refund_wire_transfer' );
+		add_settings_field( 'paccofacile_refund_wire_transfer_header', esc_attr__('Bank header', 'paccofacile-for-woocommerce'), array($this, 'paccofacile_refund_wire_transfer_header'), 'paccofacile_refund_wire_transfer', 'refund_method_wire_transfer' );
+		add_settings_field( 'paccofacile_refund_wire_transfer_bank', esc_attr__('Bank', 'paccofacile-for-woocommerce'), array($this, 'paccofacile_refund_wire_transfer_bank'), 'paccofacile_refund_wire_transfer', 'refund_method_wire_transfer' );
+		add_settings_field( 'paccofacile_refund_wire_transfer_iban', esc_attr__('IBAN', 'paccofacile-for-woocommerce'), array($this, 'paccofacile_refund_wire_transfer_iban'), 'paccofacile_refund_wire_transfer', 'refund_method_wire_transfer' );
+		add_settings_field( 'paccofacile_refund_wire_transfer_bic', esc_attr__('BIC', 'paccofacile-for-woocommerce'), array($this, 'paccofacile_refund_wire_transfer_bic'), 'paccofacile_refund_wire_transfer', 'refund_method_wire_transfer' );
 		*/
 	}
 
@@ -279,25 +279,25 @@ class Paccofacile_Admin {
 
 		if ( empty( $newinput['api_key'] ) ) {
 			$valid = false;
-			add_settings_error( 'api_key', 'invalid_api_settings', esc_attr__( 'API Key is incorrect.', 'paccofacile' ) );
+			add_settings_error( 'api_key', 'invalid_api_settings', esc_attr__( 'API Key is incorrect.', 'paccofacile-for-woocommerce' ) );
 			$newinput['api_key'] = '';
 		}
 
 		if ( empty( $newinput['account_number'] ) ) {
 			$valid = false;
-			add_settings_error( 'account_number', 'invalid_account_number', esc_attr__( 'Account number is incorrect.', 'paccofacile' ) );
+			add_settings_error( 'account_number', 'invalid_account_number', esc_attr__( 'Account number is incorrect.', 'paccofacile-for-woocommerce' ) );
 		}
 		
 		if ( empty( $newinput['token'] ) ) {
 			$valid = false;
-			add_settings_error( 'token', 'invalid_token', esc_attr__( 'Token is incorrect.', 'paccofacile' ) );
+			add_settings_error( 'token', 'invalid_token', esc_attr__( 'Token is incorrect.', 'paccofacile-for-woocommerce' ) );
 		}
 
 		if ( true === $valid ) {
 			$valid = $this->paccofacile_check_api_auth( $newinput['api_key'], $newinput['token'], $newinput['account_number'] );
 			if ( false === $valid ) {
 				update_option( 'paccofacile_api_valid', '0' );
-				add_settings_error( 'api_auth', 'invalid_api_auth', esc_attr__( 'API credentials are not valid.', 'paccofacile' ) );
+				add_settings_error( 'api_auth', 'invalid_api_auth', esc_attr__( 'API credentials are not valid.', 'paccofacile-for-woocommerce' ) );
 			} else {
 				update_option( 'paccofacile_api_valid', '1' );
 			}
@@ -348,7 +348,7 @@ class Paccofacile_Admin {
 	 * @return void
 	 */
 	public function paccofacile_section_api_text() {
-		echo '<p>' . esc_attr__( 'You will find the API Keys to activate Paccofacile.it PRO plugin in your Paccofacile.it account follow this path: Paccofacile PRO Dashboard -> Integrations -> WooCommerce -> Generate Keys.', 'paccofacile' ) . '</p>';
+		echo '<p>' . esc_attr__( 'You will find the API Keys to activate Paccofacile.it PRO plugin in your Paccofacile.it account follow this path: Paccofacile PRO Dashboard -> Integrations -> WooCommerce -> Generate Keys.', 'paccofacile-for-woocommerce' ) . '</p>';
 	}
 
 	/**
@@ -357,7 +357,7 @@ class Paccofacile_Admin {
 	 * @return void
 	 */
 	public function paccofacile_section_tracking_text() {
-		echo '<p>' . esc_attr__( 'Check which notification you want to send to your customers to keep them updated on the tracking of their shipments.', 'paccofacile' ) . '</p>';
+		echo '<p>' . esc_attr__( 'Check which notification you want to send to your customers to keep them updated on the tracking of their shipments.', 'paccofacile-for-woocommerce' ) . '</p>';
 	}
 
 	/**
@@ -453,28 +453,28 @@ class Paccofacile_Admin {
 		foreach ( $this->default_tracking_to_show as $key => $value ) {
 			switch ( $key ) {
 				case 'delivered':
-					$this->tracking_status_label['delivered'] = esc_attr__( 'Delivered', 'paccofacile' );
+					$this->tracking_status_label['delivered'] = esc_attr__( 'Delivered', 'paccofacile-for-woocommerce' );
 					break;
 				case 'exception':
-					$this->tracking_status_label['exception'] = esc_attr__( 'Exception', 'paccofacile' );
+					$this->tracking_status_label['exception'] = esc_attr__( 'Exception', 'paccofacile-for-woocommerce' );
 					break;
 				case 'expired':
-					$this->tracking_status_label['expired'] = esc_attr__( 'Expired', 'paccofacile' );
+					$this->tracking_status_label['expired'] = esc_attr__( 'Expired', 'paccofacile-for-woocommerce' );
 					break;
 				case 'inforeceived':
-					$this->tracking_status_label['inforeceived'] = esc_attr__( 'Info received', 'paccofacile' );
+					$this->tracking_status_label['inforeceived'] = esc_attr__( 'Info received', 'paccofacile-for-woocommerce' );
 					break;
 				case 'outfordelivery':
-					$this->tracking_status_label['outfordelivery'] = esc_attr__( 'Out for delivery', 'paccofacile' );
+					$this->tracking_status_label['outfordelivery'] = esc_attr__( 'Out for delivery', 'paccofacile-for-woocommerce' );
 					break;
 				case 'attemptfail':
-					$this->tracking_status_label['attemptfail'] = esc_attr__( 'Attempt failed', 'paccofacile' );
+					$this->tracking_status_label['attemptfail'] = esc_attr__( 'Attempt failed', 'paccofacile-for-woocommerce' );
 					break;
 				case 'pending':
-					$this->tracking_status_label['pending'] = esc_attr__( 'Pending', 'paccofacile' );
+					$this->tracking_status_label['pending'] = esc_attr__( 'Pending', 'paccofacile-for-woocommerce' );
 					break;
 				case 'intransit':
-					$this->tracking_status_label['intransit'] = esc_attr__( 'In transit', 'paccofacile' );
+					$this->tracking_status_label['intransit'] = esc_attr__( 'In transit', 'paccofacile-for-woocommerce' );
 					break;
 			}
 		}
@@ -640,7 +640,7 @@ class Paccofacile_Admin {
 				'message'             => 'OK',
 				'new_post_ID'         => $new_post_id,
 				'nonce'               => wp_create_nonce( 'form-nonce' ),
-				'delete_button_label' => esc_attr__( 'Delete', 'paccofacile' ),
+				'delete_button_label' => esc_attr__( 'Delete', 'paccofacile-for-woocommerce' ),
 			);
 			foreach ( $_POST as $key => $value ) {
 				$response[ $key ] = $value;
@@ -705,8 +705,8 @@ class Paccofacile_Admin {
 			'message'                   => 'OK',
 			'new_post_ID'               => $imballo['imballo_id'],
 			'nonce'                     => wp_create_nonce( 'form-nonce' ),
-			'edit_button_label'         => esc_attr__( 'Edit', 'paccofacile' ),
-			'delete_button_label'       => esc_attr__( 'Delete', 'paccofacile' ),
+			'edit_button_label'         => esc_attr__( 'Edit', 'paccofacile-for-woocommerce' ),
+			'delete_button_label'       => esc_attr__( 'Delete', 'paccofacile-for-woocommerce' ),
 			'icon'                      => $icon,
 			'box_name'                  => $imballo['nome'],
 			'box_type'                  => $imballo['tipo'],
@@ -715,7 +715,7 @@ class Paccofacile_Admin {
 			'dim3'                      => $imballo['dim3'],
 			'volume'                    => $imballo['volume'],
 			'action'                    => $action,
-			'confirm_edit_button_label' => esc_attr__( 'Edit package', 'paccofacile' ),
+			'confirm_edit_button_label' => esc_attr__( 'Edit package', 'paccofacile-for-woocommerce' ),
 		);
 
 		$response['max_weight'] = ( isset( $_POST['peso_max'] ) ) ? filter_var( wp_unslash( $_POST['peso_max'] ), FILTER_SANITIZE_STRING ) : 0;
@@ -849,11 +849,11 @@ class Paccofacile_Admin {
 				'status' => '400',
 			);
 			if ( $_POST['total_goods_value'] !== $items_amount_sum ) {
-				$response['message'][] = esc_attr__( 'The total goods amount must match the amounts of the articles to ship.', 'paccofacile' );
+				$response['message'][] = esc_attr__( 'The total goods amount must match the amounts of the articles to ship.', 'paccofacile-for-woocommerce' );
 			}
 			if ( $_POST['order_weight'] !== $items_weight_sum ) {
 				/* translators: %s is replaced with the amount in Kg */
-				$response['message'][] = esc_attr( sprintf( __( 'The sum of the articles weight must match the weight of the order. (%s Kg)', 'paccofacile' ), filter_var( wp_unslash( $_POST['order_weight'] ), FILTER_SANITIZE_STRING ) ) );
+				$response['message'][] = esc_attr( sprintf( __( 'The sum of the articles weight must match the weight of the order. (%s Kg)', 'paccofacile-for-woocommerce' ), filter_var( wp_unslash( $_POST['order_weight'] ), FILTER_SANITIZE_STRING ) ) );
 			}
 		} else {
 			// SALVO LE INFO DOGANALI NELL'ORDINE.
@@ -926,7 +926,7 @@ class Paccofacile_Admin {
 
 				$response = array(
 					'status'  => '400',
-					'message' => array( esc_attr__( 'Error while saving customs info. Please check the fields and retry.', 'paccofacile' ) ),
+					'message' => array( esc_attr__( 'Error while saving customs info. Please check the fields and retry.', 'paccofacile-for-woocommerce' ) ),
 				);
 			}
 		}

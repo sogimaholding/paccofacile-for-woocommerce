@@ -20,8 +20,8 @@ echo esc_html( wp_strip_all_tags( $email_heading ) );
 echo "\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";
 
 /* translators: %s: Customer first name */
-echo sprintf( esc_html__( 'Hi %s,', 'woocommerce' ), esc_html( $order->get_billing_first_name() ) ) . "\n\n";
-echo esc_html__( 'The following note has been added to your order:', 'woocommerce' ) . "\n\n";
+echo sprintf( esc_html__( 'Hi %s,', 'paccofacile-for-woocommerce' ), esc_html( $order->get_billing_first_name() ) ) . "\n\n";
+echo esc_html__( 'The following note has been added to your order:', 'paccofacile-for-woocommerce' ) . "\n\n";
 
 echo "----------\n\n";
 
@@ -42,7 +42,7 @@ endif;
 
 echo "----------\n\n";
 
-echo esc_html__( 'As a reminder, here are your order details:', 'woocommerce' ) . "\n\n";
+echo esc_html__( 'As a reminder, here are your order details:', 'paccofacile-for-woocommerce' ) . "\n\n";
 
 /*
  * @hooked WC_Emails::order_details() Shows the order details table.

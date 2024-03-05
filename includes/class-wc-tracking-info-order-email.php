@@ -45,14 +45,14 @@ if ( ! class_exists( 'WC_Tracking_Info_Order_Email', false ) ) :
 			$this->customer_email = true;
 
 			// this is the title in WooCommerce Email settings.
-			$this->title = __( 'Tracking Info', 'paccofacile' );
+			$this->title = __( 'Tracking Info', 'paccofacile-for-woocommerce' );
 
 			// this is the description in WooCommerce email settings.
-			$this->description = __( 'Tracking Info Notification emails are sent when tracking checkpoints are available for the client\'s order', 'paccofacile' );
+			$this->description = __( 'Tracking Info Notification emails are sent when tracking checkpoints are available for the client\'s order', 'paccofacile-for-woocommerce' );
 
 			// these are the default heading and subject lines that can be overridden using the settings.
-			$this->heading = __( 'Tracking Info', 'paccofacile' );
-			$this->subject = __( 'Tracking Info', 'paccofacile' );
+			$this->heading = __( 'Tracking Info', 'paccofacile-for-woocommerce' );
+			$this->subject = __( 'Tracking Info', 'paccofacile-for-woocommerce' );
 
 			// these define the locations of the templates that this email should use, we'll just use the new order template since this email is similar.
 			$this->template_html  = 'emails/order-tracking-info.php';

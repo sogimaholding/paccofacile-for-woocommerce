@@ -67,10 +67,10 @@ function paccofacile_shipping_method() {
 
 				$this->id = 'paccofacile_shipping_method';
 
-				$this->method_title = __( 'Paccofacile.it Shipping', 'paccofacile' );
-				$this->title        = $this->get_option( 'title', __( 'Paccofacile.it Shipping', 'paccofacile' ) );
+				$this->method_title = __( 'Paccofacile.it Shipping', 'paccofacile-for-woocommerce' );
+				$this->title        = $this->get_option( 'title', __( 'Paccofacile.it Shipping', 'paccofacile-for-woocommerce' ) );
 
-				$this->method_description = __( 'Custom Shipping Method for Paccofacile.it', 'paccofacile' );
+				$this->method_description = __( 'Custom Shipping Method for Paccofacile.it', 'paccofacile-for-woocommerce' );
 
 				$this->init();
 
@@ -93,7 +93,7 @@ function paccofacile_shipping_method() {
 				$this->init_form_fields();
 				$this->init_settings();
 
-				$this->price_policy                = $this->get_option( 'price_policy', __( 'Paccofacile.it prices', 'paccofacile' ) );
+				$this->price_policy                = $this->get_option( 'price_policy', __( 'Paccofacile.it prices', 'paccofacile-for-woocommerce' ) );
 				$this->carrier                     = $this->get_option( 'carrier', 'notset' );
 				$this->class_cost_calculation_type = $this->get_option( 'class_cost_calculation_type', 'class' );
 
@@ -136,7 +136,7 @@ function paccofacile_shipping_method() {
 
 				if ( 'none' !== $this->service_id ) {
 					$rate = array(
-						'label'     => $this->get_option( 'title', __( 'Paccofacile.it Shipping Method', 'paccofacile' ) ),
+						'label'     => $this->get_option( 'title', __( 'Paccofacile.it Shipping Method', 'paccofacile-for-woocommerce' ) ),
 						'cost'      => '0',
 						'calc_tax'  => 'per_item',
 						'meta_data' => array(
@@ -154,7 +154,7 @@ function paccofacile_shipping_method() {
 
 							$rate = array(
 								'id'        => 'paccofacile_shipping_' . $this->service_id,
-								'label'     => $this->get_option( 'title', __( 'Paccofacile.it Shipping Method', 'paccofacile' ) ),
+								'label'     => $this->get_option( 'title', __( 'Paccofacile.it Shipping Method', 'paccofacile-for-woocommerce' ) ),
 								'cost'      => '0',
 								'calc_tax'  => 'per_item',
 								'meta_data' => array(
@@ -248,7 +248,7 @@ function paccofacile_validate_order( $posted ) {
 			Commented out code.
 			if ( $weight > $weightLimit ) {
 
-				$message = sprintf( __( 'Sorry, %d kg exceeds the maximum weight of %d kg for %s', 'paccofacile' ), $weight, $weightLimit, $Paccofacile_Shipping_Method->title );
+				$message = sprintf( __( 'Sorry, %d kg exceeds the maximum weight of %d kg for %s', 'paccofacile-for-woocommerce' ), $weight, $weightLimit, $Paccofacile_Shipping_Method->title );
 
 				$messageType = "error";
 
@@ -893,13 +893,13 @@ add_filter( 'woocommerce_checkout_fields', 'paccofacile_shipping_phone_checkout'
  */
 function paccofacile_shipping_phone_checkout( $fields ) {
 	$fields['shipping']['shipping_phone'] = array(
-		'label'    => __( 'Phone', 'woocommerce' ),
+		'label'    => __( 'Phone', 'paccofacile-for-woocommerce' ),
 		'required' => false,
 		'class'    => array( 'form-row-wide' ),
 		'priority' => 25,
 	);
 	$fields['shipping']['shipping_email'] = array(
-		'label'    => __( 'Email Address', 'woocommerce' ),
+		'label'    => __( 'Email Address', 'paccofacile-for-woocommerce' ),
 		'required' => false,
 		'class'    => array( 'form-row-wide' ),
 		'priority' => 25,
@@ -907,19 +907,19 @@ function paccofacile_shipping_phone_checkout( $fields ) {
 	unset( $fields['shipping']['shipping_address_2'] );
 	unset( $fields['billing']['billing_address_2'] );
 	$fields['shipping']['shipping_building_number'] = array(
-		'label'    => __( 'Building number', 'paccofacile' ),
+		'label'    => __( 'Building number', 'paccofacile-for-woocommerce' ),
 		'required' => true,
 		'class'    => array( 'form-row-wide' ),
 		'priority' => 55,
 	);
 	$fields['billing']['billing_building_number']   = array(
-		'label'    => __( 'Building number', 'paccofacile' ),
+		'label'    => __( 'Building number', 'paccofacile-for-woocommerce' ),
 		'required' => true,
 		'class'    => array( 'form-row-wide' ),
 		'priority' => 55,
 	);
 	$fields['shipping']['shipping_intercom_code']   = array(
-		'label'    => __( 'Intercom code', 'paccofacile' ),
+		'label'    => __( 'Intercom code', 'paccofacile-for-woocommerce' ),
 		'required' => false,
 		'class'    => array( 'form-row-wide' ),
 		'priority' => 60,
@@ -947,10 +947,10 @@ function paccofacile_shipping_locker_info( $order ) {
 
 		$opening_hours = '';
 		if ( $locker_details['opening_hours'] ) {
-			$opening_hours = '<br /><b>' . esc_html__( 'Opening hours', 'paccofacile' ) . '</b>: ' . $locker_details['opening_hours'];
+			$opening_hours = '<br /><b>' . esc_html__( 'Opening hours', 'paccofacile-for-woocommerce' ) . '</b>: ' . $locker_details['opening_hours'];
 		}
-		echo '<p><b>' . esc_html__( 'Locker ID', 'paccofacile' ) . '</b>: ' . esc_html( $destination_locker_id ) . '<br />
-		<b>' . esc_html__( 'Address', 'paccofacile' ) . '</b>: ' . esc_html( $locker_details['address'] ) . ' ' . esc_html( $locker_details['building_number'] ) . ' - ' . esc_html( $locker_details['city'] ) . ' (' . esc_html( $locker_details['province'] ) . ') ' . esc_html( $locker_details['postcode'] ) . esc_html( $opening_hours ) . '</p>';
+		echo '<p><b>' . esc_html__( 'Locker ID', 'paccofacile-for-woocommerce' ) . '</b>: ' . esc_html( $destination_locker_id ) . '<br />
+		<b>' . esc_html__( 'Address', 'paccofacile-for-woocommerce' ) . '</b>: ' . esc_html( $locker_details['address'] ) . ' ' . esc_html( $locker_details['building_number'] ) . ' - ' . esc_html( $locker_details['city'] ) . ' (' . esc_html( $locker_details['province'] ) . ') ' . esc_html( $locker_details['postcode'] ) . esc_html( $opening_hours ) . '</p>';
 
 	}
 }
@@ -1008,7 +1008,7 @@ add_filter( 'woocommerce_checkout_fields', 'paccofacile_locker_checkout_fields' 
  */
 function paccofacile_locker_checkout_fields( $fields ) {
 	$fields['shipping']['shipping_locker'] = array(
-		'label'    => __( 'Locker', 'woocommerce' ),
+		'label'    => __( 'Locker', 'paccofacile-for-woocommerce' ),
 		'type'     => 'text',
 		'required' => true,
 		'class'    => array( 'form-row-wide' ),
@@ -1027,7 +1027,7 @@ add_filter( 'woocommerce_default_address_fields', 'paccofacile_checkout_fields_l
  * @return array
  */
 function paccofacile_checkout_fields_labels( $fields ) {
-	$fields['address_1']['label'] = __( 'Address', 'paccofacile' );
+	$fields['address_1']['label'] = __( 'Address', 'paccofacile-for-woocommerce' );
 
 	return $fields;
 }
@@ -1134,8 +1134,8 @@ function paccofacile_woocommerce_general_settings( $settings ) {
 
 		if ( 'store_address' === $values['id'] && 'sectionend' !== $values['type'] ) {
 			$new_settings[ $key ] = array(
-				'title'    => __( 'Shop name', 'paccofacile' ),
-				'desc'     => __( 'Heading name of your business office', 'paccofacile' ),
+				'title'    => __( 'Shop name', 'paccofacile-for-woocommerce' ),
+				'desc'     => __( 'Heading name of your business office', 'paccofacile-for-woocommerce' ),
 				'id'       => 'woocommerce_store_name', // <= The field ID (important)
 				'default'  => '',
 				'type'     => 'text',
@@ -1147,8 +1147,8 @@ function paccofacile_woocommerce_general_settings( $settings ) {
 		// Inserting array just after the post code in "Store Address" section.
 		if ( 'woocommerce_store_postcode' === $values['id'] ) {
 			$new_settings[ $key ] = array(
-				'title'    => __( 'Phone Number', 'paccofacile' ),
-				'desc'     => __( 'Phone number of your business office' ),
+				'title'    => __( 'Phone Number', 'paccofacile-for-woocommerce' ),
+				'desc'     => __( 'Phone number of your business office', 'paccofacile-for-woocommerce' ),
 				'id'       => 'woocommerce_store_phone', // <= The field ID (important)
 				'default'  => '',
 				'type'     => 'text',
@@ -1156,8 +1156,8 @@ function paccofacile_woocommerce_general_settings( $settings ) {
 			);
 			$key++;
 			$new_settings[ $key ] = array(
-				'title'    => __( 'Email Address', 'paccofacile' ),
-				'desc'     => __( 'Email Address of your business office' ),
+				'title'    => __( 'Email Address', 'paccofacile-for-woocommerce' ),
+				'desc'     => __( 'Email Address of your business office', 'paccofacile-for-woocommerce' ),
 				'id'       => 'woocommerce_store_email', // <= The field ID (important)
 				'default'  => '',
 				'type'     => 'text',
@@ -1166,8 +1166,8 @@ function paccofacile_woocommerce_general_settings( $settings ) {
 			$key++;
 		} elseif ( 'woocommerce_store_address_2' === $values['id'] ) {
 			$new_settings[ $key ] = array(
-				'title'    => __( 'Building number', 'paccofacile' ),
-				'desc'     => __( 'Building number of your business office' ),
+				'title'    => __( 'Building number', 'paccofacile-for-woocommerce' ),
+				'desc'     => __( 'Building number of your business office', 'paccofacile-for-woocommerce' ),
 				'id'       => 'woocommerce_store_building_number', // <= The field ID (important)
 				'default'  => '',
 				'type'     => 'text',
@@ -1198,7 +1198,7 @@ function paccofacile_order_meta_box( $post ) {
 
 	add_meta_box(
 		'paccofacile',
-		__( 'Paccofacile', 'paccofacile' ),
+		__( 'Paccofacile', 'paccofacile-for-woocommerce' ),
 		'paccofacile_credit_meta_box',
 		'shop_order',
 		'side',
@@ -1209,7 +1209,7 @@ function paccofacile_order_meta_box( $post ) {
 	if ( ! empty( $order_tracking ) ) {
 		add_meta_box(
 			'paccofacile_tracking',
-			__( 'Order Tracking', 'paccofacile' ),
+			__( 'Order Tracking', 'paccofacile-for-woocommerce' ),
 			'paccofacile_tracking_meta_box',
 			'shop_order',
 			'side',
@@ -1221,7 +1221,7 @@ function paccofacile_order_meta_box( $post ) {
 	if ( ! empty( $order_parcels ) ) {
 		add_meta_box(
 			'paccofacile_parcels',
-			__( 'Order Parcels', 'paccofacile' ),
+			__( 'Order Parcels', 'paccofacile-for-woocommerce' ),
 			'paccofacile_parcels_meta_box',
 			'shop_order',
 			'normal',
@@ -1304,74 +1304,74 @@ function paccofacile_credit_meta_box() {
 		
 
 		<div class="paccofacile_ship_with_form">
-			<p><?php esc_html_e( "The customer didn't choose a Paccofacile.it shipment.", 'paccofacile' ); ?></p>
+			<p><?php esc_html_e( "The customer didn't choose a Paccofacile.it shipment.", 'paccofacile-for-woocommerce' ); ?></p>
 			
 			<input type="hidden" name="paccofacile_meta_field_nonce" value="<?php echo esc_attr( wp_create_nonce() ); ?>">
 			<input type="hidden" name="action" value="paccofacile_ship_with" />
 			<input type="hidden" name="post_type" value="shop_order">
 			<input type="hidden" name="order_id" value="<?php echo esc_attr( $order->get_id() ); ?>">
 
-			<input type="submit" name="paccofacile_ship_with" class="button button-primary" value="<?php esc_attr_e( 'Ship with Paccofacile.it', 'paccofacile' ); ?>">
+			<input type="submit" name="paccofacile_ship_with" class="button button-primary" value="<?php esc_attr_e( 'Ship with Paccofacile.it', 'paccofacile-for-woocommerce' ); ?>">
 		</div>
 
 	<?php } else { ?>
 		<div class="paccofacile_pay_order_form">
-			<p><?php esc_html_e( 'Credit left:', 'paccofacile' ); ?> <b><?php echo esc_html( $credito ); ?> €</b></p>
+			<p><?php esc_html_e( 'Credit left:', 'paccofacile-for-woocommerce' ); ?> <b><?php echo esc_html( $credito ); ?> €</b></p>
 			<input type="hidden" name="paccofacile_meta_field_nonce" value="<?php echo esc_attr( wp_create_nonce() ); ?>">
 			<input type="hidden" name="action" value="paccofacile_pay_order" />
 			<?php if ( $shipment_id ) { ?>
 				<input type="hidden" name="shipment_id" value="<?php echo esc_attr( $shipment_id ); ?>">
 			<?php } else { ?>
 				<div class="notice notice-error">
-					<p><?php esc_html_e( 'Your Paccofacile.it order could not be saved due to a data error. Please check the shipping destination data.', 'paccofacile' ); ?></p>
+					<p><?php esc_html_e( 'Your Paccofacile.it order could not be saved due to a data error. Please check the shipping destination data.', 'paccofacile-for-woocommerce' ); ?></p>
 				</div>
 			<?php } ?>
 			<input type="hidden" name="shipping_amount" value="<?php echo esc_attr( $order->get_shipping_total() ); ?>">
 			<input type="hidden" name="post_type" value="shop_order">
 			<input type="hidden" name="order_id" value="<?php echo esc_attr( $order->get_id() ); ?>">
-			<p><?php esc_html_e( 'Shipment ID:', 'paccofacile' ); ?> 
+			<p><?php esc_html_e( 'Shipment ID:', 'paccofacile-for-woocommerce' ); ?> 
 			<?php
 			if ( $shipment_id ) {
 				echo '<b>' . esc_html( $shipment_id ) . '</b>';
 			} else {
-				echo '<b style="color:#b32d2e;">' . esc_html__( 'None', 'paccofacile' ) . '</b>';
+				echo '<b style="color:#b32d2e;">' . esc_html__( 'None', 'paccofacile-for-woocommerce' ) . '</b>';
 			}
 			?>
 			</p>
 			<?php if ( $shipment_draft_id ) { ?>
-				<p><?php esc_html_e( 'Shipment Draft ID:', 'paccofacile' ); ?> <b><?php echo esc_html( $shipment_draft_id ); ?></b></p>
+				<p><?php esc_html_e( 'Shipment Draft ID:', 'paccofacile-for-woocommerce' ); ?> <b><?php echo esc_html( $shipment_draft_id ); ?></b></p>
 			<?php } ?>
 			<?php if ( $paccofacile_order_id ) : ?>
-				<p><?php esc_html_e( 'Paccofacile.it Order ID:', 'paccofacile' ); ?> <b><?php echo esc_html( $paccofacile_order_id ); ?></b></p>
+				<p><?php esc_html_e( 'Paccofacile.it Order ID:', 'paccofacile-for-woocommerce' ); ?> <b><?php echo esc_html( $paccofacile_order_id ); ?></b></p>
 			<?php endif; ?>
 
 			<hr>
 
 			<?php if ( 'paid' !== $paccofacile_order_status ) : ?>
-				<p><?php esc_html_e( 'Shipping costs:', 'paccofacile' ); ?> <b><?php echo ( get_post_meta( $order->get_id(), 'paccofacile_shipping_cost', 1 ) ) ? esc_html( get_post_meta( $order->get_id(), 'paccofacile_shipping_cost', 1 ) ) . ' € (' . esc_html( get_post_meta( $order->get_id(), 'paccofacile_shipping_cost_label_iva', 1 ) ) . ')' : esc_html( wc_format_decimal( $order->get_shipping_total(), 2 ) ) . '  €'; ?></b></p>
+				<p><?php esc_html_e( 'Shipping costs:', 'paccofacile-for-woocommerce' ); ?> <b><?php echo ( get_post_meta( $order->get_id(), 'paccofacile_shipping_cost', 1 ) ) ? esc_html( get_post_meta( $order->get_id(), 'paccofacile_shipping_cost', 1 ) ) . ' € (' . esc_html( get_post_meta( $order->get_id(), 'paccofacile_shipping_cost_label_iva', 1 ) ) . ')' : esc_html( wc_format_decimal( $order->get_shipping_total(), 2 ) ) . '  €'; ?></b></p>
 
 				<?php if ( 1 === $is_consolidato ) : ?>
 					
-					<p><?php esc_html_e( 'This shipment has been consolidated with others. To confirm your order you have to proceed to payment.', 'paccofacile' ); ?></p>
+					<p><?php esc_html_e( 'This shipment has been consolidated with others. To confirm your order you have to proceed to payment.', 'paccofacile-for-woocommerce' ); ?></p>
 
-					<a class="button button-primary" href="<?php esc_attr_e( 'https://pro.paccofacile.it/redirect_to?route=shipment.consolidation_list', 'paccofacile' ); ?>" target="_blank"><?php esc_html_e( 'Continue on Paccofacile.it', 'paccofacile' ); ?></a>
+					<a class="button button-primary" href="<?php esc_attr_e( 'https://pro.paccofacile.it/redirect_to?route=shipment.consolidation_list', 'paccofacile-for-woocommerce' ); ?>" target="_blank"><?php esc_html_e( 'Continue on Paccofacile.it', 'paccofacile-for-woocommerce' ); ?></a>
 
 				<?php elseif ( 1 === $is_consolidabile ) : ?>
 
-					<p><?php esc_html_e( 'This is a consolidable shipment. You have to merge it with other shipments before you can proceed to the payment.', 'paccofacile' ); ?></p>
+					<p><?php esc_html_e( 'This is a consolidable shipment. You have to merge it with other shipments before you can proceed to the payment.', 'paccofacile-for-woocommerce' ); ?></p>
 
-					<a class="button button-primary" href="<?php esc_attr_e( 'https://pro.paccofacile.it/redirect_to?route=shipment.consolidation_list', 'paccofacile' ); ?>" target="_blank"><?php esc_html_e( 'Continue on Paccofacile.it', 'paccofacile' ); ?></a>
+					<a class="button button-primary" href="<?php esc_attr_e( 'https://pro.paccofacile.it/redirect_to?route=shipment.consolidation_list', 'paccofacile-for-woocommerce' ); ?>" target="_blank"><?php esc_html_e( 'Continue on Paccofacile.it', 'paccofacile-for-woocommerce' ); ?></a>
 
 				<?php else : ?>
 				
 					<fieldset class="form-field paccofacile_billing_detail_field form-field-wide">
-						<legend><?php esc_html_e( 'Billing details', 'paccofacile' ); ?></legend>
+						<legend><?php esc_html_e( 'Billing details', 'paccofacile-for-woocommerce' ); ?></legend>
 						<ul class="wc-radios">
 							<li>
-								<label><input name="paccofacile_billing_detail" value="1" type="radio" class="select short" style="width:16px" required checked> <?php esc_html_e( 'Non-fiscal receipt with order summary', 'paccofacile' ); ?></label>
+								<label><input name="paccofacile_billing_detail" value="1" type="radio" class="select short" style="width:16px" required checked> <?php esc_html_e( 'Non-fiscal receipt with order summary', 'paccofacile-for-woocommerce' ); ?></label>
 							</li>
 							<li>
-								<label><input name="paccofacile_billing_detail" value="2" type="radio" class="select short" style="width:16px" required> <?php esc_html_e( 'Invoice', 'paccofacile' ); ?></label>
+								<label><input name="paccofacile_billing_detail" value="2" type="radio" class="select short" style="width:16px" required> <?php esc_html_e( 'Invoice', 'paccofacile-for-woocommerce' ); ?></label>
 							</li>
 						</ul>
 					</fieldset>
@@ -1381,11 +1381,11 @@ function paccofacile_credit_meta_box() {
 						woocommerce_wp_radio(
 							array(
 								'id'            => 'paccofacile_billing_date',
-								'label'         => __( 'Invoice type', 'paccofacile' ),
+								'label'         => __( 'Invoice type', 'paccofacile-for-woocommerce' ),
 								'value'         => '1',
 								'options'       => array(
-									'1' => __( 'Monthly (unique invoice recap of all orders of the current month)', 'paccofacile' ),
-									'2' => __( 'Singular (invoice of this order only)', 'paccofacile' ),
+									'1' => __( 'Monthly (unique invoice recap of all orders of the current month)', 'paccofacile-for-woocommerce' ),
+									'2' => __( 'Singular (invoice of this order only)', 'paccofacile-for-woocommerce' ),
 								),
 								'style'         => 'width:16px', // required for checkboxes and radio buttons.
 								'wrapper_class' => 'paccofacile_billing_date', // always add this class.
@@ -1395,7 +1395,7 @@ function paccofacile_credit_meta_box() {
 						woocommerce_wp_select(
 							array(
 								'id'            => 'paccofacile_billing_address',
-								'label'         => __( 'Billing address', 'paccofacile' ),
+								'label'         => __( 'Billing address', 'paccofacile-for-woocommerce' ),
 								'value'         => $fav_address['address_id'],
 								'options'       => $addresses_options,
 								'wrapper_class' => 'paccofacile_billing_address',
@@ -1423,16 +1423,16 @@ function paccofacile_credit_meta_box() {
 						add_thickbox();
 						?>
 
-						<a name="<?php esc_attr_e( 'Enter customs information', 'paccofacile' ); ?>" href="#TB_inline?width=600&height=550&inlineId=modal_customes" class="button button-primary thickbox add_customs_modal_open"><?php esc_html_e( 'Enter customs information', 'paccofacile' ); ?></a>
+						<a name="<?php esc_attr_e( 'Enter customs information', 'paccofacile-for-woocommerce' ); ?>" href="#TB_inline?width=600&height=550&inlineId=modal_customes" class="button button-primary thickbox add_customs_modal_open"><?php esc_html_e( 'Enter customs information', 'paccofacile-for-woocommerce' ); ?></a>
 						
 					<?php endif; ?>
 				
-					<input type="submit" name="paccofacile_pay_order" class="button button-primary" <?php echo esc_attr( $disabled ); ?> value="<?php esc_attr_e( 'Pay the order with the remaining credit', 'paccofacile' ); ?>">
+					<input type="submit" name="paccofacile_pay_order" class="button button-primary" <?php echo esc_attr( $disabled ); ?> value="<?php esc_attr_e( 'Pay the order with the remaining credit', 'paccofacile-for-woocommerce' ); ?>">
 				
 				<?php endif; ?>
 
 			<?php else : ?>
-				<p class="success"><?php esc_html_e( 'The order on Paccofacile.it is paid', 'paccofacile' ); ?></p>
+				<p class="success"><?php esc_html_e( 'The order on Paccofacile.it is paid', 'paccofacile-for-woocommerce' ); ?></p>
 			<?php endif; ?>
 		</div>
 
@@ -1440,24 +1440,24 @@ function paccofacile_credit_meta_box() {
 			<div class="customs_wrapper">
 				<form action="" class="modal_customes_form" method="post">
 					<p>Order weight: <?php echo esc_html( $order_weight ); ?></p>
-					<input type="number" required name="total_goods_value" placeholder="<?php esc_attr_e( 'Shipping goods total amount (€)', 'paccofacile' ); ?>">
+					<input type="number" required name="total_goods_value" placeholder="<?php esc_attr_e( 'Shipping goods total amount (€)', 'paccofacile-for-woocommerce' ); ?>">
 					<select name="goods_type" required>
-						<option value="none" disabled><?php esc_html_e( 'Goods type', 'paccofacile' ); ?></option>
-						<option value="on_sale_goods"><?php esc_html_e( 'On sale goods', 'paccofacile' ); ?></option>
-						<option value="document"><?php esc_html_e( 'Document', 'paccofacile' ); ?></option>
-						<option value="commercial_sample"><?php esc_html_e( 'Commercial sample', 'paccofacile' ); ?></option>
-						<option value="no_sale_goods"><?php esc_html_e( 'Goods not for sale', 'paccofacile' ); ?></option>
-						<option value="other"><?php esc_html_e( 'Other', 'paccofacile' ); ?></option>
+						<option value="none" disabled><?php esc_html_e( 'Goods type', 'paccofacile-for-woocommerce' ); ?></option>
+						<option value="on_sale_goods"><?php esc_html_e( 'On sale goods', 'paccofacile-for-woocommerce' ); ?></option>
+						<option value="document"><?php esc_html_e( 'Document', 'paccofacile-for-woocommerce' ); ?></option>
+						<option value="commercial_sample"><?php esc_html_e( 'Commercial sample', 'paccofacile-for-woocommerce' ); ?></option>
+						<option value="no_sale_goods"><?php esc_html_e( 'Goods not for sale', 'paccofacile-for-woocommerce' ); ?></option>
+						<option value="other"><?php esc_html_e( 'Other', 'paccofacile-for-woocommerce' ); ?></option>
 					</select>
 
-					<h4><?php esc_html_e( 'Shipping articles details', 'paccofacile' ); ?></h4>
+					<h4><?php esc_html_e( 'Shipping articles details', 'paccofacile-for-woocommerce' ); ?></h4>
 					<table class="widefat fixed lista_customs">
 						<thead>
 							<tr>
-								<th width="80px"><?php esc_html_e( 'Quantity', 'paccofacile' ); ?></th>
-								<th><?php esc_html_e( 'Weight (Kg)', 'paccofacile' ); ?></th>
-								<th><?php esc_html_e( 'Amount (€)', 'paccofacile' ); ?></th>
-								<th width="200px"><?php esc_html_e( 'Description', 'paccofacile' ); ?></th>
+								<th width="80px"><?php esc_html_e( 'Quantity', 'paccofacile-for-woocommerce' ); ?></th>
+								<th><?php esc_html_e( 'Weight (Kg)', 'paccofacile-for-woocommerce' ); ?></th>
+								<th><?php esc_html_e( 'Amount (€)', 'paccofacile-for-woocommerce' ); ?></th>
+								<th width="200px"><?php esc_html_e( 'Description', 'paccofacile-for-woocommerce' ); ?></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -1493,7 +1493,7 @@ function paccofacile_credit_meta_box() {
 					<input type="hidden" name="order_weight" value="<?php echo esc_attr( $order_weight ); ?>">
 					<?php wp_nonce_field( 'add_shipping_customes', '_wpnonce' ); ?>
 					<input type="hidden" name="action" value="add_shipping_customes" />
-					<input type="submit" name="customes_submit" class="button button-primary customes_submit_button" value="<?php esc_attr_e( 'Save', 'paccofacile' ); ?>">
+					<input type="submit" name="customes_submit" class="button button-primary customes_submit_button" value="<?php esc_attr_e( 'Save', 'paccofacile-for-woocommerce' ); ?>">
 				</form>
 			</div>
 		</div>
@@ -1541,10 +1541,10 @@ function paccofacile_parcels_meta_box( $post ) {
 		<table class="widefat fixed">
 			<thead>
 				<tr>
-					<th><?php esc_html_e( 'Parcels', 'paccofacile' ); ?></th>
-					<th><?php esc_html_e( 'Dimensions', 'paccofacile' ); ?></th>
-					<th><?php esc_html_e( 'Weight', 'paccofacile' ); ?></th>
-					<th><?php esc_html_e( 'Products', 'paccofacile' ); ?></th>
+					<th><?php esc_html_e( 'Parcels', 'paccofacile-for-woocommerce' ); ?></th>
+					<th><?php esc_html_e( 'Dimensions', 'paccofacile-for-woocommerce' ); ?></th>
+					<th><?php esc_html_e( 'Weight', 'paccofacile-for-woocommerce' ); ?></th>
+					<th><?php esc_html_e( 'Products', 'paccofacile-for-woocommerce' ); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -1596,7 +1596,7 @@ function paccofacile_order_tracking_info( $order ) {
 		if ( ! empty( $checkpoints ) ) :
 			?>
 
-			<h2><?php echo esc_html( apply_filters( 'paccofacile_order_tracking_title', __( 'Order tracking', 'paccofacile' ) ) ); ?></h2>
+			<h2><?php echo esc_html( apply_filters( 'paccofacile_order_tracking_title', __( 'Order tracking', 'paccofacile-for-woocommerce' ) ) ); ?></h2>
 
 			<table class="woocommerce-table shop_table paccofacile_order_tracking">
 				<?php $count_checkpoints = count( $checkpoints ); ?>
@@ -1907,7 +1907,7 @@ function paccofacile_shipping_option_to_products() {
 		array(
 			'id'      => 'no_pack_needed',
 			'value'   => $no_pack_needed,
-			'label'   => __( 'No pack needed', 'paccofacile' ),
+			'label'   => __( 'No pack needed', 'paccofacile-for-woocommerce' ),
 			'cbvalue' => 1,
 		)
 	);
@@ -2240,8 +2240,8 @@ function paccofacile_shop_order_column( $columns ) {
 		$reordered_columns[ $key ] = $column;
 		if ( 'order_total' === $key ) {
 			// Inserting after "Status" column.
-			$reordered_columns['paccofacile_status'] = __( 'Shipping status', 'paccofacile' );
-			$reordered_columns['paccofacile_label']  = __( 'Paccofacile.it documents', 'paccofacile' );
+			$reordered_columns['paccofacile_status'] = __( 'Shipping status', 'paccofacile-for-woocommerce' );
+			$reordered_columns['paccofacile_label']  = __( 'Paccofacile.it documents', 'paccofacile-for-woocommerce' );
 		}
 	}
 	return $reordered_columns;
@@ -2271,7 +2271,7 @@ function paccofacile_orders_list_column_content( $column, $post_id ) {
 					echo esc_html( $last_checkpoint['message'] ) . ' - ' . esc_html( $last_checkpoint['city'] );
 				}
 			} else {
-				echo '<small>(<em>' . esc_html__( 'no value', 'paccofacile' ) . '</em>)</small>';
+				echo '<small>(<em>' . esc_html__( 'no value', 'paccofacile-for-woocommerce' ) . '</em>)</small>';
 			}
 
 			break;
@@ -2282,7 +2282,7 @@ function paccofacile_orders_list_column_content( $column, $post_id ) {
 			if ( $waybill ) {
 				echo '<a href="' . esc_attr( $waybill ) . '" target="_blank"><span class="dashicons dashicons-pdf"></span> Lettera di vettura</a>';
 			} else {
-				echo '<small>(<em>' . esc_html__( 'no value', 'paccofacile' ) . '</em>)</small>';
+				echo '<small>(<em>' . esc_html__( 'no value', 'paccofacile-for-woocommerce' ) . '</em>)</small>';
 			}
 
 			break;
@@ -2341,7 +2341,7 @@ function paccofacile_search_locality( $iso_code, $city ) {
 
 	if ( 200 === $response['code'] ) {
 		if ( array_key_exists( 'data', $response ) && array_key_exists( 'items', $response['data'] ) && ! empty( $response['data']['items'] ) ) {
-			$array_locality       = array( '' => __( 'Select a city/locality', 'paccofacile' ) );
+			$array_locality       = array( '' => __( 'Select a city/locality', 'paccofacile-for-woocommerce' ) );
 			$count_response_items = count( $response['data']['items'] );
 			for ( $i = 0; $i < $count_response_items; $i++ ) {
 				$array_locality[ $response['data']['items'][ $i ]['locality'] ] = $response['data']['items'][ $i ]['locality'];
@@ -2463,7 +2463,7 @@ function paccofacile_cerca_localita( $fields ) {
 
 	if ( $shipment_draft_id ) {
 		$fields['city'] = array(
-			'label'   => __( 'City / Locality', 'paccofacile' ),
+			'label'   => __( 'City / Locality', 'paccofacile-for-woocommerce' ),
 			'show'    => false,
 			'type'    => 'select',
 			'class'   => 'js_field-city select short',
