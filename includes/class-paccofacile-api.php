@@ -79,7 +79,7 @@ class Paccofacile_Api {
 			'Authorization'  => 'Bearer ' . $this->keys['token'],
 		);
 
-		$this->debug = true;
+		$this->debug = false;
 	}
 
 	/**

@@ -540,6 +540,8 @@ add_filter( 'woocommerce_package_rates', 'paccofacile_package_rates', 10, 2 );
  */
 function paccofacile_package_rates( $rates, $package ) {
 
+	$debug = false;
+
 	$paccofacile_api = Paccofacile_Api::get_instance();
 
 	// Initializing.
@@ -1632,7 +1634,7 @@ function paccofacile_validate_shipping_methods( $services_list ) {
 			$service_id = get_post_meta( get_the_ID(), 'service_id', true );
 
 			$array_serviceids = array_column( $services_list, 'service_id' );
-			$method_k         = array_search( $service_id, $array_serviceids, true );
+			$method_k         = array_search( (int) $service_id, $array_serviceids, true );
 
 			if ( false !== $method_k ) {
 				$filtered_list[] = $services_list[ $method_k ];
