@@ -372,91 +372,198 @@
 			var form = $( el ).closest( 'form' );
 			var activationConditionField = $( el ).closest( 'tr' );
 
-			var minWeightField = $( '#woocommerce_paccofacile_shipping_method_min_weight', form ).closest( 'tr' );
-			var maxWeightField = $( '#woocommerce_paccofacile_shipping_method_max_weight', form ).closest( 'tr' );
+			var arrayToHide = [];
+			var arrayToShow = [];
+
+			var minWeightField = $( '#woocommerce_paccofacile_shipping_method_min_weight', form );
+			var maxWeightField = $( '#woocommerce_paccofacile_shipping_method_max_weight', form );
 			
-			var minPriceField = $( '#woocommerce_paccofacile_shipping_method_min_price', form ).closest( 'tr' );
-			var maxPriceField = $( '#woocommerce_paccofacile_shipping_method_max_price', form ).closest( 'tr' );
+			var minPriceField = $( '#woocommerce_paccofacile_shipping_method_min_price', form );
+			var maxPriceField = $( '#woocommerce_paccofacile_shipping_method_max_price', form );
 
 			if ( 'none' === $( el ).val() ) {
-				minWeightField.hide();
-				maxWeightField.hide();
+
+				arrayToHide.push(minWeightField.attr('id'));
+				//minWeightField.hide();
+
+				arrayToHide.push(maxWeightField.attr('id'));
+				//maxWeightField.hide();
 				
-				minPriceField.hide();
-				maxPriceField.hide();
+				arrayToHide.push(minPriceField.attr('id'));
+				//minPriceField.hide();
 
-				activationConditionField.find('th, td').css('border-bottom', '1px solid #f8f8f8');
+				arrayToHide.push(maxPriceField.attr('id'));
+				//maxPriceField.hide();
+
+				//activationConditionField.find('th, td').css('border-bottom', '1px solid #f8f8f8');
 			} else if ( 'by_weight' === $( el ).val() ) {
-				minWeightField.show();
-				maxWeightField.show();
+				
+				arrayToShow.push(minWeightField.attr('id'));
+				//minWeightField.show();
 
-				minPriceField.hide();
-				maxPriceField.hide();
+				arrayToShow.push(maxWeightField.attr('id'));
+				//maxWeightField.show();
 
-				minWeightField.find( 'th, td' ).css('border-bottom', 'none');
-				activationConditionField.find('th, td').css('border-bottom', 'none');
+				arrayToHide.push(minPriceField.attr('id'));
+				//minPriceField.hide();
+
+				arrayToHide.push(maxPriceField.attr('id'));
+				//maxPriceField.hide();
+
+				// minWeightField.find( 'th, td' ).css('border-bottom', 'none');
+				// activationConditionField.find('th, td').css('border-bottom', 'none');
 			} else if ( 'by_price' === $( el ).val() ) {
-				minWeightField.hide();
-				maxWeightField.hide();
+				arrayToHide.push(minWeightField.attr('id'));
+				//minWeightField.hide();
 
-				minPriceField.show();
-				maxPriceField.show();
+				arrayToHide.push(maxWeightField.attr('id'));
+				//maxWeightField.hide();
 
-				minPriceField.find( 'th, td' ).css('border-bottom', 'none');
-				activationConditionField.find('th, td').css('border-bottom', 'none');
+				arrayToShow.push(minPriceField.attr('id'));
+				//minPriceField.show();
+
+				arrayToShow.push(maxPriceField.attr('id'));
+				//maxPriceField.show();
+
+				//minPriceField.find( 'th, td' ).css('border-bottom', 'none');
+				//activationConditionField.find('th, td').css('border-bottom', 'none');
 			}
+
+			arrayToHide.map(function(value) {
+				var field = $( '#'+value, form ).closest( 'tr' );
+				if(field.length > 0) {
+					field.hide();
+				} else {
+					$( '#'+value, form ).closest( 'fieldset' ).hide();
+					$('label[for="'+value+'"]').hide();
+				}
+			});
+			
+			arrayToShow.map(function(value) {
+				var field = $( '#'+value, form ).closest( 'tr' );
+				if(field.length > 0) {
+					field.show();
+				} else {
+					$( '#'+value, form ).closest( 'fieldset' ).show();
+					$('label[for="'+value+'"]').show();
+				}
+			})
+
+
 		}
 		
 		function paccofacileShippingConditionShowHidePriceVariationFields( el ) {
 			var form = $( el ).closest( 'form' );
 
-			var priceVariationField = $( el ).closest( 'tr' ); // woocommerce_paccofacile_shipping_method_price_variation
-			var variationTypeField = $( '#woocommerce_paccofacile_shipping_method_price_variation_type', form ).closest( 'tr' );
+			//console.log('form', form);
 
-			var variationAmountField = $( '#woocommerce_paccofacile_shipping_method_price_variation_amount', form ).closest( 'tr' );
-			var variationPercentageField = $( '#woocommerce_paccofacile_shipping_method_price_variation_percentage', form ).closest( 'tr' );
+			var arrayToHide = [];
+			var arrayToShow = [];
+
+			var priceVariationField = form.find('#woocommerce_paccofacile_shipping_method_price_variation');
+
+			var variationTypeField = $( '#woocommerce_paccofacile_shipping_method_price_variation_type', form );
+			var variationAmountField = $( '#woocommerce_paccofacile_shipping_method_price_variation_amount', form );
+			var variationPercentageField = $( '#woocommerce_paccofacile_shipping_method_price_variation_percentage', form );
 
 			if ( 'none' === $( el ).val() ) {
-				variationTypeField.hide();
-				variationAmountField.hide();
-				variationPercentageField.hide();
+				
+				arrayToHide.push(variationTypeField.attr('id'));
+				arrayToHide.push(variationAmountField.attr('id'));
+				arrayToHide.push(variationPercentageField.attr('id'));
 
-				priceVariationField.find('th, td').css('border-bottom', '1px solid #f8f8f8');
 			} else {
-				variationTypeField.show();
-				if( variationTypeField.find('#woocommerce_paccofacile_shipping_method_price_variation_type').val() == 'fixed' ) {
-					variationAmountField.show();
-					variationPercentageField.hide();
-				} else if( variationTypeField.find('#woocommerce_paccofacile_shipping_method_price_variation_type').val() == 'percentage' ) {
-					variationAmountField.hide();
-					variationPercentageField.show();
+				arrayToShow.push(variationTypeField.attr('id'));
+				
+				//variationTypeField.show();
+				if( variationTypeField.val() == 'fixed' ) {
+					arrayToShow.push(variationAmountField.attr('id'));
+					arrayToHide.push(variationPercentageField.attr('id'));
+
+					//variationAmountField.show();
+					//variationPercentageField.hide();
+				} else if( variationTypeField.val() == 'percentage' ) {
+					arrayToHide.push(variationAmountField.attr('id'));
+					arrayToShow.push(variationPercentageField.attr('id'));
+
+					//variationAmountField.hide();
+					//variationPercentageField.show();
 				}
 				/* variationTypeField.find('#woocommerce_paccofacile_shipping_method_price_variation_type').trigger( 'change' ); */
 
-				priceVariationField.find('th, td').css('border-bottom', 'none');
-				variationTypeField.find( 'th, td' ).css('border-bottom', 'none');
+				//priceVariationField.find('th, td').css('border-bottom', 'none');
+				//variationTypeField.find( 'th, td' ).css('border-bottom', 'none');
 			}
+
+			arrayToHide.map(function(value) {
+				var field = $( '#'+value, form ).closest( 'tr' );
+				if(field.length > 0) {
+					field.hide();
+				} else {
+					$( '#'+value, form ).closest( 'fieldset' ).hide();
+					$('label[for="'+value+'"]').hide();
+				}
+			});
+			
+			arrayToShow.map(function(value) {
+				var field = $( '#'+value, form ).closest( 'tr' );
+				if(field.length > 0) {
+					field.show();
+				} else {
+					$( '#'+value, form ).closest( 'fieldset' ).show();
+					$('label[for="'+value+'"]').show();
+				}
+			})
 		}
 		
 		function paccofacileShippingConditionShowHidePriceVariationTypeFields( el ) {
 			var form = $( el ).closest( 'form' );
+			
+			//var priceVariationField = $( '#woocommerce_paccofacile_shipping_method_price_variation', form );
+			//var variationTypeField = $( el ).closest( 'tr' );
 
-			var priceVariationField = $( '#woocommerce_paccofacile_shipping_method_price_variation', form ).closest( 'tr' );
-			var variationTypeField = $( el ).closest( 'tr' );
+			arrayToHide = [];
+			arrayToShow = [];
 
-			var variationAmountField = $( '#woocommerce_paccofacile_shipping_method_price_variation_amount', form ).closest( 'tr' );
-			var variationPercentageField = $( '#woocommerce_paccofacile_shipping_method_price_variation_percentage', form ).closest( 'tr' );
+			var variationAmountField = $( '#woocommerce_paccofacile_shipping_method_price_variation_amount', form );
+			var variationPercentageField = $( '#woocommerce_paccofacile_shipping_method_price_variation_percentage', form );
 
-			priceVariationField.find('th, td').css('border-bottom', 'none');
-			variationTypeField.find( 'th, td' ).css('border-bottom', 'none');
+			//priceVariationField.find('th, td').css('border-bottom', 'none');
+			//variationTypeField.find( 'th, td' ).css('border-bottom', 'none');
 			
 			if ( 'fixed' === $( el ).val() ) {
-				variationAmountField.show();
-				variationPercentageField.hide();
+				arrayToShow.push(variationAmountField.attr('id'));
+				//variationAmountField.show();
+				
+				arrayToHide.push(variationPercentageField.attr('id'));
+				//variationPercentageField.hide();
 			} else if( 'percentage' === $( el ).val() ) {
-				variationAmountField.hide();
-				variationPercentageField.show();
+				arrayToHide.push(variationAmountField.attr('id'));
+				//variationAmountField.hide();
+
+				arrayToShow.push(variationPercentageField.attr('id'));
+				//variationPercentageField.show();
 			}
+
+			arrayToHide.map(function(value) {
+				var field = $( '#'+value, form ).closest( 'tr' );
+				if(field.length > 0) {
+					field.hide();
+				} else {
+					$( '#'+value, form ).closest( 'fieldset' ).hide();
+					$('label[for="'+value+'"]').hide();
+				}
+			});
+			
+			arrayToShow.map(function(value) {
+				var field = $( '#'+value, form ).closest( 'tr' );
+				if(field.length > 0) {
+					field.show();
+				} else {
+					$( '#'+value, form ).closest( 'fieldset' ).show();
+					$('label[for="'+value+'"]').show();
+				}
+			})
 		}
 
 		$( document.body ).on( 'change', '#woocommerce_paccofacile_shipping_method_activation_condition', function() {

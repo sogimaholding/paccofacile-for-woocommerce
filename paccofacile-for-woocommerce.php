@@ -30,6 +30,7 @@ if ( ! defined( 'WPINC' ) ) {
 define( 'PACCOFACILE_VERSION', '1.0.5' );
 define( 'PACCOFACILE_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'PACCOFACILE_BASENAME_FILE', plugin_basename( __FILE__ ) );
+define( 'PACCOFACILE_PLUGIN_URL', plugins_url( '', __FILE__ ) );
 
 if ( ! function_exists( 'is_plugin_active' ) ) {
 	include_once ABSPATH . '/wp-admin/includes/plugin.php';

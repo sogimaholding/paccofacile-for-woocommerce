@@ -67,7 +67,7 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 		
 	<?php } elseif ( 'shipping_services' === $active_tab ) { ?>
 
-		<?php if ( get_option( 'paccofacile_api_valid' ) == 1 ) : ?>
+		<?php if ( 1 === get_option( 'paccofacile_api_valid' ) || '1' === get_option( 'paccofacile_api_valid' ) ) : ?>
 
 			<?php add_thickbox(); ?>
 
@@ -235,7 +235,7 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 
 	} elseif ( 'manage_boxes' === $active_tab ) {
 
-		if ( get_option( 'paccofacile_api_valid' ) === 1 ) :
+		if ( 1 === get_option( 'paccofacile_api_valid' ) || '1' === get_option( 'paccofacile_api_valid' ) ) :
 
 			add_thickbox();
 
@@ -370,17 +370,17 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 									$max_height           = $package['altezza_max'];
 
 									if ( 1 === $paccofacile_box_type ) { // pacco!
-										$icon = '<svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M447.9 176c0-10.6-2.6-21-7.6-30.3l-49.1-91.9c-4.3-13-16.5-21.8-30.3-21.8H87.1c-13.8 0-26 8.8-30.4 21.9L7.6 145.8c-5 9.3-7.6 19.7-7.6 30.3C.1 236.6 0 448 0 448c0 17.7 14.3 32 32 32h384c17.7 0 32-14.3 32-32 0 0-.1-211.4-.1-272zm-87-112l50.8 96H286.1l-12-96h86.8zM192 192h64v64h-64v-64zm49.9-128l12 96h-59.8l12-96h35.8zM87.1 64h86.8l-12 96H36.3l50.8-96zM32 448s.1-181.1.1-256H160v64c0 17.7 14.3 32 32 32h64c17.7 0 32-14.3 32-32v-64h127.9c0 74.9.1 256 .1 256H32z" class=""></path></svg>';
+										$icon = PACCOFACILE_PLUGIN_URL . '/public/images/pacco.svg';
 									} elseif ( 2 === $paccofacile_box_type ) { // busta!
-										$icon = '<svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M464 64H48C21.5 64 0 85.5 0 112v288c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48zM48 96h416c8.8 0 16 7.2 16 16v41.4c-21.9 18.5-53.2 44-150.6 121.3-16.9 13.4-50.2 45.7-73.4 45.3-23.2.4-56.6-31.9-73.4-45.3C85.2 197.4 53.9 171.9 32 153.4V112c0-8.8 7.2-16 16-16zm416 320H48c-8.8 0-16-7.2-16-16V195c22.8 18.7 58.8 47.6 130.7 104.7 20.5 16.4 56.7 52.5 93.3 52.3 36.4.3 72.3-35.5 93.3-52.3 71.9-57.1 107.9-86 130.7-104.7v205c0 8.8-7.2 16-16 16z" class=""></path></svg>';
+										$icon = PACCOFACILE_PLUGIN_URL . '/public/images/busta.svg';
 									} elseif ( 3 === $paccofacile_box_type ) { // pallet!
-										$icon = '<svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M144 288h352c8.8 0 16-7.2 16-16V16c0-8.8-7.2-16-16-16H144c-8.8 0-16 7.2-16 16v256c0 8.8 7.2 16 16 16zM288 32h64v76.2l-32-16-32 16V32zm-128 0h96v128l64-32 64 32V32h96v224H160V32zm472 320c4.4 0 8-3.6 8-8v-16c0-4.4-3.6-8-8-8H8c-4.4 0-8 3.6-8 8v16c0 4.4 3.6 8 8 8h56v128H8c-4.4 0-8 3.6-8 8v16c0 4.4 3.6 8 8 8h624c4.4 0 8-3.6 8-8v-16c0-4.4-3.6-8-8-8h-56V352h56zM160 480H96V352h64v128zm288 0H192V352h256v128zm96 0h-64V352h64v128z" class=""></path></svg>';
+										$icon = PACCOFACILE_PLUGIN_URL . '/public/images/pallet.svg';
 									}
 
 									?>
 
 									<tr class="imballo imballo_<?php echo esc_attr( $package_id ); ?>">
-										<td><?php echo esc_html( $icon ); ?></td>
+										<td><img src="<?php echo esc_attr( $icon ); ?>" alt="box type"></td>
 										<td><?php echo esc_html( $package_name ); ?></td>
 										<td><?php echo esc_html( $dimensions ); ?></td>
 										<td><?php echo esc_html( $volume ); ?></td>

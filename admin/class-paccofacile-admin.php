@@ -287,7 +287,7 @@ class Paccofacile_Admin {
 			$valid = false;
 			add_settings_error( 'account_number', 'invalid_account_number', esc_attr__( 'Account number is incorrect.', 'paccofacile-for-woocommerce' ) );
 		}
-		
+
 		if ( empty( $newinput['token'] ) ) {
 			$valid = false;
 			add_settings_error( 'token', 'invalid_token', esc_attr__( 'Token is incorrect.', 'paccofacile-for-woocommerce' ) );
@@ -492,7 +492,7 @@ class Paccofacile_Admin {
 		}
 		echo '<div id="paccofacile_setting_tracking_to_show">';
 		foreach ( $this->default_tracking_to_show as $key => $value ) {
-			if ( array_key_exists( 'tracking_to_show', $options ) && $options['tracking_to_show'] && array_key_exists( $key, $options['tracking_to_show'] ) && 1 === $options['tracking_to_show'][ $key ] ) {
+			if ( array_key_exists( 'tracking_to_show', $options ) && $options['tracking_to_show'] && array_key_exists( $key, $options['tracking_to_show'] ) && '1' === $options['tracking_to_show'][ $key ] ) {
 				$checked = 'checked="checked"';
 			} else {
 				$checked = '';

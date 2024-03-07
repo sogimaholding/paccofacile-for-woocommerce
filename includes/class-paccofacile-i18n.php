@@ -34,7 +34,7 @@ class Paccofacile_I18n {
 	public function load_plugin_textdomain() {
 
 		load_plugin_textdomain(
-			'paccofacile',
+			'paccofacile-for-woocommerce',
 			false,
 			dirname( PACCOFACILE_BASENAME_FILE ) . '/languages/'
 		);
