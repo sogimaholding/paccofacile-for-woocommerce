@@ -960,10 +960,10 @@ function paccofacile_shipping_locker_info( $order ) {
 /**
  * Define the woocommerce_ship_to_different_address_checked callback
  *
- * @param [type] $var Value of woocommerce_ship_to_different_address_checked.
+ * @param [type] $value Value of woocommerce_ship_to_different_address_checked.
  * @return mixed Value woocommerce_ship_to_different_address_checked.
  */
-function paccofacile_woocommerce_ship_to_different_address_checked( $var ) {
+function paccofacile_woocommerce_ship_to_different_address_checked( $value ) {
 	$current_shipping_method = WC()->session->get( 'chosen_shipping_methods' );
 
 	$current_method_strarray = explode( '_', $current_shipping_method[0] );
@@ -995,7 +995,7 @@ function paccofacile_woocommerce_ship_to_different_address_checked( $var ) {
 		}
 	}
 
-	return $var;
+	return $value;
 }
 add_filter( 'woocommerce_ship_to_different_address_checked', 'paccofacile_woocommerce_ship_to_different_address_checked', 10, 1 );
 
@@ -1320,7 +1320,9 @@ function paccofacile_credit_meta_box() {
 		<div class="paccofacile_pay_order_form">
 			<p><?php esc_html_e( 'Credit left:', 'paccofacile-for-woocommerce' ); ?> <b><?php echo esc_html( $credito ); ?> €</b></p>
 			<input type="hidden" name="paccofacile_meta_field_nonce" value="<?php echo esc_attr( wp_create_nonce() ); ?>">
-			<input type="hidden" name="action" value="paccofacile_pay_order" />
+			
+			<?php /* <input type="hidden" name="action" value="paccofacile_pay_order" /> */ ?>
+
 			<?php if ( $shipment_id ) { ?>
 				<input type="hidden" name="shipment_id" value="<?php echo esc_attr( $shipment_id ); ?>">
 			<?php } else { ?>
@@ -1329,8 +1331,8 @@ function paccofacile_credit_meta_box() {
 				</div>
 			<?php } ?>
 			<input type="hidden" name="shipping_amount" value="<?php echo esc_attr( $order->get_shipping_total() ); ?>">
-			<input type="hidden" name="post_type" value="shop_order">
-			<input type="hidden" name="order_id" value="<?php echo esc_attr( $order->get_id() ); ?>">
+			<?php /* <input type="hidden" name="post_type" value="shop_order"> */ ?>
+			<?php /* <input type="hidden" name="order_id" value="<?php echo esc_attr( $order->get_id() ); ?>"> */ ?>
 			<p><?php esc_html_e( 'Shipment ID:', 'paccofacile-for-woocommerce' ); ?> 
 			<?php
 			if ( $shipment_id ) {
@@ -1340,9 +1342,11 @@ function paccofacile_credit_meta_box() {
 			}
 			?>
 			</p>
+
 			<?php if ( $shipment_draft_id ) { ?>
 				<p><?php esc_html_e( 'Shipment Draft ID:', 'paccofacile-for-woocommerce' ); ?> <b><?php echo esc_html( $shipment_draft_id ); ?></b></p>
 			<?php } ?>
+
 			<?php if ( $paccofacile_order_id ) : ?>
 				<p><?php esc_html_e( 'Paccofacile.it Order ID:', 'paccofacile-for-woocommerce' ); ?> <b><?php echo esc_html( $paccofacile_order_id ); ?></b></p>
 			<?php endif; ?>
@@ -1429,18 +1433,21 @@ function paccofacile_credit_meta_box() {
 						
 					<?php endif; ?>
 				
-					<input type="submit" name="paccofacile_pay_order" class="button button-primary" <?php echo esc_attr( $disabled ); ?> value="<?php esc_attr_e( 'Pay the order with the remaining credit', 'paccofacile-for-woocommerce' ); ?>">
+					<button type="button" name="paccofacile_pay_order" class="button button-primary" <?php echo esc_attr( $disabled ); ?>><?php esc_html_e( 'Pay the order with the remaining credit', 'paccofacile-for-woocommerce' ); ?></button>
 				
 				<?php endif; ?>
 
 			<?php else : ?>
 				<p class="success"><?php esc_html_e( 'The order on Paccofacile.it is paid', 'paccofacile-for-woocommerce' ); ?></p>
 			<?php endif; ?>
+		
 		</div>
 
 		<div id="modal_customes" style="display:none;">
 			<div class="customs_wrapper">
-				<form action="" class="modal_customes_form" method="post">
+				<!-- <form action="post.php" class="modal_customes_form" method="post"> -->
+				<div class="modal_customes_form">
+
 					<p>Order weight: <?php echo esc_html( $order_weight ); ?></p>
 					<input type="number" required name="total_goods_value" placeholder="<?php esc_attr_e( 'Shipping goods total amount (€)', 'paccofacile-for-woocommerce' ); ?>">
 					<select name="goods_type" required>
@@ -1493,10 +1500,10 @@ function paccofacile_credit_meta_box() {
 					<input type="hidden" name="shipment_id" value="<?php echo esc_attr( $shipment_id ); ?>">
 					<input type="hidden" name="woo_order_id" value="<?php echo esc_attr( $order->get_id() ); ?>">
 					<input type="hidden" name="order_weight" value="<?php echo esc_attr( $order_weight ); ?>">
-					<?php wp_nonce_field( 'add_shipping_customes', '_wpnonce' ); ?>
-					<input type="hidden" name="action" value="add_shipping_customes" />
-					<input type="submit" name="customes_submit" class="button button-primary customes_submit_button" value="<?php esc_attr_e( 'Save', 'paccofacile-for-woocommerce' ); ?>">
-				</form>
+
+					<button type="button" name="customes_submit" class="button button-primary customes_submit_button"><?php esc_html_e( 'Save', 'paccofacile-for-woocommerce' ); ?></button>
+				</div>
+				<!-- </form> -->
 			</div>
 		</div>
 
@@ -1828,7 +1835,7 @@ function paccofacile_quote_and_save_by_woo_order( $order, $action = null ) {
 		}
 
 		if ( $shipment_id || array_key_exists( 'shipment_draft_id', $payload_ordine ) ) { // siamo nella modifica ordine in wp-admin.
-			$paccofacile_order_payload = json_decode( get_post_meta( $order->get_id(), 'paccofacile_order_payload', true ), true );
+			$paccofacile_order_payload = get_post_meta( $order->get_id(), 'paccofacile_order_payload', true );
 			$saved_service_id          = $paccofacile_order_payload['shipment_service']['service_id'];
 		}
 

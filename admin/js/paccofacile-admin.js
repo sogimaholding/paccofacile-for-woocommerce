@@ -32,7 +32,8 @@
 	$(function() {
 		$('.postbox-container .save_order').on('click', function() {
 			console.log('salavataggio premuto');
-			$('[name="paccofacile_billing_detail"]').removeAttr('required');
+			$('#paccofacile').find('input, textarea, select').removeAttr('required');
+			//$('[name="paccofacile_billing_detail"]').removeAttr('required');
 		});
 
 
@@ -589,11 +590,27 @@
 		} );
 
 
-		$('.modal_customes_form').on('submit',function(event) {
+		$('.modal_customes_form [name="customes_submit"]').on('click',function(event) {
 			event.preventDefault();
 			
-			var dataString = $(this).serialize();
-			var form = $(this);
+			//var dataString = $('.modal_customes_form').serialize();
+			var dataString = '';
+			var dataArray = [];
+			$('.modal_customes_form input').each(function() {
+				if($(this).val() != '' && $(this).val() != null) {
+					dataArray.push(`${$(this).attr('name')}=${$(this).val()}`);
+				}
+			});
+
+			dataArray.push('action=add_shipping_customes');
+			
+
+			dataString = dataArray.join('&');
+
+			// single=Single&multiple=Multiple&multiple=Multiple3&check=check2&radio=radio1
+
+			//console.log(dataString);
+			var form = $('.modal_customes_form');
 			/* console.log(form); */
 			
 			$.ajax({
