@@ -148,7 +148,7 @@ class Paccofacile_Public {
 		endif;
 
 		/* @todo: controllare se il metodo di spedizione scelto è compatibile con locker (meta data?) */
-		if ( 4 === $pickup_type || 5 === $pickup_type ) :
+		if ( 4 === (int)$pickup_type || 5 === (int)$pickup_type ) :
 
 			?>
 			<div id="paccofacile-map" class="paccofacile-map" data-postcode="<?php echo esc_attr( $postcode ); ?>" data-city="<?php echo esc_attr( $city ); ?>" data-carrier-id="<?php echo esc_attr( $carrier_id ); ?>" data-store-nonce="<?php echo esc_attr( wp_create_nonce( 'get_store_locker_nonce' ) ); ?>">

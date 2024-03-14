@@ -166,7 +166,7 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 									$store_city     = get_option( 'woocommerce_store_city' );
 									$store_postcode = get_option( 'woocommerce_store_postcode' );
 									$pickup_locker  = get_option( 'paccofacile_pickup_locker_' . $carrier_id );
-									if ( 4 === $pickup_type || 6 === $pickup_type ) :
+									if ( 4 === (int)$pickup_type || 6 === (int)$pickup_type ) :
 										?>
 										<a href="#TB_inline?width=600&height=550&inlineId=manage_pickup_modal" name="<?php esc_attr_e( 'Choose a pickup locker', 'paccofacile-for-woocommerce' ); ?>" class="thickbox manage_pickup_modal_open"><i class="fa-solid fa-lg fa-gears"></i></a>
 										<div id="manage_pickup_modal" style="display:none;" data-carrier-id="<?php echo esc_attr( $carrier_id ); ?>">

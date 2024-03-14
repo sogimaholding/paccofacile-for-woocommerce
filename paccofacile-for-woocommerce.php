@@ -40,7 +40,7 @@ if ( ! function_exists( 'is_plugin_active' ) ) {
  * Check for the existence of WooCommerce and any other requirements
  */
 function paccofacile_check_requirements() {
-	if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+	if ( class_exists( 'WooCommerce' ) ) {
 		return true;
 	} else {
 		add_action( 'admin_notices', 'paccofacile_missing_wc_notice' );

@@ -990,7 +990,7 @@ function paccofacile_woocommerce_ship_to_different_address_checked( $value ) {
 		endif;
 
 		/* @todo: controllare se il metodo di spedizione scelto è compatibile con locker (meta data?) */
-		if ( 4 === $pickup_type || 5 === $pickup_type ) {
+		if ( 4 === (int)$pickup_type || 5 === (int)$pickup_type ) {
 			return 1;
 		}
 	}
@@ -1093,7 +1093,7 @@ function paccofacile_locker_checkout_map( $checkout ) {
 		endif;
 
 		/* @todo: controllare se il metodo di spedizione scelto è compatibile con locker (meta data?) */
-		if ( 4 === $pickup_type || 5 === $pickup_type ) {
+		if ( 4 === (int)$pickup_type || 5 === (int)$pickup_type ) {
 
 			$active_locker_id = WC()->session->get( 'locker_id' );
 
@@ -1834,9 +1834,14 @@ function paccofacile_quote_and_save_by_woo_order( $order, $action = null ) {
 			$payload_ordine['shipment_draft_id'] = get_post_meta( $order->get_id(), 'shipment_draft_id', true );
 		}
 
+		$saved_service_id = '';
+
 		if ( $shipment_id || array_key_exists( 'shipment_draft_id', $payload_ordine ) ) { // siamo nella modifica ordine in wp-admin.
 			$paccofacile_order_payload = get_post_meta( $order->get_id(), 'paccofacile_order_payload', true );
-			$saved_service_id          = $paccofacile_order_payload['shipment_service']['service_id'];
+
+			if ( $paccofacile_order_payload && is_array( $paccofacile_order_payload ) && array_key_exists( 'shipment_service', $paccofacile_order_payload ) && array_key_exists( 'service_id', $paccofacile_order_payload['shipment_service'] ) ) {
+				$saved_service_id = $paccofacile_order_payload['shipment_service']['service_id'];
+			}
 		}
 
 		if ( null !== $saved_service_id && $saved_service_id && '' !== $saved_service_id ) {
