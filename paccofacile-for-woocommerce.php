@@ -10,7 +10,7 @@
  * Plugin Name:       Paccofacile.it for WooCommerce
  * Plugin URI:        https://www.paccofacile.it/integrazioni/woocommerce
  * Description:       Connect in few clicks your Paccofacile.it PRO's account and start saving money and time with our automatic shipping manager software.
- * Version:           1.1.0
+ * Version:           1.1.1
  * Author:            Sogima Holding srl
  * Author URI:        https://www.paccofacile.it
  * License:           GPL-2.0+
@@ -27,7 +27,7 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Currently plugin version.
  */
-define( 'PACCOFACILE_VERSION', '1.1.0' );
+define( 'PACCOFACILE_VERSION', '1.1.1' );
 define( 'PACCOFACILE_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'PACCOFACILE_BASENAME_FILE', plugin_basename( __FILE__ ) );
 define( 'PACCOFACILE_PLUGIN_URL', plugins_url( '', __FILE__ ) );
@@ -40,7 +40,7 @@ if ( ! function_exists( 'is_plugin_active' ) ) {
  * Check for the existence of WooCommerce and any other requirements
  */
 function paccofacile_check_requirements() {
-	if ( class_exists( 'WooCommerce' ) ) {
+	if ( class_exists( 'WooCommerce' ) || is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 		return true;
 	} else {
 		add_action( 'admin_notices', 'paccofacile_missing_wc_notice' );
