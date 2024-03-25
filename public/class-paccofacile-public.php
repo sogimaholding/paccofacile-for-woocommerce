@@ -73,7 +73,7 @@ class Paccofacile_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( 'open-layers', 'https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.15.1/css/ol.css', array(), '6.14.1', 'all' );
+		wp_enqueue_style( 'open-layers', PACCOFACILE_PLUGIN_URL . '/openlayers/ol.css', array(), '6.15.1', 'all' );
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/paccofacile-public.css', array(), $this->version, 'all' );
 	}
@@ -97,7 +97,7 @@ class Paccofacile_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( 'open-layers', 'https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.15.1/build/ol.js', array( 'jquery' ), '6.15.1', false );
+		wp_enqueue_script( 'open-layers', PACCOFACILE_PLUGIN_URL . '/openlayers/ol.js', array( 'jquery' ), '6.15.1', false );
 		wp_enqueue_script( 'locker-map', plugin_dir_url( __FILE__ ) . 'js/draw-map.js', array( 'jquery' ), $this->version, true );
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/paccofacile-public.js', array( 'jquery' ), $this->version, false );
