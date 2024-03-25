@@ -71,7 +71,7 @@ jQuery(document).ready(function() {
                     console.log(response.message);
                     for(var i=0; i < response.message.length; i++) {
                         var error_div = jQuery('<div>'+response.message[i]+'</div>').addClass('notice notice-error');
-                        var form = 
+                        var form = $mappa.closest('form');
                         
                         form.prepend(error_div);
                     }
