@@ -2,9 +2,9 @@
 Contributors: sogimaholding,francbarberini
 Tags: paccofacile,woocommerce,shipping,spedizioni
 Requires at least: 5.0.0
-Tested up to: 6.3.2
+Tested up to: 6.4.3
 Requires PHP: 7.2
-Stable tag: 1.0.5
+Stable tag: 1.1.3
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 
