@@ -51,15 +51,15 @@ function paccofacile_check_requirements() {
 /**
  * Custom function to declare compatibility with cart_checkout_blocks feature 
 */
-/* function paccofacile_declare_cart_checkout_blocks_compatibility() {
+function paccofacile_declare_cart_checkout_blocks_compatibility() {
 	// Check if the required class exists
 	if ( class_exists('\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
 		// Declare compatibility for 'cart_checkout_blocks'
-		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('paccofacile-for-woocommerce', __FILE__, false);
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('cart_checkout_blocks', __FILE__, false);
 	}
 }
 // Hook the custom function to the 'before_woocommerce_init' action
-add_action('before_woocommerce_init', 'paccofacile_declare_cart_checkout_blocks_compatibility' ); */
+add_action('before_woocommerce_init', 'paccofacile_declare_cart_checkout_blocks_compatibility' );
 
 
 /**
