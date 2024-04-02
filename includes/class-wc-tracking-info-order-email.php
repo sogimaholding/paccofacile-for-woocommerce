@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-if ( ! class_exists( 'WC_Tracking_Info_Order_Email', false ) ) :
+if ( ! class_exists( 'PFWC_Tracking_Info_Order_Email', false ) ) :
 
 	/**
 	 * A custom Expedited Order WooCommerce Email class
@@ -24,7 +24,7 @@ if ( ! class_exists( 'WC_Tracking_Info_Order_Email', false ) ) :
 	 * @since 0.1
 	 * @extends \WC_Email
 	 */
-	class WC_Tracking_Info_Order_Email extends WC_Email {
+	class PFWC_Tracking_Info_Order_Email extends WC_Email {
 
 		/**
 		 * Tracking info
@@ -41,7 +41,7 @@ if ( ! class_exists( 'WC_Tracking_Info_Order_Email', false ) ) :
 		public function __construct() {
 
 			// set ID, this simply needs to be a unique name.
-			$this->id             = 'wc_tracking_info_order';
+			$this->id             = 'pfwc_tracking_info_order';
 			$this->customer_email = true;
 
 			// this is the title in WooCommerce Email settings.
@@ -155,6 +155,6 @@ if ( ! class_exists( 'WC_Tracking_Info_Order_Email', false ) ) :
 				$this->template_base
 			);
 		}
-	} // End \WC_Tracking_Info_Order_Email class.
+	} // End \PFWC_Tracking_Info_Order_Email class.
 
 endif;

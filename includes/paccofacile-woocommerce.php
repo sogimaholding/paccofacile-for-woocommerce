@@ -990,7 +990,7 @@ function paccofacile_woocommerce_ship_to_different_address_checked( $value ) {
 		endif;
 
 		/* @todo: controllare se il metodo di spedizione scelto è compatibile con locker (meta data?) */
-		if ( 4 === (int)$pickup_type || 5 === (int)$pickup_type ) {
+		if ( 4 === (int) $pickup_type || 5 === (int) $pickup_type ) {
 			return 1;
 		}
 	}
@@ -1093,7 +1093,7 @@ function paccofacile_locker_checkout_map( $checkout ) {
 		endif;
 
 		/* @todo: controllare se il metodo di spedizione scelto è compatibile con locker (meta data?) */
-		if ( 4 === (int)$pickup_type || 5 === (int)$pickup_type ) {
+		if ( 4 === (int) $pickup_type || 5 === (int) $pickup_type ) {
 
 			$active_locker_id = WC()->session->get( 'locker_id' );
 
@@ -2317,7 +2317,7 @@ function paccofacile_add_tracking_info_woocommerce_email( $email_classes ) {
 	require 'class-wc-tracking-info-order-email.php';
 
 	// add the email class to the list of email classes that WooCommerce loads.
-	$email_classes['WC_Tracking_Info_Order_Email'] = new WC_Tracking_Info_Order_Email();
+	$email_classes['PFWC_Tracking_Info_Order_Email'] = new PFWC_Tracking_Info_Order_Email();
 
 	return $email_classes;
 }
