@@ -269,7 +269,7 @@ class Paccofacile {
 		$this->loader->add_action( 'init', $this, 'paccofacile_register_session' );
 		$this->loader->add_filter( 'body_class', $plugin_public, 'paccofacile_body_classes' );
 		$this->loader->add_action( 'wp_ajax_get_lockers', $plugin_public, 'get_lockers_ajax_handler' );
-		$this->loader->add_action( 'wp_ajax_getCityCoordinates', $plugin_public, 'getCityCoordinates_ajax_handler' );
+		$this->loader->add_action( 'wp_ajax_get_city_coordinates', $plugin_public, 'get_city_coordinates_ajax_handler' );
 		$this->loader->add_action( 'wp_ajax_locker_id_session', $plugin_public, 'locker_id_session_ajax_handler' );
 	}
 

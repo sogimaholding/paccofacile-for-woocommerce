@@ -166,7 +166,7 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 									$store_city     = get_option( 'woocommerce_store_city' );
 									$store_postcode = get_option( 'woocommerce_store_postcode' );
 									$pickup_locker  = get_option( 'paccofacile_pickup_locker_' . $carrier_id );
-									if ( 4 === (int)$pickup_type || 6 === (int)$pickup_type ) :
+									if ( 4 === (int) $pickup_type || 6 === (int) $pickup_type ) :
 										?>
 										<a href="#TB_inline?width=600&height=550&inlineId=manage_pickup_modal" name="<?php esc_attr_e( 'Choose a pickup locker', 'paccofacile-for-woocommerce' ); ?>" class="thickbox manage_pickup_modal_open"><i class="fa-solid fa-lg fa-gears"></i></a>
 										<div id="manage_pickup_modal" style="display:none;" data-carrier-id="<?php echo esc_attr( $carrier_id ); ?>">
@@ -266,7 +266,18 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 										$array_nome_type = json_decode( $package_type['nome'], true );
 										$nome_type       = $array_nome_type['en'];
 									?>
-									<li><label><input name="paccofacile_box_type" value="<?php echo esc_attr( $package_type['imballi_tipo_id'] ); ?>" type="radio" class="select short" style="width:16px"> <?php esc_html_e( $nome_type, 'paccofacile-for-woocommerce' ); ?></label></li>
+									<li>
+										<label>
+											<input name="paccofacile_box_type" value="<?php echo esc_attr( $package_type['imballi_tipo_id'] ); ?>" type="radio" class="select short" style="width:16px"> 
+											<?php
+												printf(
+													/* translators: %s: Box type */
+													esc_html__( 'Type %s', 'paccofacile-for-woocommerce' ),
+													esc_html( $nome_type )
+												);
+											?>
+										</label>
+									</li>
 								<?php endforeach; ?>
 							</ul>
 						</fieldset>
@@ -297,7 +308,14 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 							<select style="" id="pallet_type" name="pallet_type" class="select short">
 								<?php foreach ( $pallet_options as $variazione ) : ?>
 									<option data-dim1="<?php echo esc_attr( $variazione['dim1'] ); ?>" data-dim2="<?php echo esc_attr( $variazione['dim2'] ); ?>" data-pesomax="<?php echo esc_attr( $variazione['peso_max'] ); ?>" value="<?php echo esc_attr( $variazione['variante_id'] ); ?>">
-										<?php esc_html_e( 'Base ' . floatval( $variazione['dim1'] ) . 'x' . floatval( $variazione['dim2'] ), 'paccofacile-for-woocommerce' ); ?>
+										<?php
+										printf(
+											/* translators: %1$d: Pallet base dim1, %2$d: Pallet base dim2 */
+											esc_html__( 'Base %1$dx%2$d', 'paccofacile-for-woocommerce' ),
+											floatval( $variazione['dim1'] ),
+											floatval( $variazione['dim2'] )
+										);
+										?>
 									</option>
 								<?php endforeach; ?>
 							</select>
@@ -323,7 +341,17 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 										$nome_variante       = $array_nome_variante['en'];
 									?>
 									<option data-dim1="<?php echo esc_attr( $variazione['dim1'] ); ?>" data-dim2="<?php echo esc_attr( $variazione['dim2'] ); ?>" data-dim3="<?php echo esc_attr( $variazione['dim3'] ); ?>" data-pesomax="<?php echo esc_attr( $variazione['peso_max'] ); ?>" value="<?php echo esc_attr( $variazione['variante_id'] ); ?>">
-										<?php esc_html_e( $nome_variante . ' ' . floatval( $variazione['dim1'] ) . 'x' . floatval( $variazione['dim2'] ) . 'x' . floatval( $variazione['dim3'] ) . ' cm - Max ' . floatval( $variazione['peso_max'] ) . ' kg', 'paccofacile-for-woocommerce' ); ?>
+										<?php
+										printf(
+											/* translators: %1$s: Envelope variant name, %2$d dim1, %3$d dim2, %4$d dim3, %5$d max weight  */
+											esc_html__( '%1$s %2$dx%3$dx%4$d cm - Max %5$d kg', 'paccofacile-for-woocommerce' ),
+											esc_html( $nome_variante ),
+											floatval( $variazione['dim1'] ),
+											floatval( $variazione['dim2'] ),
+											floatval( $variazione['dim3'] ),
+											floatval( $variazione['peso_max'] )
+										);
+										?>
 									</option>
 								<?php endforeach; ?>
 							</select>
@@ -412,7 +440,7 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 														$array_nome_type = json_decode( $package_type['nome'], true );
 														$nome_type       = $array_nome_type['en'];
 
-														$options_tipo[ $package_type['imballi_tipo_id'] ] = __( $nome_type, 'paccofacile-for-woocommerce' );
+														$options_tipo[ $package_type['imballi_tipo_id'] ] = $nome_type;
 													}
 
 													woocommerce_wp_radio(
@@ -478,7 +506,14 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 														<select style="" id="pallet_type" name="pallet_type" class="select short">
 															<?php foreach ( $pallet_options as $variazione ) : ?>
 																<option data-dim1="<?php echo esc_attr( $variazione['dim1'] ); ?>" data-dim2="<?php echo esc_attr( $variazione['dim2'] ); ?>" data-pesomax="<?php echo esc_attr( $variazione['peso_max'] ); ?>" value="<?php echo esc_attr( $variazione['variante_id'] ); ?>">
-																	<?php esc_html_e( 'Base ' . floatval( $variazione['dim1'] ) . 'x' . floatval( $variazione['dim2'] ), 'paccofacile-for-woocommerce' ); ?>
+																	<?php
+																	printf(
+																		/* translators: %1$d: Pallet base dim1, %2$d: Pallet base dim2 */
+																		esc_html__( 'Base %1$dx%2$d', 'paccofacile-for-woocommerce' ),
+																		floatval( $variazione['dim1'] ),
+																		floatval( $variazione['dim2'] )
+																	);
+																	?>
 																</option>
 															<?php endforeach; ?>
 														</select>
@@ -507,7 +542,17 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 																	$nome_variante       = $array_nome_variante['en'];
 																?>
 																<option data-dim1="<?php echo esc_attr( $variazione['dim1'] ); ?>" data-dim2="<?php echo esc_attr( $variazione['dim2'] ); ?>" data-dim3="<?php echo esc_attr( $variazione['dim3'] ); ?>" data-pesomax="<?php echo esc_attr( $variazione['peso_max'] ); ?>" value="<?php echo esc_attr( $variazione['variante_id'] ); ?>">
-																	<?php esc_attr_e( $nome_variante . ' ' . floatval( $variazione['dim1'] ) . 'x' . floatval( $variazione['dim2'] ) . 'x' . floatval( $variazione['dim3'] ) . ' cm - Max ' . floatval( $variazione['peso_max'] ) . ' kg', 'paccofacile-for-woocommerce' ); ?>
+																	<?php
+																	printf(
+																		/* translators: %1$s: Envelope variant name, %2$d dim1, %3$d dim2, %4$d dim3, %5$d max weight  */
+																		esc_html__( '%1$s %2$dx%3$dx%4$d cm - Max %5$d kg', 'paccofacile-for-woocommerce' ),
+																		esc_html( $nome_variante ),
+																		floatval( $variazione['dim1'] ),
+																		floatval( $variazione['dim2'] ),
+																		floatval( $variazione['dim3'] ),
+																		floatval( $variazione['peso_max'] )
+																	);
+																	?>
 																</option>
 															<?php endforeach; ?>
 														</select>
