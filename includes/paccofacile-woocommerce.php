@@ -11,14 +11,14 @@
  * @author     Francesco Barberini <supporto.tecnico@paccofacile.it>
  */
 
-require_once PACCOFACILE_PATH . '/includes/class-paccofacile-api.php';
+require_once PFWC_PACCOFACILE_PATH . '/includes/class-paccofacile-api.php';
 
 /**
  * Paccofacile shipping method function
  *
  * @return void
  */
-function paccofacile_shipping_method() {
+function pfwc_shipping_method() {
 	if ( ! class_exists( 'Paccofacile_Shipping_Method' ) ) {
 		/**
 		 * Paccofacile_Shipping_Method
@@ -100,7 +100,7 @@ function paccofacile_shipping_method() {
 				if ( 'notset' !== $this->carrier && 'none' !== $this->carrier ) {
 					$this->service_id = substr( $this->carrier, strpos( $this->carrier, '_' ) + 1 );
 
-					$service = get_available_shipping_methods( $this->service_id );
+					$service = pfwc_get_available_shipping_methods( $this->service_id );
 					if ( $service->have_posts() ) {
 						foreach ( $service->posts as $corriere ) {
 							$this->method_title = get_the_title( $corriere->ID );
@@ -146,7 +146,7 @@ function paccofacile_shipping_method() {
 					// Register the rate.
 					$this->add_rate( $rate );
 				} else {
-					$carriers = get_available_shipping_methods();
+					$carriers = pfwc_get_available_shipping_methods();
 					if ( $carriers->have_posts() ) {
 						while ( $carriers->have_posts() ) {
 							$carriers->the_post();
@@ -172,7 +172,7 @@ function paccofacile_shipping_method() {
 	}
 }
 
-add_action( 'woocommerce_shipping_init', 'paccofacile_shipping_method' );
+add_action( 'woocommerce_shipping_init', 'pfwc_shipping_method' );
 
 /**
  * Add Paccofacile Shipping Method.
@@ -180,12 +180,12 @@ add_action( 'woocommerce_shipping_init', 'paccofacile_shipping_method' );
  * @param array $methods Methods.
  * @return array
  */
-function add_paccofacile_shipping_method( $methods ) {
+function pfwc_add_paccofacile_shipping_method( $methods ) {
 	$methods['paccofacile_shipping_method'] = 'Paccofacile_Shipping_Method';
 	return $methods;
 }
 
-add_filter( 'woocommerce_shipping_methods', 'add_paccofacile_shipping_method' );
+add_filter( 'woocommerce_shipping_methods', 'pfwc_add_paccofacile_shipping_method' );
 
 
 /**
@@ -194,7 +194,7 @@ add_filter( 'woocommerce_shipping_methods', 'add_paccofacile_shipping_method' );
  * @param mixed $service_id Service id.
  * @return $carriers
  */
-function get_available_shipping_methods( $service_id = false ) {
+function pfwc_get_available_shipping_methods( $service_id = false ) {
 	$service = array();
 
 	if ( false !== $service_id ) {
@@ -220,7 +220,7 @@ function get_available_shipping_methods( $service_id = false ) {
  * @param [type] $posted Posted data.
  * @return void
  */
-function paccofacile_validate_order( $posted ) {
+function pfwc_validate_order( $posted ) {
 
 	$packages = WC()->shipping->get_packages();
 
@@ -263,8 +263,8 @@ function paccofacile_validate_order( $posted ) {
 	}
 }
 
-add_action( 'woocommerce_review_order_before_cart_contents', 'paccofacile_validate_order', 10 );
-add_action( 'woocommerce_after_checkout_validation', 'paccofacile_validate_order', 10 );
+add_action( 'woocommerce_review_order_before_cart_contents', 'pfwc_validate_order', 10 );
+add_action( 'woocommerce_after_checkout_validation', 'pfwc_validate_order', 10 );
 
 /**
  * Create parcels
@@ -272,9 +272,9 @@ add_action( 'woocommerce_after_checkout_validation', 'paccofacile_validate_order
  * @param array $products Products array.
  * @return array
  */
-function create_parcels_object( $products ) {
+function pfwc_create_parcels_object( $products ) {
 
-	$boxes = prepare_boxes_payload_bin_packing();
+	$boxes = pfwc_prepare_boxes_payload_bin_packing();
 
 	$paccofacile_api = Paccofacile_Api::get_instance();
 
@@ -471,8 +471,8 @@ function create_parcels_object( $products ) {
  *
  * @return array
  */
-function prepare_boxes_payload_bin_packing() {
-	$plugin         = new Paccofacile();
+function pfwc_prepare_boxes_payload_bin_packing() {
+	$plugin         = new PFWC_Paccofacile();
 	$shipping_boxes = $plugin->get_shipping_boxes();
 	$imballi        = array();
 
@@ -530,7 +530,7 @@ function prepare_boxes_payload_bin_packing() {
 	return $imballi;
 }
 
-add_filter( 'woocommerce_package_rates', 'paccofacile_package_rates', 10, 2 );
+add_filter( 'woocommerce_package_rates', 'pfwc_package_rates', 10, 2 );
 /**
  * Paccofacile package rates
  *
@@ -538,7 +538,7 @@ add_filter( 'woocommerce_package_rates', 'paccofacile_package_rates', 10, 2 );
  * @param array $package Shipping data.
  * @return array
  */
-function paccofacile_package_rates( $rates, $package ) {
+function pfwc_package_rates( $rates, $package ) {
 
 	$debug = false;
 
@@ -578,7 +578,7 @@ function paccofacile_package_rates( $rates, $package ) {
 
 	if ( is_checkout() || is_cart() ) {
 
-		$parcels = create_parcels_object( $package['contents'] );
+		$parcels = pfwc_create_parcels_object( $package['contents'] );
 
 		$response = $paccofacile_api->calculate_quote( $store_country, $store_state, $store_postcode, $store_city, $destination_country, $destination_state, $destination_postcode, $destination_city, $parcels, false );
 
@@ -587,7 +587,7 @@ function paccofacile_package_rates( $rates, $package ) {
 	if ( array_key_exists( 'data', $response ) && ! empty( $response['data'] ) ) {
 		$spedizioni = $response['data']['services_available'];
 
-		$filtered_methods = paccofacile_validate_shipping_methods( $spedizioni );
+		$filtered_methods = pfwc_validate_shipping_methods( $spedizioni );
 
 		$registered_shipping_methods = WC()->shipping->get_shipping_methods();
 
@@ -710,7 +710,7 @@ function paccofacile_package_rates( $rates, $package ) {
  * @param [type] $order Order object.
  * @return void
  */
-function paccofacile_create_order( $order_id, $posted_data, $order ) {
+function pfwc_create_order( $order_id, $posted_data, $order ) {
 	global $woocommerce;
 	$cart = $woocommerce->cart->get_cart();
 
@@ -730,7 +730,7 @@ function paccofacile_create_order( $order_id, $posted_data, $order ) {
 
 	if ( $shipping_method_id && 'paccofacile_shipping_method' === $shipping_method_id ) {
 
-		$carriers = get_available_shipping_methods( $service_id );
+		$carriers = pfwc_get_available_shipping_methods( $service_id );
 		if ( $carriers->have_posts() ) {
 			while ( $carriers->have_posts() ) {
 				$carriers->the_post();
@@ -883,17 +883,17 @@ function paccofacile_create_order( $order_id, $posted_data, $order ) {
 		}
 	}
 }
-add_action( 'woocommerce_checkout_order_processed', 'paccofacile_create_order', 10, 3 );
+add_action( 'woocommerce_checkout_order_processed', 'pfwc_create_order', 10, 3 );
 
 
-add_filter( 'woocommerce_checkout_fields', 'paccofacile_shipping_phone_checkout', 20 );
+add_filter( 'woocommerce_checkout_fields', 'pfwc_shipping_phone_checkout', 20 );
 /**
  * Add shipping additional fields
  *
  * @param array $fields array of checkout fields.
  * @return array
  */
-function paccofacile_shipping_phone_checkout( $fields ) {
+function pfwc_shipping_phone_checkout( $fields ) {
 	$fields['shipping']['shipping_phone'] = array(
 		'label'    => __( 'Phone', 'paccofacile-for-woocommerce' ),
 		'required' => false,
@@ -931,14 +931,14 @@ function paccofacile_shipping_phone_checkout( $fields ) {
 
 
 
-add_action( 'woocommerce_admin_order_data_after_shipping_address', 'paccofacile_shipping_locker_info' );
+add_action( 'woocommerce_admin_order_data_after_shipping_address', 'pfwc_shipping_locker_info' );
 /**
  * Paccofacile locker info
  *
  * @param [type] $order Order object.
  * @return void
  */
-function paccofacile_shipping_locker_info( $order ) {
+function pfwc_shipping_locker_info( $order ) {
 	$destination_locker_id = get_post_meta( $order->get_id(), 'destination_locker_id', true );
 
 	$paccofacile_api = Paccofacile_Api::get_instance();
@@ -963,7 +963,7 @@ function paccofacile_shipping_locker_info( $order ) {
  * @param [type] $value Value of woocommerce_ship_to_different_address_checked.
  * @return mixed Value woocommerce_ship_to_different_address_checked.
  */
-function paccofacile_woocommerce_ship_to_different_address_checked( $value ) {
+function pfwc_ship_to_different_address_checked( $value ) {
 	$current_shipping_method = WC()->session->get( 'chosen_shipping_methods' );
 
 	$current_method_strarray = explode( '_', $current_shipping_method[0] );
@@ -997,18 +997,18 @@ function paccofacile_woocommerce_ship_to_different_address_checked( $value ) {
 
 	return $value;
 }
-add_filter( 'woocommerce_ship_to_different_address_checked', 'paccofacile_woocommerce_ship_to_different_address_checked', 10, 1 );
+add_filter( 'woocommerce_ship_to_different_address_checked', 'pfwc_ship_to_different_address_checked', 10, 1 );
 
 
 
-add_filter( 'woocommerce_checkout_fields', 'paccofacile_locker_checkout_fields' );
+add_filter( 'woocommerce_checkout_fields', 'pfwc_locker_checkout_fields' );
 /**
  * Add locker checkout fields
  *
  * @param array $fields Array of fields.
  * @return array
  */
-function paccofacile_locker_checkout_fields( $fields ) {
+function pfwc_locker_checkout_fields( $fields ) {
 	$fields['shipping']['shipping_locker'] = array(
 		'label'    => __( 'Locker', 'paccofacile-for-woocommerce' ),
 		'type'     => 'text',
@@ -1021,21 +1021,21 @@ function paccofacile_locker_checkout_fields( $fields ) {
 }
 
 
-add_filter( 'woocommerce_default_address_fields', 'paccofacile_checkout_fields_labels' );
+add_filter( 'woocommerce_default_address_fields', 'pfwc_checkout_fields_labels' );
 /**
  * Change the checkout address field label
  *
  * @param array $fields Checkout fields.
  * @return array
  */
-function paccofacile_checkout_fields_labels( $fields ) {
+function pfwc_checkout_fields_labels( $fields ) {
 	$fields['address_1']['label'] = __( 'Address', 'paccofacile-for-woocommerce' );
 
 	return $fields;
 }
 
 
-add_filter( 'woocommerce_checkout_get_value', 'paccofacile_shipping_locker_field_value', 5, 2 );
+add_filter( 'woocommerce_checkout_get_value', 'pfwc_shipping_locker_field_value', 5, 2 );
 /**
  * Locker field
  *
@@ -1043,7 +1043,7 @@ add_filter( 'woocommerce_checkout_get_value', 'paccofacile_shipping_locker_field
  * @param [type] $input The input name.
  * @return [mixed]
  */
-function paccofacile_shipping_locker_field_value( $value, $input ) {
+function pfwc_shipping_locker_field_value( $value, $input ) {
 	// $items = WC()->cart->get_cart();
 	// $item  = reset( $items );
 	$active_locker = WC()->session->get( 'locker_id' );
@@ -1055,14 +1055,14 @@ function paccofacile_shipping_locker_field_value( $value, $input ) {
 }
 
 
-add_action( 'woocommerce_after_checkout_shipping_form', 'paccofacile_locker_checkout_map' );
+add_action( 'woocommerce_after_checkout_shipping_form', 'pfwc_locker_checkout_map' );
 /**
  * Checkout locker map
  *
  * @param [type] $checkout Checkout.
  * @return void
  */
-function paccofacile_locker_checkout_map( $checkout ) {
+function pfwc_locker_checkout_map( $checkout ) {
 
 	global $woocommerce;
 	$current_shipping_method = WC()->session->get( 'chosen_shipping_methods' );
@@ -1120,14 +1120,14 @@ function paccofacile_locker_checkout_map( $checkout ) {
 
 
 
-add_filter( 'woocommerce_general_settings', 'paccofacile_woocommerce_general_settings' );
+add_filter( 'woocommerce_general_settings', 'pfwc_general_settings' );
 /**
  * WooCommerce general settings
  *
  * @param array $settings array of WooCommerce settings.
  * @return array
  */
-function paccofacile_woocommerce_general_settings( $settings ) {
+function pfwc_general_settings( $settings ) {
 	$key = 1;
 
 	foreach ( $settings as $values ) {
@@ -1188,7 +1188,7 @@ function paccofacile_woocommerce_general_settings( $settings ) {
  * @param [type] $post Order Post.
  * @return void
  */
-function paccofacile_order_meta_box( $post ) {
+function pfwc_order_meta_box( $post ) {
 	$order              = wc_get_order( $post->ID );
 	$shipping_methods   = $order->get_items( 'shipping' );
 	$shipping_method_id = false;
@@ -1201,7 +1201,7 @@ function paccofacile_order_meta_box( $post ) {
 	add_meta_box(
 		'paccofacile',
 		__( 'Paccofacile', 'paccofacile-for-woocommerce' ),
-		'paccofacile_credit_meta_box',
+		'pfwc_credit_meta_box',
 		'shop_order',
 		'side',
 		'core',
@@ -1212,7 +1212,7 @@ function paccofacile_order_meta_box( $post ) {
 		add_meta_box(
 			'paccofacile_tracking',
 			__( 'Order Tracking', 'paccofacile-for-woocommerce' ),
-			'paccofacile_tracking_meta_box',
+			'pfwc_tracking_meta_box',
 			'shop_order',
 			'side',
 			'core'
@@ -1224,21 +1224,21 @@ function paccofacile_order_meta_box( $post ) {
 		add_meta_box(
 			'paccofacile_parcels',
 			__( 'Order Parcels', 'paccofacile-for-woocommerce' ),
-			'paccofacile_parcels_meta_box',
+			'pfwc_parcels_meta_box',
 			'shop_order',
 			'normal',
 			'core'
 		);
 	}
 }
-add_action( 'add_meta_boxes_shop_order', 'paccofacile_order_meta_box' );
+add_action( 'add_meta_boxes_shop_order', 'pfwc_order_meta_box' );
 
 /**
  * Paccofacile Order credit metabox
  *
  * @return void
  */
-function paccofacile_credit_meta_box() {
+function pfwc_credit_meta_box() {
 	global $post;
 
 	$paccofacile_api = Paccofacile_Api::get_instance();
@@ -1516,7 +1516,7 @@ function paccofacile_credit_meta_box() {
  *
  * @return void
  */
-function paccofacile_tracking_meta_box() {
+function pfwc_tracking_meta_box() {
 	global $post;
 
 	$order_tracking = get_post_meta( $post->ID, 'order_tracking', true ) ? json_decode( get_post_meta( $post->ID, 'order_tracking', true ), true ) : '';
@@ -1542,7 +1542,7 @@ function paccofacile_tracking_meta_box() {
  * @param [type] $post Order object.
  * @return void
  */
-function paccofacile_parcels_meta_box( $post ) {
+function pfwc_parcels_meta_box( $post ) {
 	$order_parcels = get_post_meta( $post->ID, 'order_parcels', true ) ? json_decode( get_post_meta( $post->ID, 'order_parcels', true ), true ) : '';
 
 	if ( ! empty( $order_parcels ) ) :
@@ -1587,14 +1587,14 @@ function paccofacile_parcels_meta_box( $post ) {
 	endif;
 }
 
-add_action( 'woocommerce_order_details_after_order_table', 'paccofacile_order_tracking_info' );
+add_action( 'woocommerce_order_details_after_order_table', 'pfwc_order_tracking_info' );
 /**
  * Order tracking info
  *
  * @param [type] $order Order object.
  * @return void
  */
-function paccofacile_order_tracking_info( $order ) {
+function pfwc_order_tracking_info( $order ) {
 
 	$order_tracking   = get_post_meta( $order->get_id(), 'order_tracking', true ) ? json_decode( get_post_meta( $order->get_id(), 'order_tracking', true ), true ) : '';
 	$options_tracking = get_option( 'paccofacile_settings' )['tracking_to_show'];
@@ -1628,7 +1628,7 @@ function paccofacile_order_tracking_info( $order ) {
  * @param [type] $services_list Services list.
  * @return array
  */
-function paccofacile_validate_shipping_methods( $services_list ) {
+function pfwc_validate_shipping_methods( $services_list ) {
 
 	// PRENDO SOLO I SERVIZI ABILITATI DALL'UTENTE.
 	$args             = array( 'post_type' => 'carrier' );
@@ -1660,7 +1660,7 @@ function paccofacile_validate_shipping_methods( $services_list ) {
  * @param [type] $action Action.
  * @return void
  */
-function paccofacile_quote_and_save_by_woo_order( $order, $action = null ) {
+function pfwc_quote_and_save_by_woo_order( $order, $action = null ) {
 
 	$paccofacile_api = Paccofacile_Api::get_instance();
 
@@ -1703,7 +1703,7 @@ function paccofacile_quote_and_save_by_woo_order( $order, $action = null ) {
 	$destination_building_number = $order->get_meta( '_shipping_building_number' );
 	$destination_intercom_code   = $order->get_meta( '_shipping_intercom_code' );
 
-	$parcels = create_parcels_object( $order->get_items() );
+	$parcels = pfwc_create_parcels_object( $order->get_items() );
 
 	$calculate_tax_for = array(
 		'country'  => $destination_country,
@@ -1717,7 +1717,7 @@ function paccofacile_quote_and_save_by_woo_order( $order, $action = null ) {
 	if ( array_key_exists( 'data', $response_quote ) && ! empty( $response_quote['data'] ) ) {
 		$response_quote_data = $response_quote['data'];
 
-		$filtered_response = paccofacile_validate_shipping_methods( $response_quote_data['services_available'] );
+		$filtered_response = pfwc_validate_shipping_methods( $response_quote_data['services_available'] );
 
 		$shipping_items = (array) $order->get_items( 'shipping' );
 		if ( 0 === count( $shipping_items ) ) {
@@ -1873,7 +1873,7 @@ function paccofacile_quote_and_save_by_woo_order( $order, $action = null ) {
 }
 
 
-add_action( 'woocommerce_order_before_calculate_totals', 'paccofacile_calculate_shipping_costs', 10, 2 );
+add_action( 'woocommerce_order_before_calculate_totals', 'pfwc_calculate_shipping_costs', 10, 2 );
 /**
  * Calculate shipping costs
  *
@@ -1881,7 +1881,7 @@ add_action( 'woocommerce_order_before_calculate_totals', 'paccofacile_calculate_
  * @param [type] $order Order object.
  * @return void
  */
-function paccofacile_calculate_shipping_costs( $and_taxes, $order ) {
+function pfwc_calculate_shipping_costs( $and_taxes, $order ) {
 
 	if ( did_action( 'woocommerce_order_before_calculate_totals' ) > 0 ) {
 
@@ -1894,20 +1894,20 @@ function paccofacile_calculate_shipping_costs( $and_taxes, $order ) {
 		}
 
 		if ( $shipping_method_id && 'paccofacile_shipping_method' === $shipping_method_id ) {
-			paccofacile_quote_and_save_by_woo_order( $order );
+			pfwc_quote_and_save_by_woo_order( $order );
 		}
 	}
 }
 
 
 // Add custom fields to product shipping tab.
-add_action( 'woocommerce_product_options_shipping', 'paccofacile_shipping_option_to_products' );
+add_action( 'woocommerce_product_options_shipping', 'pfwc_shipping_option_to_products' );
 /**
  * No need pack option on WooCommerce products
  *
  * @return void
  */
-function paccofacile_shipping_option_to_products() {
+function pfwc_shipping_option_to_products() {
 	global $post, $product;
 
 	echo '</div><div class="options_group">'; // New option group.
@@ -1928,14 +1928,14 @@ function paccofacile_shipping_option_to_products() {
 }
 
 // Save the custom fields values as meta data.
-add_action( 'woocommerce_process_product_meta', 'paccofacile_save_shipping_option_to_products' );
+add_action( 'woocommerce_process_product_meta', 'pfwc_save_shipping_option_to_products' );
 /**
  * Save "need package option" setting
  *
  * @param int $post_id Product post id.
  * @return void
  */
-function paccofacile_save_shipping_option_to_products( $post_id ) {
+function pfwc_save_shipping_option_to_products( $post_id ) {
 	// Check & Validate the woocommerce meta nonce.
 	if ( ! ( isset( $_POST['woocommerce_meta_nonce'] ) || wp_verify_nonce( sanitize_key( $_POST['woocommerce_meta_nonce'] ), 'woocommerce_save_data' ) ) ) {
 		return;
@@ -2018,7 +2018,7 @@ if ( ! function_exists( 'paccofacile_pay_order' ) ) {
  * @param [type] $data Data to sent.
  * @return array
  */
-function paccofacile_send_documents_to_orders( $data ) {
+function pfwc_send_documents_to_orders( $data ) {
 
 	global $wp_filesystem;
 	if ( ! is_a( $wp_filesystem, 'WP_Filesystem_Base' ) ) {
@@ -2109,7 +2109,7 @@ add_action(
 			'/order_documents/(?P<order_id>\d+)',
 			array(
 				'methods'             => WP_REST_Server::EDITABLE,
-				'callback'            => 'paccofacile_send_documents_to_orders',
+				'callback'            => 'pfwc_send_documents_to_orders',
 				'permission_callback' => '__return_true',
 			)
 		);
@@ -2122,7 +2122,7 @@ add_action(
  * @param array $data Data to update.
  * @return array
  */
-function paccofacile_update_order( $data ) {
+function pfwc_update_order( $data ) {
 
 	$paccofacile_order_id = $data['shipment']['order_id'];
 
@@ -2231,7 +2231,7 @@ add_action(
 			'/order_update',
 			array(
 				'methods'             => WP_REST_Server::EDITABLE,
-				'callback'            => 'paccofacile_update_order',
+				'callback'            => 'pfwc_update_order',
 				'permission_callback' => '__return_true',
 			)
 		);
@@ -2239,14 +2239,14 @@ add_action(
 );
 
 
-add_filter( 'manage_edit-shop_order_columns', 'paccofacile_shop_order_column', 20 );
+add_filter( 'manage_edit-shop_order_columns', 'pfwc_shop_order_column', 20 );
 /**
  * Shop order column
  *
  * @param [type] $columns Columns.
  * @return array
  */
-function paccofacile_shop_order_column( $columns ) {
+function pfwc_shop_order_column( $columns ) {
 	$reordered_columns = array();
 
 	// Inserting columns to a specific location.
@@ -2262,7 +2262,7 @@ function paccofacile_shop_order_column( $columns ) {
 }
 
 
-add_action( 'manage_shop_order_posts_custom_column', 'paccofacile_orders_list_column_content', 20, 2 );
+add_action( 'manage_shop_order_posts_custom_column', 'pfwc_orders_list_column_content', 20, 2 );
 /**
  * Order listg content column
  *
@@ -2270,7 +2270,7 @@ add_action( 'manage_shop_order_posts_custom_column', 'paccofacile_orders_list_co
  * @param [type] $post_id Post id.
  * @return void
  */
-function paccofacile_orders_list_column_content( $column, $post_id ) {
+function pfwc_orders_list_column_content( $column, $post_id ) {
 	switch ( $column ) {
 		case 'paccofacile_status':
 			// Get custom post meta data.
@@ -2311,30 +2311,18 @@ function paccofacile_orders_list_column_content( $column, $post_id ) {
  * @param array $email_classes available Email classes.
  * @return array filtered available email classes
  */
-function paccofacile_add_tracking_info_woocommerce_email( $email_classes ) {
+function pfwc_add_tracking_info_woocommerce_email( $email_classes ) {
 
 	// include our custom email class.
-	require 'class-wc-tracking-info-order-email.php';
+	require 'class-pfwc-tracking-info-order-email.php';
 
 	// add the email class to the list of email classes that WooCommerce loads.
 	$email_classes['PFWC_Tracking_Info_Order_Email'] = new PFWC_Tracking_Info_Order_Email();
 
 	return $email_classes;
 }
-add_filter( 'woocommerce_email_classes', 'paccofacile_add_tracking_info_woocommerce_email' );
+add_filter( 'woocommerce_email_classes', 'pfwc_add_tracking_info_woocommerce_email' );
 
-
-/*
-COMMENTED.
-add_action( 'woocommerce_proceed_to_checkout', 'print_shipping_info' );
-function print_shipping_info() {
-	$shipping_tax_rates = WC_Tax::get_shipping_tax_rates();
-
-	echo '<pre>';
-	print_r($shipping_tax_rates);
-	echo '</pre>';
-}
-*/
 
 /**
  * Search locality
@@ -2343,7 +2331,7 @@ function print_shipping_info() {
  * @param [type] $city City.
  * @return array
  */
-function paccofacile_search_locality( $iso_code, $city ) {
+function pfwc_search_locality( $iso_code, $city ) {
 	$paccofacile_api = Paccofacile_Api::get_instance();
 
 	$payload = array(
@@ -2374,7 +2362,7 @@ function paccofacile_search_locality( $iso_code, $city ) {
  * @param [type] $locker_id Id locker.
  * @return mixed
  */
-function paccofacile_add_store_locker( $carrier_id, $locker_id ) {
+function pfwc_add_store_locker( $carrier_id, $locker_id ) {
 
 	$result = update_option( 'paccofacile_pickup_locker_' . $carrier_id, $locker_id );
 
@@ -2391,7 +2379,7 @@ function paccofacile_add_store_locker( $carrier_id, $locker_id ) {
  * @param [type] $carrier_id Id Corriere.
  * @return mixed|bool
  */
-function paccofacile_get_pickup_locker( $carrier_id ) {
+function pfwc_get_pickup_locker( $carrier_id ) {
 
 	$locker_id = get_option( 'paccofacile_pickup_locker_' . $carrier_id );
 
@@ -2409,11 +2397,11 @@ function paccofacile_get_pickup_locker( $carrier_id ) {
  * @param [type] $city City.
  * @return array
  */
-function paccofacile_get_lockers( $postcode, $city ) {
+function pfwc_get_lockers( $postcode, $city ) {
 	$paccofacile_api = Paccofacile_Api::get_instance();
 
 	// prendo le coordinate del comune indicato.
-	$locality = paccofacile_get_location_info( $postcode, $city );
+	$locality = pfwc_get_location_info( $postcode, $city );
 
 	if ( $locality ) {
 		$payload  = array(
@@ -2442,7 +2430,7 @@ function paccofacile_get_lockers( $postcode, $city ) {
  * @param string $city City.
  * @return array
  */
-function paccofacile_get_location_info( $postcode, $city ) {
+function pfwc_get_location_info( $postcode, $city ) {
 	$paccofacile_api = Paccofacile_Api::get_instance();
 
 	$payload = array(
@@ -2467,7 +2455,7 @@ function paccofacile_get_location_info( $postcode, $city ) {
  * @param array $fields Admin shipping fields.
  * @return array
  */
-function paccofacile_cerca_localita( $fields ) {
+function pfwc_cerca_localita( $fields ) {
 	global $post;
 
 	$shipment_draft_id = get_post_meta( $post->ID, 'shipment_draft_id', true );
@@ -2481,9 +2469,9 @@ function paccofacile_cerca_localita( $fields ) {
 			'show'    => false,
 			'type'    => 'select',
 			'class'   => 'js_field-city select short',
-			'options' => paccofacile_search_locality( $iso_code, $city ),
+			'options' => pfwc_search_locality( $iso_code, $city ),
 		);
 	}
 	return $fields;
 }
-add_filter( 'woocommerce_admin_shipping_fields', 'paccofacile_cerca_localita' );
+add_filter( 'woocommerce_admin_shipping_fields', 'pfwc_cerca_localita' );

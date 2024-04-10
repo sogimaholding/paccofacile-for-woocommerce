@@ -27,45 +27,45 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Currently plugin version.
  */
-define( 'PACCOFACILE_VERSION', '1.1.3' );
-define( 'PACCOFACILE_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
-define( 'PACCOFACILE_BASENAME_FILE', plugin_basename( __FILE__ ) );
-define( 'PACCOFACILE_PLUGIN_URL', plugins_url( '', __FILE__ ) );
+define( 'PFWC_PACCOFACILE_VERSION', '1.1.3' );
+define( 'PFWC_PACCOFACILE_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
+define( 'PFWC_PACCOFACILE_BASENAME_FILE', plugin_basename( __FILE__ ) );
+define( 'PFWC_PACCOFACILE_PLUGIN_URL', plugins_url( '', __FILE__ ) );
 
 if ( ! function_exists( 'is_plugin_active' ) ) {
 	include_once ABSPATH . '/wp-admin/includes/plugin.php';
 }
 
 /**
- * Check for the existence of WooCommerce and any other requirements
+ * Check for the existence of WooCommerce and any other requirements.
  */
-function paccofacile_check_requirements() {
+function pfwc_check_requirements() {
 	if ( class_exists( 'WooCommerce' ) || is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 		return true;
 	} else {
-		add_action( 'admin_notices', 'paccofacile_missing_wc_notice' );
+		add_action( 'admin_notices', 'pfwc_missing_wc_notice' );
 		return false;
 	}
 }
 
 /**
- * Custom function to declare compatibility with cart_checkout_blocks feature 
-*/
-function paccofacile_declare_cart_checkout_blocks_compatibility() {
-	// Check if the required class exists
-	if ( class_exists('\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
-		// Declare compatibility for 'cart_checkout_blocks'
-		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('cart_checkout_blocks', __FILE__, false);
+ * Custom function to declare compatibility with cart_checkout_blocks feature.
+ */
+function pfwc_declare_cart_checkout_blocks_compatibility() {
+	// Check if the required class exists.
+	if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+		// Declare compatibility for 'cart_checkout_blocks'.
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', __FILE__, false );
 	}
 }
-// Hook the custom function to the 'before_woocommerce_init' action
-add_action('before_woocommerce_init', 'paccofacile_declare_cart_checkout_blocks_compatibility' );
+// Hook the custom function to the 'before_woocommerce_init' action.
+add_action( 'before_woocommerce_init', 'pfwc_declare_cart_checkout_blocks_compatibility' );
 
 
 /**
  * Display a message advising WooCommerce is required
  */
-function paccofacile_missing_wc_notice() {
+function pfwc_missing_wc_notice() {
 	$class   = 'notice notice-error';
 	$message = __( 'Paccofacile requires WooCommerce to be installed and active.', 'paccofacile-for-woocommerce' );
 
@@ -74,30 +74,30 @@ function paccofacile_missing_wc_notice() {
 
 /**
  * The code that runs during plugin activation.
- * This action is documented in includes/class-paccofacile-activator.php
+ * This action is documented in includes/class-pfwc-paccofacile-activator.php
  */
-function activate_paccofacile() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-paccofacile-activator.php';
-	Paccofacile_Activator::activate();
+function pfwc_activate_paccofacile() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-pfwc-paccofacile-activator.php';
+	PFWC_Paccofacile_Activator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-paccofacile-deactivator.php
  */
-function deactivate_paccofacile() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-paccofacile-deactivator.php';
-	Paccofacile_Deactivator::deactivate();
+function pfwc_deactivate_paccofacile() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-pfwc-paccofacile-deactivator.php';
+	PFWC_Paccofacile_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_paccofacile' );
-register_deactivation_hook( __FILE__, 'deactivate_paccofacile' );
+register_activation_hook( __FILE__, 'pfwc_activate_paccofacile' );
+register_deactivation_hook( __FILE__, 'pfwc_deactivate_paccofacile' );
 
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-paccofacile.php';
+require plugin_dir_path( __FILE__ ) . 'includes/class-pfwc-paccofacile.php';
 
 /**
  * Begins execution of the plugin.
@@ -108,10 +108,10 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-paccofacile.php';
  *
  * @since    1.0.0
  */
-function run_paccofacile() {
-	if ( paccofacile_check_requirements() ) {
-		$plugin = new Paccofacile();
+function pfwc_run_paccofacile() {
+	if ( pfwc_check_requirements() ) {
+		$plugin = new PFWC_Paccofacile();
 		$plugin->run();
 	}
 }
-run_paccofacile();
+pfwc_run_paccofacile();

@@ -1,6 +1,6 @@
 <?php
 /**
- * Fired during plugin deactivation
+ * Fired during plugin activation
  *
  * @link       #
  * @since      1.0.0
@@ -10,24 +10,24 @@
  */
 
 /**
- * Fired during plugin deactivation.
+ * Fired during plugin activation.
  *
- * This class defines all code necessary to run during the plugin's deactivation.
+ * This class defines all code necessary to run during the plugin's activation.
  *
  * @since      1.0.0
  * @package    Paccofacile
  * @subpackage Paccofacile/includes
  * @author     Francesco Barberini <supporto.tecnico@paccofacile.it>
  */
-class Paccofacile_Deactivator {
+class PFWC_Paccofacile_Activator {
 
 	/**
-	 * Deactivate method.
+	 * Short Description. (use period)
 	 *
 	 * Long Description.
 	 *
 	 * @since    1.0.0
 	 */
-	public static function deactivate() {
+	public static function activate() {
 	}
 }

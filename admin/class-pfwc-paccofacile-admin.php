@@ -19,7 +19,7 @@
  * @subpackage Paccofacile/admin
  * @author     Francesco Barberini <supporto.tecnico@paccofacile.it>
  */
-class Paccofacile_Admin {
+class PFWC_Paccofacile_Admin {
 
 	/**
 	 * The ID of this plugin.
@@ -108,10 +108,10 @@ class Paccofacile_Admin {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Paccofacile_Loader as all of the hooks are defined
+		 * defined in PFWC_Paccofacile_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Paccofacile_Loader will then create the relationship
+		 * The PFWC_Paccofacile_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
@@ -119,7 +119,7 @@ class Paccofacile_Admin {
 		wp_enqueue_style( 'fontawesome-core', plugin_dir_url( __FILE__ ) . 'fontawesome/css/fontawesome.css', array(), '6.1.1', 'all' );
 		wp_enqueue_style( 'fontawesome-solid', plugin_dir_url( __FILE__ ) . 'fontawesome/css/solid.css', array(), '6.1.1', 'all' );
 
-		wp_enqueue_style( 'open-layers', PACCOFACILE_PLUGIN_URL . '/openlayers/ol.css', array(), '6.15.1', 'all' );
+		wp_enqueue_style( 'open-layers', PFWC_PACCOFACILE_PLUGIN_URL . '/openlayers/ol.css', array(), '6.15.1', 'all' );
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/paccofacile-admin.css', array(), $this->version, 'all' );
 	}
@@ -135,15 +135,15 @@ class Paccofacile_Admin {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Paccofacile_Loader as all of the hooks are defined
+		 * defined in PFWC_Paccofacile_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Paccofacile_Loader will then create the relationship
+		 * The PFWC_Paccofacile_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
 
-		wp_enqueue_script( 'open-layers', PACCOFACILE_PLUGIN_URL . '/openlayers/ol.js', array( 'jquery' ), '6.15.1', false );
+		wp_enqueue_script( 'open-layers', PFWC_PACCOFACILE_PLUGIN_URL . '/openlayers/ol.js', array( 'jquery' ), '6.15.1', false );
 		wp_enqueue_script( 'locker-map', plugin_dir_url( __FILE__ ) . 'js/draw-map.js', array( 'jquery' ), $this->version, true );
 
 		// Add the Select2 CSS file!
@@ -200,30 +200,30 @@ class Paccofacile_Admin {
 	 *
 	 * @return void
 	 */
-	public function paccofacile_register_settings() {
+	public function pfwc_register_settings() {
 		// SET TO FALSE THE API KEY VALIDATION ON START.
 		add_option( 'paccofacile_api_valid', '0' );
 
-		register_setting( 'paccofacile_settings', 'paccofacile_settings', array( 'sanitize_callback' => array( $this, 'paccofacile_settings_validate' ) ) );
+		register_setting( 'paccofacile_settings', 'paccofacile_settings', array( 'sanitize_callback' => array( $this, 'pfwc_settings_validate' ) ) );
 
-		add_settings_section( 'api_settings', esc_attr__( 'API Settings', 'paccofacile-for-woocommerce' ), array( $this, 'paccofacile_section_api_text' ), 'paccofacile' );
-		add_settings_field( 'paccofacile_setting_api_key', esc_attr__( 'API Key', 'paccofacile-for-woocommerce' ), array( $this, 'paccofacile_setting_api_key' ), 'paccofacile', 'api_settings' );
+		add_settings_section( 'api_settings', esc_attr__( 'API Settings', 'paccofacile-for-woocommerce' ), array( $this, 'pfwc_section_api_text' ), 'paccofacile' );
+		add_settings_field( 'paccofacile_setting_api_key', esc_attr__( 'API Key', 'paccofacile-for-woocommerce' ), array( $this, 'pfwc_setting_api_key' ), 'paccofacile', 'api_settings' );
 		add_settings_field( 'paccofacile_setting_token', esc_attr__( 'Token', 'paccofacile-for-woocommerce' ), array( $this, 'paccofacile_setting_token' ), 'paccofacile', 'api_settings' );
 		add_settings_field( 'paccofacile_setting_account_number', esc_attr__( 'Account Number', 'paccofacile-for-woocommerce' ), array( $this, 'paccofacile_setting_account_number' ), 'paccofacile', 'api_settings' );
 
-		add_settings_section( 'tracking_settings', esc_attr__( 'Tracking', 'paccofacile-for-woocommerce' ), array( $this, 'paccofacile_section_tracking_text' ), 'paccofacile_tracking' );
+		add_settings_section( 'tracking_settings', esc_attr__( 'Tracking', 'paccofacile-for-woocommerce' ), array( $this, 'pfwc_section_tracking_text' ), 'paccofacile_tracking' );
 		add_settings_field( 'paccofacile_tracking_to_show', esc_attr__( 'Tracking info to show', 'paccofacile-for-woocommerce' ), array( $this, 'paccofacile_tracking_to_show' ), 'paccofacile_tracking', 'tracking_settings' );
 
 		/* phpcs:ignore
 		Refund settings.
-		register_setting( 'paccofacile_settings_refund', 'paccofacile_settings_refund', array( 'sanitize_callback' => array($this, 'paccofacile_settings_refund_options') ) );
+		register_setting( 'paccofacile_settings_refund', 'paccofacile_settings_refund', array( 'sanitize_callback' => array($this, 'pfwc_settings_refund_options') ) );
 
-		add_settings_section( 'refund_method', esc_attr__('Refund methods', 'paccofacile-for-woocommerce'), array($this, 'paccofacile_section_refund_methods'), 'paccofacile_refund' );
+		add_settings_section( 'refund_method', esc_attr__('Refund methods', 'paccofacile-for-woocommerce'), array($this, 'pfwc_section_refund_methods'), 'paccofacile_refund' );
 
-		add_settings_section( 'refund_method_paypal', esc_attr__('PayPal refund', 'paccofacile-for-woocommerce'), array($this, 'paccofacile_section_refund_methods'), 'paccofacile_refund_paypal' );
-		add_settings_field( 'paccofacile_refund_paypal_email', esc_attr__('Paypal email', 'paccofacile-for-woocommerce'), array($this, 'paccofacile_refund_paypal_email'), 'paccofacile_refund_paypal', 'refund_method_paypal' );
+		add_settings_section( 'refund_method_paypal', esc_attr__('PayPal refund', 'paccofacile-for-woocommerce'), array($this, 'pfwc_section_refund_methods'), 'paccofacile_refund_paypal' );
+		add_settings_field( 'paccofacile_refund_paypal_email', esc_attr__('Paypal email', 'paccofacile-for-woocommerce'), array($this, 'pfwc_refund_paypal_email'), 'paccofacile_refund_paypal', 'refund_method_paypal' );
 
-		add_settings_section( 'refund_method_wire_transfer', esc_attr__('Wire Transfer refund', 'paccofacile-for-woocommerce'), array($this, 'paccofacile_section_refund_methods'), 'paccofacile_refund_wire_transfer' );
+		add_settings_section( 'refund_method_wire_transfer', esc_attr__('Wire Transfer refund', 'paccofacile-for-woocommerce'), array($this, 'pfwc_section_refund_methods'), 'paccofacile_refund_wire_transfer' );
 		add_settings_field( 'paccofacile_refund_wire_transfer_header', esc_attr__('Bank header', 'paccofacile-for-woocommerce'), array($this, 'paccofacile_refund_wire_transfer_header'), 'paccofacile_refund_wire_transfer', 'refund_method_wire_transfer' );
 		add_settings_field( 'paccofacile_refund_wire_transfer_bank', esc_attr__('Bank', 'paccofacile-for-woocommerce'), array($this, 'paccofacile_refund_wire_transfer_bank'), 'paccofacile_refund_wire_transfer', 'refund_method_wire_transfer' );
 		add_settings_field( 'paccofacile_refund_wire_transfer_iban', esc_attr__('IBAN', 'paccofacile-for-woocommerce'), array($this, 'paccofacile_refund_wire_transfer_iban'), 'paccofacile_refund_wire_transfer', 'refund_method_wire_transfer' );
@@ -239,7 +239,7 @@ class Paccofacile_Admin {
 	 * @param int    $account_number    PaccoafcileAccount Number.
 	 * @return bool
 	 */
-	public function paccofacile_check_api_auth( $api_key, $token, $account_number ) {
+	public function pfwc_check_api_auth( $api_key, $token, $account_number ) {
 		$paccofacile_api = Paccofacile_Api::get_instance();
 
 		$headers = array(
@@ -270,7 +270,7 @@ class Paccofacile_Admin {
 	 * @param array $input    array of input values.
 	 * @return mixed array
 	 */
-	public function paccofacile_settings_validate( $input ) {
+	public function pfwc_settings_validate( $input ) {
 		$newinput['api_key']          = ( array_key_exists( 'api_key', $input ) ) ? trim( $input['api_key'] ) : '';
 		$newinput['account_number']   = ( array_key_exists( 'account_number', $input ) ) ? trim( $input['account_number'] ) : '';
 		$newinput['token']            = ( array_key_exists( 'token', $input ) ) ? trim( $input['token'] ) : '';
@@ -294,7 +294,7 @@ class Paccofacile_Admin {
 		}
 
 		if ( true === $valid ) {
-			$valid = $this->paccofacile_check_api_auth( $newinput['api_key'], $newinput['token'], $newinput['account_number'] );
+			$valid = $this->pfwc_check_api_auth( $newinput['api_key'], $newinput['token'], $newinput['account_number'] );
 			if ( false === $valid ) {
 				update_option( 'paccofacile_api_valid', '0' );
 				add_settings_error( 'api_auth', 'invalid_api_auth', esc_attr__( 'API credentials are not valid.', 'paccofacile-for-woocommerce' ) );
@@ -313,7 +313,7 @@ class Paccofacile_Admin {
 
 	/* phpcs:ignore
 	Refund settings.
-	public function paccofacile_settings_refund_options( $input ) {
+	public function pfwc_settings_refund_options( $input ) {
 		$newinput['paypal_email'] = trim( $input['paypal_email'] );
 		$newinput['wire_transfer_header'] = trim( $input['wire_transfer_header'] );
 		$newinput['wire_transfer_bank'] = trim( $input['wire_transfer_bank'] );
@@ -347,7 +347,7 @@ class Paccofacile_Admin {
 	 *
 	 * @return void
 	 */
-	public function paccofacile_section_api_text() {
+	public function pfwc_section_api_text() {
 		echo '<p>' . esc_attr__( 'You will find the API Keys to activate Paccofacile.it PRO plugin in your Paccofacile.it account follow this path: Paccofacile PRO Dashboard -> Integrations -> WooCommerce -> Generate Keys.', 'paccofacile-for-woocommerce' ) . '</p>';
 	}
 
@@ -356,7 +356,7 @@ class Paccofacile_Admin {
 	 *
 	 * @return void
 	 */
-	public function paccofacile_section_tracking_text() {
+	public function pfwc_section_tracking_text() {
 		echo '<p>' . esc_attr__( 'Check which notification you want to send to your customers to keep them updated on the tracking of their shipments.', 'paccofacile-for-woocommerce' ) . '</p>';
 	}
 
@@ -365,7 +365,7 @@ class Paccofacile_Admin {
 	 *
 	 * @return void
 	 */
-	public function paccofacile_setting_api_key() {
+	public function pfwc_setting_api_key() {
 		$options = get_option( 'paccofacile_settings' );
 		if ( ! is_array( $options ) ) {
 			$options = $this->settings;
@@ -375,11 +375,11 @@ class Paccofacile_Admin {
 
 	/* phpcs:ignore
 	Refund settings.
-	public function paccofacile_section_refund_methods() {
+	public function pfwc_section_refund_methods() {
 
 	}
 
-	public function paccofacile_refund_paypal_email() {
+	public function pfwc_refund_paypal_email() {
 		$options = get_option( 'paccofacile_settings_refund' );
 		if (!is_array($options)) {
 			$options = $this->settings;
@@ -588,7 +588,7 @@ class Paccofacile_Admin {
 			exit;
 		}
 
-		paccofacile_quote_and_save_by_woo_order( $order_obj, 'after_order' );
+		pfwc_quote_and_save_by_woo_order( $order_obj, 'after_order' );
 
 		exit; // important!
 	}
@@ -670,7 +670,7 @@ class Paccofacile_Admin {
 			return;
 		}
 
-		$plugin = new Paccofacile();
+		$plugin = new PFWC_Paccofacile();
 
 		$action = ( array_key_exists( 'action', $_POST ) ) ? filter_var( wp_unslash( $_POST['action'] ), FILTER_SANITIZE_STRING ) : '';
 		unset( $_POST['action'] );
@@ -782,7 +782,7 @@ class Paccofacile_Admin {
 			return;
 		}
 
-		$plugin = new Paccofacile();
+		$plugin = new PFWC_Paccofacile();
 
 		$imballo_id = ( array_key_exists( 'imballo_id', $_POST ) && isset( $_POST['imballo_id'] ) ) ? absint( $_POST['imballo_id'] ) : 0;
 
@@ -953,7 +953,7 @@ class Paccofacile_Admin {
 		$iso_code = ( array_key_exists( 'iso_code', $_POST ) && isset( $_POST['iso_code'] ) ) ? filter_var( wp_unslash( $_POST['iso_code'] ), FILTER_SANITIZE_STRING ) : '';
 		$city     = ( array_key_exists( 'city', $_POST ) && isset( $_POST['city'] ) ) ? filter_var( wp_unslash( $_POST['city'] ), FILTER_SANITIZE_STRING ) : '';
 
-		$return = paccofacile_search_locality( $iso_code, $city );
+		$return = pfwc_search_locality( $iso_code, $city );
 
 		// send some information back to the javascipt handler.
 		if ( $return ) {
@@ -990,7 +990,7 @@ class Paccofacile_Admin {
 		$carrier_id = ( array_key_exists( 'carrier_id', $_POST ) && isset( $_POST['carrier_id'] ) ) ? filter_var( wp_unslash( $_POST['carrier_id'] ), FILTER_SANITIZE_NUMBER_INT ) : '';
 		$locker_id  = ( array_key_exists( 'shipping_locker', $_POST ) && isset( $_POST['shipping_locker'] ) ) ? filter_var( wp_unslash( $_POST['shipping_locker'] ), FILTER_SANITIZE_STRING ) : '';
 
-		$return = paccofacile_add_store_locker( $carrier_id, $locker_id );
+		$return = pfwc_add_store_locker( $carrier_id, $locker_id );
 
 		// send some information back to the javascipt handler.
 		if ( $return ) {
@@ -1027,7 +1027,7 @@ class Paccofacile_Admin {
 		$postcode = ( isset( $_POST['postcode'] ) ) ? filter_var( wp_unslash( $_POST['postcode'] ), FILTER_SANITIZE_STRING ) : '';
 		$city     = ( isset( $_POST['city'] ) ) ? filter_var( wp_unslash( $_POST['city'] ), FILTER_SANITIZE_STRING ) : '';
 
-		$return = paccofacile_get_lockers( $postcode, $city );
+		$return = pfwc_get_lockers( $postcode, $city );
 
 		// send some information back to the javascipt handler.
 		if ( $return ) {

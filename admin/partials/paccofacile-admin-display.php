@@ -17,7 +17,7 @@
 
 <?php
 
-require_once PACCOFACILE_PATH . '/includes/class-paccofacile-api.php';
+require_once PFWC_PACCOFACILE_PATH . '/includes/class-paccofacile-api.php';
 $paccofacile_api = Paccofacile_Api::get_instance();
 
 ?>
@@ -239,7 +239,7 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 
 			add_thickbox();
 
-			$plugin_paccofacile = new Paccofacile();
+			$plugin_paccofacile = new PFWC_Paccofacile();
 
 			$shipping_boxes = $plugin_paccofacile->get_shipping_boxes();
 
@@ -398,11 +398,11 @@ $paccofacile_api = Paccofacile_Api::get_instance();
 									$max_height           = $package['altezza_max'];
 
 									if ( 1 === $paccofacile_box_type ) { // pacco!
-										$icon = PACCOFACILE_PLUGIN_URL . '/public/images/pacco.svg';
+										$icon = PFWC_PACCOFACILE_PLUGIN_URL . '/public/images/pacco.svg';
 									} elseif ( 2 === $paccofacile_box_type ) { // busta!
-										$icon = PACCOFACILE_PLUGIN_URL . '/public/images/busta.svg';
+										$icon = PFWC_PACCOFACILE_PLUGIN_URL . '/public/images/busta.svg';
 									} elseif ( 3 === $paccofacile_box_type ) { // pallet!
-										$icon = PACCOFACILE_PLUGIN_URL . '/public/images/pallet.svg';
+										$icon = PFWC_PACCOFACILE_PLUGIN_URL . '/public/images/pallet.svg';
 									}
 
 									?>

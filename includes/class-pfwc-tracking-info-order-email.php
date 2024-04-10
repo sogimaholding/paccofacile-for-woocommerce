@@ -72,7 +72,7 @@ if ( ! class_exists( 'PFWC_Tracking_Info_Order_Email', false ) ) :
 				$this->recipient = get_option( 'admin_email' );
 			}
 
-			$this->template_base = PACCOFACILE_PATH . '/';
+			$this->template_base = PFWC_PACCOFACILE_PATH . '/';
 		}
 
 		/**

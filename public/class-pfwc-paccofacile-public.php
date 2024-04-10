@@ -19,7 +19,7 @@
  * @subpackage Paccofacile/public
  * @author     Francesco Barberini <supporto.tecnico@paccofacile.it>
  */
-class Paccofacile_Public {
+class PFWC_Paccofacile_Public {
 
 	/**
 	 * The ID of this plugin.
@@ -65,15 +65,15 @@ class Paccofacile_Public {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Paccofacile_Loader as all of the hooks are defined
+		 * defined in PFWC_Paccofacile_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Paccofacile_Loader will then create the relationship
+		 * The PFWC_Paccofacile_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
 
-		wp_enqueue_style( 'open-layers', PACCOFACILE_PLUGIN_URL . '/openlayers/ol.css', array(), '6.15.1', 'all' );
+		wp_enqueue_style( 'open-layers', PFWC_PACCOFACILE_PLUGIN_URL . '/openlayers/ol.css', array(), '6.15.1', 'all' );
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/paccofacile-public.css', array(), $this->version, 'all' );
 	}
@@ -89,15 +89,15 @@ class Paccofacile_Public {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Paccofacile_Loader as all of the hooks are defined
+		 * defined in PFWC_Paccofacile_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Paccofacile_Loader will then create the relationship
+		 * The PFWC_Paccofacile_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
 
-		wp_enqueue_script( 'open-layers', PACCOFACILE_PLUGIN_URL . '/openlayers/ol.js', array( 'jquery' ), '6.15.1', false );
+		wp_enqueue_script( 'open-layers', PFWC_PACCOFACILE_PLUGIN_URL . '/openlayers/ol.js', array( 'jquery' ), '6.15.1', false );
 		wp_enqueue_script( 'locker-map', plugin_dir_url( __FILE__ ) . 'js/draw-map.js', array( 'jquery' ), $this->version, true );
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/paccofacile-public.js', array( 'jquery' ), $this->version, false );
@@ -192,7 +192,7 @@ class Paccofacile_Public {
 		$postcode = ( isset( $_POST['postcode'] ) ) ? filter_var( wp_unslash( $_POST['postcode'] ), FILTER_SANITIZE_STRING ) : '';
 		$city     = ( isset( $_POST['city'] ) ) ? filter_var( wp_unslash( $_POST['city'] ), FILTER_SANITIZE_STRING ) : '';
 
-		$return = paccofacile_get_lockers( $postcode, $city );
+		$return = pfwc_get_lockers( $postcode, $city );
 
 		// Send some information back to the javascipt handler.
 		if ( $return ) {
@@ -229,7 +229,7 @@ class Paccofacile_Public {
 		$postcode = ( isset( $_POST['postcode'] ) ) ? filter_var( wp_unslash( $_POST['postcode'] ), FILTER_SANITIZE_STRING ) : '';
 		$city     = ( isset( $_POST['city'] ) ) ? filter_var( wp_unslash( $_POST['city'] ), FILTER_SANITIZE_STRING ) : '';
 
-		$return = paccofacile_get_location_info( $postcode, $city );
+		$return = pfwc_get_location_info( $postcode, $city );
 
 		// Send some information back to the javascipt handler.
 		if ( $return ) {

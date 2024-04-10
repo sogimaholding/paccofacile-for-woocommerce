@@ -20,7 +20,7 @@
  * @subpackage Paccofacile/includes
  * @author     Francesco Barberini <supporto.tecnico@paccofacile.it>
  */
-class Paccofacile_Loader {
+class PFWC_Paccofacile_Loader {
 
 	/**
 	 * The array of actions registered with WordPress.

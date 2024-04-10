@@ -23,7 +23,7 @@
  * @subpackage Paccofacile/includes
  * @author     Francesco Barberini <supporto.tecnico@paccofacile.it>
  */
-class Paccofacile_I18n {
+class PFWC_Paccofacile_I18n {
 
 
 	/**
@@ -36,7 +36,7 @@ class Paccofacile_I18n {
 		load_plugin_textdomain(
 			'paccofacile-for-woocommerce',
 			false,
-			dirname( PACCOFACILE_BASENAME_FILE ) . '/languages/'
+			dirname( PFWC_PACCOFACILE_BASENAME_FILE ) . '/languages/'
 		);
 	}
 }

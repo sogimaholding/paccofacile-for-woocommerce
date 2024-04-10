@@ -22,7 +22,7 @@ $desc  = sprintf( __( 'These costs can optionally be added based on the <a href=
 $desc .= ' ' . __( 'If no costs are set for shipping classes, costs defined in Paccofacile configuration will be used.', 'paccofacile-for-woocommerce' );
 
 $array_carriers = array( 'none' => __( 'All chosen couriers', 'paccofacile-for-woocommerce' ) );
-$carriers       = get_available_shipping_methods();
+$carriers       = pfwc_get_available_shipping_methods();
 
 if ( $carriers->have_posts() ) {
 	foreach ( $carriers->posts as $corriere ) {
