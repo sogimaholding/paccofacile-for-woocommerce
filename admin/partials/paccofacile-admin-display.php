@@ -13,9 +13,12 @@
 
 ?>
 
-<!-- This file should primarily consist of HTML with a little bit of PHP. -->
-
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+	// Exit if accessed directly.
+}
+
 
 require_once PFWC_PACCOFACILE_PATH . '/includes/class-paccofacile-api.php';
 $paccofacile_api = Paccofacile_Api::get_instance();

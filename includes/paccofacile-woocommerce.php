@@ -11,6 +11,11 @@
  * @author     Francesco Barberini <supporto.tecnico@paccofacile.it>
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+	// Exit if accessed directly.
+}
+
 require_once PFWC_PACCOFACILE_PATH . '/includes/class-paccofacile-api.php';
 
 /**

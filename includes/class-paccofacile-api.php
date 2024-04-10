@@ -11,6 +11,11 @@
  * @author     Francesco Barberini <supporto.tecnico@paccofacile.it>
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+	// Exit if accessed directly.
+}
+
 /**
  * The service class for managing the API calls to Paccofacile.
  *
