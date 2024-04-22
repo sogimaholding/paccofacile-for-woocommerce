@@ -106,3 +106,10 @@
     display: flex;
     justify-content: space-between;
 }
+
+.paccofacile_box_fields,
+.paccofacile_pallet_type,
+.paccofacile_pallet_max_height,
+.paccofacile_envelope_type {
+    display:none;
+}

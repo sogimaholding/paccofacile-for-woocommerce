@@ -682,13 +682,26 @@ class PFWC_Paccofacile_Admin {
 
 		$box_type = ( array_key_exists( 'tipo', $_POST ) ) ? absint( $_POST['tipo'] ) : '';
 
+		$params_package = array();
+
+		$params_package['nome']       = ( array_key_exists( 'nome', $_POST ) ) ? filter_input( INPUT_POST, 'nome', FILTER_SANITIZE_STRING ) : '';
+		$params_package['tipo']       = ( array_key_exists( 'tipo', $_POST ) ) ? filter_input( INPUT_POST, 'tipo', FILTER_SANITIZE_NUMBER_INT ) : '';
+		$params_package['dim1']       = ( array_key_exists( 'dim1', $_POST ) ) ? filter_input( INPUT_POST, 'dim1', FILTER_SANITIZE_NUMBER_INT ) : '';
+		$params_package['dim2']       = ( array_key_exists( 'dim2', $_POST ) ) ? filter_input( INPUT_POST, 'dim2', FILTER_SANITIZE_NUMBER_INT ) : '';
+		$params_package['dim3']       = ( array_key_exists( 'dim3', $_POST ) ) ? filter_input( INPUT_POST, 'dim3', FILTER_SANITIZE_NUMBER_INT ) : '';
+		$params_package['volume']     = ( array_key_exists( 'volume', $_POST ) ) ? filter_input( INPUT_POST, 'volume', FILTER_SANITIZE_NUMBER_INT ) : '';
+		$params_package['peso_max']   = ( array_key_exists( 'peso_max', $_POST ) ) ? filter_input( INPUT_POST, 'peso_max', FILTER_SANITIZE_NUMBER_INT ) : '';
+		$params_package['max_height'] = ( array_key_exists( 'max_height', $_POST ) ) ? filter_input( INPUT_POST, 'max_height', FILTER_SANITIZE_NUMBER_INT ) : '';
+
 		if ( 'add_box' === $action ) {
-			$imballo = $plugin->create_package( $_POST );
+
+			$imballo = $plugin->create_package( $params_package );
+
 		} elseif ( 'edit_box' === $action ) {
 			$imballo_id = ( array_key_exists( 'imballo_id', $_POST ) ) ? absint( $_POST['imballo_id'] ) : '';
 			unset( $_POST['imballo_id'] );
 
-			$imballo = $plugin->update_package( $imballo_id, $_POST );
+			$imballo = $plugin->update_package( $imballo_id, $params_package );
 		}
 
 		if ( 1 === $box_type ) { // PACCO.
