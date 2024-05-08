@@ -888,7 +888,7 @@ class PFWC_Paccofacile_Admin {
 					$amount      = ( array_key_exists( 'customs_' . $i . '_amount', $_POST ) ) ? filter_var( wp_unslash( $_POST[ 'customs_' . $i . '_amount' ] ), FILTER_SANITIZE_NUMBER_INT ) : 0;
 					$quantity    = ( array_key_exists( 'customs_' . $i . '_quantity', $_POST ) ) ? filter_var( wp_unslash( $_POST[ 'customs_' . $i . '_quantity' ] ), FILTER_SANITIZE_NUMBER_INT ) : 0;
 					$weight      = ( array_key_exists( 'customs_' . $i . '_weight', $_POST ) ) ? filter_var( wp_unslash( $_POST[ 'customs_' . $i . '_weight' ] ), FILTER_SANITIZE_NUMBER_INT ) : 0;
-					$description = ( array_key_exists( 'customs_' . $i . '_description', $_POST ) ) ? filter_var( wp_unslash( $_POST[ 'customs_' . $i . '_description' ] ) ) : '';
+					$description = ( array_key_exists( 'customs_' . $i . '_description', $_POST ) ) ? filter_var( wp_unslash( $_POST[ 'customs_' . $i . '_description' ] ), FILTER_SANITIZE_STRING ) : '';
 
 					$article = array(
 						'amount'                        => array(

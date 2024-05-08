@@ -585,7 +585,7 @@ function pfwc_package_rates( $rates, $package ) {
 
 		$parcels = pfwc_create_parcels_object( $package['contents'] );
 
-		$response = $paccofacile_api->calculate_quote( $store_country, $store_state, $store_postcode, $store_city, $destination_country, $destination_state, $destination_postcode, $destination_city, $parcels, false );
+		$response = $paccofacile_api->calculate_quote( $store_country, $store_postcode, $store_city, $destination_country, $destination_postcode, $destination_city, $parcels, false );
 
 	}
 
@@ -781,12 +781,15 @@ function pfwc_create_order( $order_id, $posted_data, $order ) {
 		$destination_id_locker       = ( $posted_data['shipping_locker'] ) ? $posted_data['shipping_locker'] : '';
 		$destination_note            = $posted_data['order_comments'];
 
-		if ( isset( $_SESSION['paccofacile_parcels'] ) ) {
-			$parcels = $_SESSION['paccofacile_parcels'];
+		if ( isset( $_SESSION['paccofacile_parcels']) && array_key_exists( 'paccofacile_parcels', $_SESSION ) ) {
+			$parcels_json = json_encode( $_SESSION['paccofacile_parcels'] );
+			$parcels_json = filter_var( $parcels_json, FILTER_SANITIZE_STRING );
+
+			$parcels = json_decode( $parcels_json, true );
 		} else {
 			$parcels = array();
 		}
-		$response_preventivo      = $paccofacile_api->calculate_quote( $store_country, $store_state, $store_postcode, $store_city, $destination_country, $destination_province, $destination_postcode, $destination_city, $parcels, $service_id );
+		$response_preventivo      = $paccofacile_api->calculate_quote( $store_country, $store_postcode, $store_city, $destination_country, $destination_postcode, $destination_city, $parcels, $service_id );
 		$response_preventivo_data = $response_preventivo['data'];
 
 		$pickup_date  = $response_preventivo_data['services_available'][0]['pickup_date']['first_date'];
@@ -863,7 +866,8 @@ function pfwc_create_order( $order_id, $posted_data, $order ) {
 		$response_ordine      = $paccofacile_api->post( 'shipment/save', array(), $payload_ordine );
 		$response_ordine_data = $response_ordine['data'];
 
-		if ( isset( $_SESSION['paccofacile_parcels_order'] ) ) {
+
+		if ( isset( $_SESSION['paccofacile_parcels_order'] ) && array_key_exists( 'paccofacile_parcels_order', $_SESSION ) ) {
 			update_post_meta( $order_id, 'order_parcels', filter_var( wp_json_encode( $_SESSION['paccofacile_parcels_order'] ), FILTER_SANITIZE_STRING ) );
 		}
 		update_post_meta( $order_id, 'paccofacile_order_payload', $payload_ordine );
@@ -1717,7 +1721,7 @@ function pfwc_quote_and_save_by_woo_order( $order, $action = null ) {
 		'city'     => $destination_city, // Can be set (optional).
 	);
 
-	$response_quote = $paccofacile_api->calculate_quote( $store_country, $store_state, $store_postcode, $store_city, $destination_country, $destination_province, $destination_postcode, $destination_city, $parcels, false );
+	$response_quote = $paccofacile_api->calculate_quote( $store_country, $store_postcode, $store_city, $destination_country, $destination_postcode, $destination_city, $parcels, false );
 
 	if ( array_key_exists( 'data', $response_quote ) && ! empty( $response_quote['data'] ) ) {
 		$response_quote_data = $response_quote['data'];
@@ -1947,7 +1951,7 @@ function pfwc_save_shipping_option_to_products( $post_id ) {
 	}
 
 	if ( isset( $_POST['no_pack_needed'] ) ) {
-		update_post_meta( $post_id, 'no_pack_needed', filter_var( wp_unslash( $_POST['no_pack_needed'] ) ) );
+		update_post_meta( $post_id, 'no_pack_needed', filter_var( wp_unslash( $_POST['no_pack_needed'] ), FILTER_SANITIZE_STRING ) );
 	} else {
 		delete_post_meta( $post_id, 'no_pack_needed' );
 	}

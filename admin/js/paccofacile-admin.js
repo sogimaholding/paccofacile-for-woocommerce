@@ -1,4 +1,4 @@
-(function( $ ) {
+(function ( $ ) {
 	'use strict';
 
 	/**
@@ -29,28 +29,25 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 
-	$(function() {
-		$('.postbox-container .save_order').on('click', function() {
-			console.log('salavataggio premuto');
-			$('#paccofacile').find('input, textarea, select').removeAttr('required');
-			//$('[name="paccofacile_billing_detail"]').removeAttr('required');
+	$(function () {
+		$( '.postbox-container .save_order' ).on( 'click', function () {
+			// console.log( 'salavataggio premuto' );
+			$( '#paccofacile' ).find( 'input, textarea, select' ).removeAttr( 'required' );
+			// $('[name="paccofacile_billing_detail"]').removeAttr('required');
 		});
 
-
-		$('.button[name="paccofacile_pay_order"]').on('click', function(event) {
+		$( '.button[name="paccofacile_pay_order"]' ).on( 'click', function(event) {
 			event.preventDefault();
 
-			//console.log($(this).closest('.paccofacile_pay_order_form'));
+			// console.log($(this).closest('.paccofacile_pay_order_form'));
 			var container = $(this).closest('.paccofacile_pay_order_form');
 
 			/* console.log(required);
 			console.log(paccofacile_billing_detail); */
 
-			
-
 			var dataString = container.find('input, textarea, select').serialize();
 
-			//console.log(dataString);
+			// console.log(dataString);
 
 			$.ajax({
 				type: 'POST',
