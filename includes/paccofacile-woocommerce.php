@@ -781,8 +781,8 @@ function pfwc_create_order( $order_id, $posted_data, $order ) {
 		$destination_id_locker       = ( $posted_data['shipping_locker'] ) ? $posted_data['shipping_locker'] : '';
 		$destination_note            = $posted_data['order_comments'];
 
-		if ( isset( $_SESSION['paccofacile_parcels']) && array_key_exists( 'paccofacile_parcels', $_SESSION ) ) {
-			$parcels_json = json_encode( $_SESSION['paccofacile_parcels'] );
+		if ( isset( $_SESSION['paccofacile_parcels'] ) && array_key_exists( 'paccofacile_parcels', $_SESSION ) ) {
+			$parcels_json = wp_json_encode( $_SESSION['paccofacile_parcels'] );
 			$parcels_json = filter_var( $parcels_json, FILTER_SANITIZE_STRING );
 
 			$parcels = json_decode( $parcels_json, true );
@@ -865,7 +865,6 @@ function pfwc_create_order( $order_id, $posted_data, $order ) {
 
 		$response_ordine      = $paccofacile_api->post( 'shipment/save', array(), $payload_ordine );
 		$response_ordine_data = $response_ordine['data'];
-
 
 		if ( isset( $_SESSION['paccofacile_parcels_order'] ) && array_key_exists( 'paccofacile_parcels_order', $_SESSION ) ) {
 			update_post_meta( $order_id, 'order_parcels', filter_var( wp_json_encode( $_SESSION['paccofacile_parcels_order'] ), FILTER_SANITIZE_STRING ) );
