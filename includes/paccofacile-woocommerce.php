@@ -902,6 +902,7 @@ add_filter( 'woocommerce_checkout_fields', 'pfwc_shipping_phone_checkout' );
  * @return array
  */
 function pfwc_shipping_phone_checkout( $fields ) {
+	//error_log( '------------------------------- pfwc_shipping_phone_checkout --------------------------------' );
 	$fields['shipping']['shipping_phone'] = array(
 		'label'    => __( 'Phone', 'paccofacile-for-woocommerce' ),
 		'required' => false,
@@ -1872,10 +1873,12 @@ function pfwc_quote_and_save_by_woo_order( $order, $action = null ) {
 				}
 			}
 		} elseif ( 400 === $response_ordine['code'] && array_key_exists( 'destination', $response_ordine['header']['notification']['messages']['errors'] ) ) {
-			$shipment_draft_id = $response_ordine['header']['notification']['messages']['shipment_draft_id'];
+			if ( array_key_exists( 'shipment_draft_id', $response_ordine['header']['notification']['messages'] ) ) {
+				$shipment_draft_id = $response_ordine['header']['notification']['messages']['shipment_draft_id'];
+				delete_post_meta( $order->get_id(), 'shipment_id' );
+				update_post_meta( $order->get_id(), 'shipment_draft_id', $shipment_draft_id );
+			}
 
-			delete_post_meta( $order->get_id(), 'shipment_id' );
-			update_post_meta( $order->get_id(), 'shipment_draft_id', $shipment_draft_id );
 		}
 	}
 }
