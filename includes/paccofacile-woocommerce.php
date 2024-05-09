@@ -585,7 +585,7 @@ function pfwc_package_rates( $rates, $package ) {
 
 		$parcels = pfwc_create_parcels_object( $package['contents'] );
 
-		$response = $paccofacile_api->calculate_quote( $store_country, $store_postcode, $store_city, $destination_country, $destination_postcode, $destination_city, $parcels, false );
+		$response = $paccofacile_api->calculate_quote( $store_country, $store_state, $store_postcode, $store_city, $destination_country, $destination_state, $destination_postcode, $destination_city, $parcels, false );
 
 	}
 
@@ -894,7 +894,7 @@ function pfwc_create_order( $order_id, $posted_data, $order ) {
 add_action( 'woocommerce_checkout_order_processed', 'pfwc_create_order', 10, 3 );
 
 
-add_filter( 'woocommerce_checkout_fields', 'pfwc_shipping_phone_checkout', 20 );
+add_filter( 'woocommerce_checkout_fields', 'pfwc_shipping_phone_checkout' );
 /**
  * Add shipping additional fields
  *
@@ -1720,7 +1720,7 @@ function pfwc_quote_and_save_by_woo_order( $order, $action = null ) {
 		'city'     => $destination_city, // Can be set (optional).
 	);
 
-	$response_quote = $paccofacile_api->calculate_quote( $store_country, $store_postcode, $store_city, $destination_country, $destination_postcode, $destination_city, $parcels, false );
+	$response_quote = $paccofacile_api->calculate_quote( $store_country, $store_state, $store_postcode, $store_city, $destination_country, $destination_province, $destination_postcode, $destination_city, $parcels, false );
 
 	if ( array_key_exists( 'data', $response_quote ) && ! empty( $response_quote['data'] ) ) {
 		$response_quote_data = $response_quote['data'];
