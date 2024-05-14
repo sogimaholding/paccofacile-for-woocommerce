@@ -16,6 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	// Exit if accessed directly.
 }
 
+use Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController;
+
 require_once PFWC_PACCOFACILE_PATH . '/includes/class-paccofacile-api.php';
 
 /**
@@ -781,113 +783,122 @@ function pfwc_create_order( $order_id, $posted_data, $order ) {
 		$destination_id_locker       = ( $posted_data['shipping_locker'] ) ? $posted_data['shipping_locker'] : '';
 		$destination_note            = $posted_data['order_comments'];
 
-		if ( isset( $_SESSION['paccofacile_parcels'] ) && array_key_exists( 'paccofacile_parcels', $_SESSION ) ) {
+		if ( array_key_exists( 'paccofacile_parcels', $_SESSION ) && isset( $_SESSION['paccofacile_parcels'] ) ) {
 			$parcels_json = wp_json_encode( $_SESSION['paccofacile_parcels'] );
-			$parcels_json = filter_var( $parcels_json, FILTER_SANITIZE_STRING );
-
-			$parcels = json_decode( $parcels_json, true );
+			$parcels      = json_decode( $parcels_json, true );
 		} else {
 			$parcels = array();
 		}
-		$response_preventivo      = $paccofacile_api->calculate_quote( $store_country, $store_postcode, $store_city, $destination_country, $destination_postcode, $destination_city, $parcels, $service_id );
-		$response_preventivo_data = $response_preventivo['data'];
 
-		$pickup_date  = $response_preventivo_data['services_available'][0]['pickup_date']['first_date'];
-		$pickup_range = $response_preventivo_data['services_available'][0]['pickup_date']['first_date_range'];
+		$response_preventivo = $paccofacile_api->calculate_quote( $store_country, $store_state, $store_postcode, $store_city, $destination_country, $destination_province, $destination_postcode, $destination_city, $parcels, $service_id );
 
-		$customes_required = $response_preventivo_data['services_available'][0]['customes_required'];
+		if ( array_key_exists( 'data', $response_preventivo ) ) {
 
-		if ( 0 !== $customes_required ) {
-			$amount  = number_format( (float) $order->get_total() - $order->get_total_tax() - $order->get_total_shipping() - $order->get_shipping_tax(), wc_get_price_decimals(), '.', '' );
-			$customs = array(
-				'amount'   => array(
-					'value'    => $amount,
-					'currency' => 'EUR',
-				),
-				'articles' => array(
-					array(
-						'amount'                        => array(
-							'value'    => $amount,
-							'currency' => 'EUR',
-						),
-						'quantity'                      => 1,
-						'weight'                        => $weight,
-						'description'                   => 'Merce',
-						'iso_code_country_manufactured' => 'IT',
+			$response_preventivo_data = $response_preventivo['data'];
+
+			$pickup_date  = $response_preventivo_data['services_available'][0]['pickup_date']['first_date'];
+			$pickup_range = $response_preventivo_data['services_available'][0]['pickup_date']['first_date_range'];
+
+			$customes_required = $response_preventivo_data['services_available'][0]['customes_required'];
+
+			if ( 0 !== $customes_required ) {
+				$amount  = number_format( (float) $order->get_total() - $order->get_total_tax() - $order->get_total_shipping() - $order->get_shipping_tax(), wc_get_price_decimals(), '.', '' );
+				$customs = array(
+					'amount'   => array(
+						'value'    => $amount,
+						'currency' => 'EUR',
 					),
+					'articles' => array(
+						array(
+							'amount'                        => array(
+								'value'    => $amount,
+								'currency' => 'EUR',
+							),
+							'quantity'                      => 1,
+							'weight'                        => $weight,
+							'description'                   => 'Merce',
+							'iso_code_country_manufactured' => 'IT',
+						),
+					),
+				);
+				update_post_meta( $order->get_id(), 'customes_required', 1 );
+			} else {
+				$customs = array();
+				update_post_meta( $order->get_id(), 'customes_required', 0 );
+			}
+
+			$payload_ordine = array(
+				'external_order_id'     => $order->get_id(),
+				'external_service_name' => 'woocommerce',
+				'shipment_service'      => array(
+					'shipment_type'        => 1,
+					'pickup_date'          => $pickup_date,
+					'pickup_range'         => $pickup_range,
+					'service_id'           => $service_id,
+					'parcels'              => $parcels,
+					'package_content_type' => 'GOODS',
 				),
+				'pickup'                => array(
+					'iso_code'            => $store_country,
+					'postal_code'         => $store_postcode,
+					'city'                => $store_city,
+					'header_name'         => $store_name,
+					'address'             => $store_address,
+					'building_number'     => $store_building_number,
+					'StateOrProvinceCode' => $store_state,
+					'phone'               => $store_phone,
+					'email'               => $store_email,
+					'note'                => '',
+					'locker_id'           => $store_locker_id,
+				),
+				'destination'           => array(
+					'iso_code'            => $destination_country,
+					'postal_code'         => $destination_postcode,
+					'city'                => $destination_city,
+					'header_name'         => $destination_first_name . ' ' . $destination_last_name,
+					'address'             => $destination_address,
+					'building_number'     => $destination_building_number,
+					'StateOrProvinceCode' => $destination_province,
+					'phone'               => $destination_phone,
+					'email'               => $destination_email,
+					'note'                => $destination_note,
+					'locker_id'           => $destination_id_locker,
+				),
+				'customs'               => $customs,
 			);
-			update_post_meta( $order->get_id(), 'customes_required', 1 );
-		} else {
-			$customs = array();
-			update_post_meta( $order->get_id(), 'customes_required', 0 );
-		}
 
-		$payload_ordine = array(
-			'external_order_id'     => $order->get_id(),
-			'external_service_name' => 'woocommerce',
-			'shipment_service'      => array(
-				'shipment_type'        => 1,
-				'pickup_date'          => $pickup_date,
-				'pickup_range'         => $pickup_range,
-				'service_id'           => $service_id,
-				'parcels'              => $parcels,
-				'package_content_type' => 'GOODS',
-			),
-			'pickup'                => array(
-				'iso_code'            => $store_country,
-				'postal_code'         => $store_postcode,
-				'city'                => $store_city,
-				'header_name'         => $store_name,
-				'address'             => $store_address,
-				'building_number'     => $store_building_number,
-				'StateOrProvinceCode' => $store_state,
-				'phone'               => $store_phone,
-				'email'               => $store_email,
-				'note'                => '',
-				'locker_id'           => $store_locker_id,
-			),
-			'destination'           => array(
-				'iso_code'            => $destination_country,
-				'postal_code'         => $destination_postcode,
-				'city'                => $destination_city,
-				'header_name'         => $destination_first_name . ' ' . $destination_last_name,
-				'address'             => $destination_address,
-				'building_number'     => $destination_building_number,
-				'StateOrProvinceCode' => $destination_province,
-				'phone'               => $destination_phone,
-				'email'               => $destination_email,
-				'note'                => $destination_note,
-				'locker_id'           => $destination_id_locker,
-			),
-			'customs'               => $customs,
-		);
+			$response_ordine = $paccofacile_api->post( 'shipment/save', array(), $payload_ordine );
 
-		$response_ordine      = $paccofacile_api->post( 'shipment/save', array(), $payload_ordine );
-		$response_ordine_data = $response_ordine['data'];
+			if ( array_key_exists( 'data', $response_ordine ) ) {
 
-		if ( isset( $_SESSION['paccofacile_parcels_order'] ) && array_key_exists( 'paccofacile_parcels_order', $_SESSION ) ) {
-			update_post_meta( $order_id, 'order_parcels', filter_var( wp_json_encode( $_SESSION['paccofacile_parcels_order'] ), FILTER_SANITIZE_STRING ) );
-		}
-		update_post_meta( $order_id, 'paccofacile_order_payload', $payload_ordine );
+				$response_ordine_data = $response_ordine['data'];
+	
+				if ( isset( $_SESSION['paccofacile_parcels_order'] ) && array_key_exists( 'paccofacile_parcels_order', $_SESSION ) ) {
+					update_post_meta( $order_id, 'order_parcels', filter_var( wp_json_encode( $_SESSION['paccofacile_parcels_order'] ), FILTER_SANITIZE_STRING ) );
+				}
+				update_post_meta( $order_id, 'paccofacile_order_payload', $payload_ordine );
+	
+				if ( 200 === $response_ordine['code'] ) {
+					delete_post_meta( $order_id, 'shipment_draft_id' );
+					update_post_meta( $order_id, 'shipment_id', $response_ordine_data['shipment']['shipment_id'] );
+	
+					if ( $destination_id_locker ) {
+						update_post_meta( $order_id, 'destination_locker_id', $destination_id_locker );
+					}
+	
+					if ( 1 === $response_ordine_data['shipment']['consolidation']['is_service_consolidation'] ) {
+						// SERVIZIO CONSOLIDABILE.
+						update_post_meta( $order_id, 'shipment_consolidabile', 1 );
+					}
+				} elseif ( 400 === $response_ordine['code'] && array_key_exists( 'destination', $response_ordine['header']['notification']['messages']['errors'] ) ) {
+					$shipment_draft_id = $response_ordine['header']['notification']['messages']['shipment_draft_id'];
+	
+					delete_post_meta( $order_id, 'shipment_id' );
+					update_post_meta( $order_id, 'shipment_draft_id', $shipment_draft_id );
+				}
 
-		if ( 200 === $response_ordine['code'] ) {
-			delete_post_meta( $order_id, 'shipment_draft_id' );
-			update_post_meta( $order_id, 'shipment_id', $response_ordine_data['shipment']['shipment_id'] );
-
-			if ( $destination_id_locker ) {
-				update_post_meta( $order_id, 'destination_locker_id', $destination_id_locker );
 			}
 
-			if ( 1 === $response_ordine_data['shipment']['consolidation']['is_service_consolidation'] ) {
-				// SERVIZIO CONSOLIDABILE.
-				update_post_meta( $order_id, 'shipment_consolidabile', 1 );
-			}
-		} elseif ( 400 === $response_ordine['code'] && array_key_exists( 'destination', $response_ordine['header']['notification']['messages']['errors'] ) ) {
-			$shipment_draft_id = $response_ordine['header']['notification']['messages']['shipment_draft_id'];
-
-			delete_post_meta( $order_id, 'shipment_id' );
-			update_post_meta( $order_id, 'shipment_draft_id', $shipment_draft_id );
 		}
 	}
 }
@@ -1191,64 +1202,62 @@ function pfwc_general_settings( $settings ) {
 	return $new_settings;
 }
 
+
+add_action( 'add_meta_boxes', 'pfwc_order_meta_box' );
 /**
  * Paccofacile WooCommerce Order Meta Box
  *
  * @param [type] $post Order Post.
  * @return void
  */
-function pfwc_order_meta_box( $post ) {
-	$order              = wc_get_order( $post->ID );
-	$shipping_methods   = $order->get_items( 'shipping' );
-	$shipping_method_id = false;
+function pfwc_order_meta_box($current_screen) {
 
-	foreach ( $shipping_methods as $shipping_method ) {
-		$shipping_method_id = $shipping_method->get_method_id();
-		break;
-	}
+	if ( 'woocommerce_page_wc-orders' === $current_screen ) {
 
-	add_meta_box(
-		'paccofacile',
-		__( 'Paccofacile', 'paccofacile-for-woocommerce' ),
-		'pfwc_credit_meta_box',
-		'shop_order',
-		'side',
-		'core',
-	);
+		$screen = ( class_exists( '\Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController' ) && wc_get_container()->get( CustomOrdersTableController::class )->custom_orders_table_usage_is_enabled() ) ? wc_get_page_screen_id( 'shop-order' ) : 'shop_order';
+		add_meta_box(
+			'paccofacile',
+			__( 'Paccofacile', 'paccofacile-for-woocommerce' ),
+			'pfwc_credit_meta_box',
+			$screen,
+			'side',
+			'core',
+		);
 
-	$order_tracking = json_decode( get_post_meta( $post->ID, 'order_tracking', true ), true );
-	if ( ! empty( $order_tracking ) ) {
 		add_meta_box(
 			'paccofacile_tracking',
 			__( 'Order Tracking', 'paccofacile-for-woocommerce' ),
 			'pfwc_tracking_meta_box',
-			'shop_order',
+			$screen,
 			'side',
 			'core'
 		);
-	}
 
-	$order_parcels = json_decode( get_post_meta( $post->ID, 'order_parcels', true ), true );
-	if ( ! empty( $order_parcels ) ) {
 		add_meta_box(
 			'paccofacile_parcels',
 			__( 'Order Parcels', 'paccofacile-for-woocommerce' ),
 			'pfwc_parcels_meta_box',
-			'shop_order',
+			$screen,
 			'normal',
 			'core'
 		);
+
 	}
+
 }
-add_action( 'add_meta_boxes_shop_order', 'pfwc_order_meta_box' );
 
 /**
  * Paccofacile Order credit metabox
  *
  * @return void
  */
-function pfwc_credit_meta_box() {
-	global $post;
+function pfwc_credit_meta_box( $post_or_order_object ) {
+
+	$order = ( $post_or_order_object instanceof WP_Post ) ? wc_get_order( $post_or_order_object->ID ) : $post_or_order_object;
+
+	if ( ! $order ) {
+		return;
+	}
 
 	$paccofacile_api = Paccofacile_Api::get_instance();
 
@@ -1257,15 +1266,15 @@ function pfwc_credit_meta_box() {
 
 	$credito = $response_credito_data['credit']['value'];
 
-	$shipment_id              = get_post_meta( $post->ID, 'shipment_id', true ) ? get_post_meta( $post->ID, 'shipment_id', true ) : '';
-	$shipment_draft_id        = get_post_meta( $post->ID, 'shipment_draft_id', true ) ? get_post_meta( $post->ID, 'shipment_draft_id', true ) : '';
-	$paccofacile_order_id     = get_post_meta( $post->ID, 'paccofacile_order_id', true ) ? get_post_meta( $post->ID, 'paccofacile_order_id', true ) : '';
-	$paccofacile_order_status = get_post_meta( $post->ID, 'paccofacile_order_status', true ) ? get_post_meta( $post->ID, 'paccofacile_order_status', true ) : '';
-	$is_consolidabile         = get_post_meta( $post->ID, 'shipment_consolidabile', true ) ? get_post_meta( $post->ID, 'shipment_consolidabile', true ) : '';
-	$is_consolidato           = get_post_meta( $post->ID, 'shipment_consolidato', true ) ? get_post_meta( $post->ID, 'shipment_consolidato', true ) : '';
+	$shipment_id              = get_post_meta( $order->get_id(), 'shipment_id', true ) ? get_post_meta( $order->get_id(), 'shipment_id', true ) : '';
+	$shipment_draft_id        = get_post_meta( $order->get_id(), 'shipment_draft_id', true ) ? get_post_meta( $order->get_id(), 'shipment_draft_id', true ) : '';
+	$paccofacile_order_id     = get_post_meta( $order->get_id(), 'paccofacile_order_id', true ) ? get_post_meta( $order->get_id(), 'paccofacile_order_id', true ) : '';
+	$paccofacile_order_status = get_post_meta( $order->get_id(), 'paccofacile_order_status', true ) ? get_post_meta( $order->get_id(), 'paccofacile_order_status', true ) : '';
+	$is_consolidabile         = get_post_meta( $order->get_id(), 'shipment_consolidabile', true ) ? get_post_meta( $order->get_id(), 'shipment_consolidabile', true ) : '';
+	$is_consolidato           = get_post_meta( $order->get_id(), 'shipment_consolidato', true ) ? get_post_meta( $order->get_id(), 'shipment_consolidato', true ) : '';
 	$order_weight             = 0;
 
-	$order_parcels = get_post_meta( $post->ID, 'order_parcels', true ) ? json_decode( get_post_meta( $post->ID, 'order_parcels', true ), true ) : false;
+	$order_parcels = get_post_meta( $order->get_id(), 'order_parcels', true ) ? json_decode( get_post_meta( $order->get_id(), 'order_parcels', true ), true ) : false;
 
 	if ( $order_parcels ) {
 		$count_parcels = count( $order_parcels );
@@ -1273,8 +1282,6 @@ function pfwc_credit_meta_box() {
 			$order_weight += $order_parcels[ $i ]['box_weight'];
 		}
 	}
-
-	$order = wc_get_order( $post->ID );
 
 	$fav_address       = '';
 	$addresses_options = array();
@@ -1329,9 +1336,6 @@ function pfwc_credit_meta_box() {
 		<div class="paccofacile_pay_order_form">
 			<p><?php esc_html_e( 'Credit left:', 'paccofacile-for-woocommerce' ); ?> <b><?php echo esc_html( $credito ); ?> €</b></p>
 			<input type="hidden" name="paccofacile_meta_field_nonce" value="<?php echo esc_attr( wp_create_nonce() ); ?>">
-			
-			<?php /* <input type="hidden" name="action" value="paccofacile_pay_order" /> */ ?>
-
 			<?php if ( $shipment_id ) { ?>
 				<input type="hidden" name="shipment_id" value="<?php echo esc_attr( $shipment_id ); ?>">
 			<?php } else { ?>
@@ -1340,8 +1344,8 @@ function pfwc_credit_meta_box() {
 				</div>
 			<?php } ?>
 			<input type="hidden" name="shipping_amount" value="<?php echo esc_attr( $order->get_shipping_total() ); ?>">
-			<?php /* <input type="hidden" name="post_type" value="shop_order"> */ ?>
-			<?php /* <input type="hidden" name="order_id" value="<?php echo esc_attr( $order->get_id() ); ?>"> */ ?>
+			<input type="hidden" name="post_type" value="shop_order">
+			<input type="hidden" name="order_id" value="<?php echo esc_attr( $order->get_id() ); ?>">
 			<p><?php esc_html_e( 'Shipment ID:', 'paccofacile-for-woocommerce' ); ?> 
 			<?php
 			if ( $shipment_id ) {
@@ -1525,24 +1529,32 @@ function pfwc_credit_meta_box() {
  *
  * @return void
  */
-function pfwc_tracking_meta_box() {
-	global $post;
+function pfwc_tracking_meta_box( $post_or_order_object ) {
 
-	$order_tracking = get_post_meta( $post->ID, 'order_tracking', true ) ? json_decode( get_post_meta( $post->ID, 'order_tracking', true ), true ) : '';
-	$checkpoints    = $order_tracking['elenco']['checkpoints'];
+	$order = ( $post_or_order_object instanceof WP_Post ) ? wc_get_order( $post_or_order_object->ID ) : $post_or_order_object;
 
-	if ( ! empty( $checkpoints ) ) :
-		?>
-		<ul>
+	if ( ! $order ) {
+		return;
+	}
+
+	$order_tracking = json_decode( get_post_meta( $order->get_id(), 'order_tracking', true ), true );
+	if ( ! empty( $order_tracking ) ) {
+
+		$checkpoints = $order_tracking['elenco']['checkpoints'];
+
+		if ( ! empty( $checkpoints ) ) :
+			?>
+			<ul>
+				<?php
+				$count_checkpoints = count( $checkpoints );
+				for ( $i = 0; $i < $count_checkpoints; $i++ ) :
+					?>
+					<li><?php echo '- <b>' . esc_html( $checkpoints[ $i ]['checkpoint_time'] ) . '</b><br />- ' . esc_html( $checkpoints[ $i ]['message'] ) . ' [' . esc_html( $checkpoints[ $i ]['city'] ) . ']'; ?></li>
+				<?php endfor; ?>
+			</ul>
 			<?php
-			$count_checkpoints = count( $checkpoints );
-			for ( $i = 0; $i < $count_checkpoints; $i++ ) :
-				?>
-				<li><?php echo '- <b>' . esc_html( $checkpoints[ $i ]['checkpoint_time'] ) . '</b><br />- ' . esc_html( $checkpoints[ $i ]['message'] ) . ' [' . esc_html( $checkpoints[ $i ]['city'] ) . ']'; ?></li>
-			<?php endfor; ?>
-		</ul>
-		<?php
-	endif;
+		endif;
+	}
 }
 
 /**
@@ -1551,9 +1563,15 @@ function pfwc_tracking_meta_box() {
  * @param [type] $post Order object.
  * @return void
  */
-function pfwc_parcels_meta_box( $post ) {
-	$order_parcels = get_post_meta( $post->ID, 'order_parcels', true ) ? json_decode( get_post_meta( $post->ID, 'order_parcels', true ), true ) : '';
+function pfwc_parcels_meta_box( $post_or_order_object ) {
 
+	$order = ( $post_or_order_object instanceof WP_Post ) ? wc_get_order( $post_or_order_object->ID ) : $post_or_order_object;
+
+	if ( ! $order ) {
+		return;
+	}
+
+	$order_parcels = json_decode( get_post_meta( $order->get_id(), 'order_parcels', true ), true );
 	if ( ! empty( $order_parcels ) ) :
 		?>
 		<table class="widefat fixed">
@@ -2467,22 +2485,37 @@ function pfwc_get_location_info( $postcode, $city ) {
  * @return array
  */
 function pfwc_cerca_localita( $fields ) {
-	global $post;
+	//global $post;
 
-	$shipment_draft_id = get_post_meta( $post->ID, 'shipment_draft_id', true );
+	//error_log($_GET['id']);
 
-	$iso_code = get_post_meta( $post->ID, '_shipping_country', true );
-	$city     = get_post_meta( $post->ID, '_shipping_city', true );
+	if ( is_admin() && isset( $_GET['page'] ) && 'wc-orders' === $_GET['page'] ) {
 
-	if ( $shipment_draft_id ) {
-		$fields['city'] = array(
-			'label'   => __( 'City / Locality', 'paccofacile-for-woocommerce' ),
-			'show'    => false,
-			'type'    => 'select',
-			'class'   => 'js_field-city select short',
-			'options' => pfwc_search_locality( $iso_code, $city ),
-		);
+		//error_log( json_encode( $fields ) );
+		if ( isset( $_GET['id'] ) && '' != $_GET['id'] ) {
+			$post = get_post( $_GET['id'] );
+
+			$shipment_draft_id = get_post_meta( $post->ID, 'shipment_draft_id', true );
+
+			$iso_code = get_post_meta( $post->ID, '_shipping_country', true );
+			$city     = get_post_meta( $post->ID, '_shipping_city', true );
+
+			if ( $shipment_draft_id ) {
+				$fields['city'] = array(
+					'label'   => __( 'City / Locality', 'paccofacile-for-woocommerce' ),
+					'show'    => false,
+					'type'    => 'select',
+					'class'   => 'js_field-city select short',
+					'options' => pfwc_search_locality( $iso_code, $city ),
+				);
+			}
+		}
+
 	}
+
+
+
+	
 	return $fields;
 }
 add_filter( 'woocommerce_admin_shipping_fields', 'pfwc_cerca_localita' );

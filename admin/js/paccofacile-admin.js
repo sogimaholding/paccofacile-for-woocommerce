@@ -46,8 +46,7 @@
 			console.log(paccofacile_billing_detail); */
 
 			var dataString = container.find('input, textarea, select').serialize();
-
-			// console.log(dataString);
+			dataString += '&action=paccofacile_pay_order';
 
 			$.ajax({
 				type: 'POST',
