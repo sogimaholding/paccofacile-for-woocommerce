@@ -224,10 +224,9 @@ function pfwc_get_available_shipping_methods( $service_id = false ) {
 /**
  * Validate order.
  *
- * @param [type] $posted Posted data.
  * @return void
  */
-function pfwc_validate_order( $posted ) {
+function pfwc_validate_order() {
 
 	$packages = WC()->shipping->get_packages();
 
@@ -238,7 +237,6 @@ function pfwc_validate_order( $posted ) {
 		foreach ( $packages as $i => $package ) {
 
 			if ( 'paccofacile_shipping_method' !== $chosen_methods[ $i ] ) {
-
 				continue;
 			}
 
@@ -810,13 +808,13 @@ function pfwc_create_order( $order_id, $posted_data, $order ) {
 					),
 					'articles' => array(
 						array(
-							'amount'                        => array(
+							'amount'      => array(
 								'value'    => $amount,
 								'currency' => 'EUR',
 							),
-							'quantity'                      => 1,
-							'weight'                        => $weight,
-							'description'                   => 'Merce',
+							'quantity'    => 1,
+							'weight'      => $weight,
+							'description' => 'Merce',
 							'iso_code_country_manufactured' => 'IT',
 						),
 					),
@@ -872,33 +870,31 @@ function pfwc_create_order( $order_id, $posted_data, $order ) {
 			if ( array_key_exists( 'data', $response_ordine ) ) {
 
 				$response_ordine_data = $response_ordine['data'];
-	
+
 				if ( isset( $_SESSION['paccofacile_parcels_order'] ) && array_key_exists( 'paccofacile_parcels_order', $_SESSION ) ) {
 					update_post_meta( $order_id, 'order_parcels', filter_var( wp_json_encode( $_SESSION['paccofacile_parcels_order'] ), FILTER_SANITIZE_STRING ) );
 				}
 				update_post_meta( $order_id, 'paccofacile_order_payload', $payload_ordine );
-	
+
 				if ( 200 === $response_ordine['code'] ) {
 					delete_post_meta( $order_id, 'shipment_draft_id' );
 					update_post_meta( $order_id, 'shipment_id', $response_ordine_data['shipment']['shipment_id'] );
-	
+
 					if ( $destination_id_locker ) {
 						update_post_meta( $order_id, 'destination_locker_id', $destination_id_locker );
 					}
-	
+
 					if ( 1 === $response_ordine_data['shipment']['consolidation']['is_service_consolidation'] ) {
 						// SERVIZIO CONSOLIDABILE.
 						update_post_meta( $order_id, 'shipment_consolidabile', 1 );
 					}
 				} elseif ( 400 === $response_ordine['code'] && array_key_exists( 'destination', $response_ordine['header']['notification']['messages']['errors'] ) ) {
 					$shipment_draft_id = $response_ordine['header']['notification']['messages']['shipment_draft_id'];
-	
+
 					delete_post_meta( $order_id, 'shipment_id' );
 					update_post_meta( $order_id, 'shipment_draft_id', $shipment_draft_id );
 				}
-
 			}
-
 		}
 	}
 }
@@ -913,7 +909,6 @@ add_filter( 'woocommerce_checkout_fields', 'pfwc_shipping_phone_checkout' );
  * @return array
  */
 function pfwc_shipping_phone_checkout( $fields ) {
-	//error_log( '------------------------------- pfwc_shipping_phone_checkout --------------------------------' );
 	$fields['shipping']['shipping_phone'] = array(
 		'label'    => __( 'Phone', 'paccofacile-for-woocommerce' ),
 		'required' => false,
@@ -1064,8 +1059,6 @@ add_filter( 'woocommerce_checkout_get_value', 'pfwc_shipping_locker_field_value'
  * @return [mixed]
  */
 function pfwc_shipping_locker_field_value( $value, $input ) {
-	// $items = WC()->cart->get_cart();
-	// $item  = reset( $items );
 	$active_locker = WC()->session->get( 'locker_id' );
 
 	if ( is_checkout() && $active_locker && in_array( $input, array( 'shipping_locker' ) ) ) {
@@ -1079,10 +1072,9 @@ add_action( 'woocommerce_after_checkout_shipping_form', 'pfwc_locker_checkout_ma
 /**
  * Checkout locker map
  *
- * @param [type] $checkout Checkout.
  * @return void
  */
-function pfwc_locker_checkout_map( $checkout ) {
+function pfwc_locker_checkout_map() {
 
 	global $woocommerce;
 	$current_shipping_method = WC()->session->get( 'chosen_shipping_methods' );
@@ -1207,10 +1199,10 @@ add_action( 'add_meta_boxes', 'pfwc_order_meta_box' );
 /**
  * Paccofacile WooCommerce Order Meta Box
  *
- * @param [type] $post Order Post.
+ * @param [type] $current_screen current admin view.
  * @return void
  */
-function pfwc_order_meta_box($current_screen) {
+function pfwc_order_meta_box( $current_screen ) {
 
 	if ( 'woocommerce_page_wc-orders' === $current_screen ) {
 
@@ -1243,12 +1235,12 @@ function pfwc_order_meta_box($current_screen) {
 		);
 
 	}
-
 }
 
 /**
  * Paccofacile Order credit metabox
  *
+ * @param [type] $post_or_order_object post or order object.
  * @return void
  */
 function pfwc_credit_meta_box( $post_or_order_object ) {
@@ -1527,6 +1519,7 @@ function pfwc_credit_meta_box( $post_or_order_object ) {
 /**
  * Paccofacile tracking metabox
  *
+ * @param [type] $post_or_order_object post or order object.
  * @return void
  */
 function pfwc_tracking_meta_box( $post_or_order_object ) {
@@ -1560,7 +1553,7 @@ function pfwc_tracking_meta_box( $post_or_order_object ) {
 /**
  * Paccofacile parcels metabox
  *
- * @param [type] $post Order object.
+ * @param [type] $post_or_order_object post or order object.
  * @return void
  */
 function pfwc_parcels_meta_box( $post_or_order_object ) {
@@ -1896,7 +1889,6 @@ function pfwc_quote_and_save_by_woo_order( $order, $action = null ) {
 				delete_post_meta( $order->get_id(), 'shipment_id' );
 				update_post_meta( $order->get_id(), 'shipment_draft_id', $shipment_draft_id );
 			}
-
 		}
 	}
 }
@@ -2485,15 +2477,11 @@ function pfwc_get_location_info( $postcode, $city ) {
  * @return array
  */
 function pfwc_cerca_localita( $fields ) {
-	//global $post;
-
-	//error_log($_GET['id']);
 
 	if ( is_admin() && isset( $_GET['page'] ) && 'wc-orders' === $_GET['page'] ) {
 
-		//error_log( json_encode( $fields ) );
 		if ( isset( $_GET['id'] ) && '' != $_GET['id'] ) {
-			$post = get_post( $_GET['id'] );
+			$post = get_post( filter_var( wp_unslash( $_GET['id'] ), FILTER_SANITIZE_STRING ) );
 
 			$shipment_draft_id = get_post_meta( $post->ID, 'shipment_draft_id', true );
 
@@ -2510,12 +2498,8 @@ function pfwc_cerca_localita( $fields ) {
 				);
 			}
 		}
-
 	}
 
-
-
-	
 	return $fields;
 }
 add_filter( 'woocommerce_admin_shipping_fields', 'pfwc_cerca_localita' );
