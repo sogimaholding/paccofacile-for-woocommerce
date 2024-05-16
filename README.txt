@@ -66,3 +66,10 @@ Configurazione
 - Scegli quali servizi di spedizione attivare per il tuo negozio
 - Naviga nella tab “imballi” e clicca sul bottone “Aggiungi imballo”.
 - Aggiungi tutti i tipi di imballi(*) che hai a disposizione per le tue spedizioni, dando loro un nome.
+
+== Disclaimer ==
+Il plugin fa uso di servizi di terze parti (Paccofacile.it - https://www.paccofacile.it) tramite chiamate API.
+I dati inviati dal plugin a tale servizio vengono utilizzati per lo scopo di configurare, salvare, gestire e pagare servizi di spedizione su Paccofacile.it e
+vengono utilizzati e memorizzati dal servizio nelle modalità indicate su termini e condizioni nella pagina https://www.paccofacile.it/termini-condizioni e 
+sono trattati secondo la privacy policy indicata nella pagina https://www.paccofacile.it/privacy-policy.
+La url utilizzata per la comunicazione con il servizio è https://paccofacile.tecnosogima.cloud/live/v1/service/.
