@@ -56,7 +56,7 @@ class PFWC_Paccofacile_Public {
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
 
-		add_action( 'woocommerce_after_shipping_calculator', array( $this, 'paccofacile_locker_map' ) );
+		add_action( 'woocommerce_after_shipping_calculator', array( $this, 'pfwc_locker_map' ) );
 	}
 
 	/**
@@ -64,7 +64,7 @@ class PFWC_Paccofacile_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
+	public function pfwc_enqueue_styles() {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -88,7 +88,7 @@ class PFWC_Paccofacile_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
+	public function pfwc_enqueue_scripts() {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -121,7 +121,7 @@ class PFWC_Paccofacile_Public {
 	 *
 	 * @return void
 	 */
-	public function paccofacile_locker_map() {
+	public function pfwc_locker_map() {
 
 		global $woocommerce;
 		$postcode = $woocommerce->customer->get_shipping_postcode();
@@ -174,7 +174,7 @@ class PFWC_Paccofacile_Public {
 	 * @param [type] $classes Body Classes.
 	 * @return array
 	 */
-	public function paccofacile_body_classes( $classes ) {
+	public function pfwc_body_classes( $classes ) {
 
 		if ( is_cart() ) {
 			$classes[] = 'paccofacile-active';
@@ -188,7 +188,7 @@ class PFWC_Paccofacile_Public {
 	 *
 	 * @return void
 	 */
-	public function get_lockers_ajax_handler() {
+	public function pfwc_get_lockers_ajax_handler() {
 
 		if ( ! ( isset( $_POST['_wpnonce'] ) || wp_verify_nonce( sanitize_key( $_POST['_wpnonce'] ), 'get_store_locker_nonce' ) ) ) {
 			return;

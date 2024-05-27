@@ -281,7 +281,7 @@ function pfwc_create_parcels_object( $products ) {
 
 	$boxes = pfwc_prepare_boxes_payload_bin_packing();
 
-	$paccofacile_api = Paccofacile_Api::get_instance();
+	$paccofacile_api = PFWC_Paccofacile_Api::get_instance();
 
 	$payload_binpacking = array(
 		'unit_misure_weight'    => 'kg',
@@ -547,7 +547,7 @@ function pfwc_package_rates( $rates, $package ) {
 
 	$debug = false;
 
-	$paccofacile_api = Paccofacile_Api::get_instance();
+	$paccofacile_api = PFWC_Paccofacile_Api::get_instance();
 
 	// Initializing.
 	$volume = 0;
@@ -719,7 +719,7 @@ function pfwc_create_order( $order_id, $posted_data, $order ) {
 	global $woocommerce;
 	$cart = $woocommerce->cart->get_cart();
 
-	$paccofacile_api = Paccofacile_Api::get_instance();
+	$paccofacile_api = PFWC_Paccofacile_Api::get_instance();
 
 	$shipping_method       = $posted_data['shipping_method'][0];
 	$array_shipping_method = explode( '_', $shipping_method );
@@ -956,7 +956,7 @@ add_action( 'woocommerce_admin_order_data_after_shipping_address', 'pfwc_shippin
 function pfwc_shipping_locker_info( $order ) {
 	$destination_locker_id = get_post_meta( $order->get_id(), 'destination_locker_id', true );
 
-	$paccofacile_api = Paccofacile_Api::get_instance();
+	$paccofacile_api = PFWC_Paccofacile_Api::get_instance();
 
 	if ( $destination_locker_id ) {
 		$locker_details = $paccofacile_api->get( 'lockers/' . $destination_locker_id );
@@ -1251,7 +1251,7 @@ function pfwc_credit_meta_box( $post_or_order_object ) {
 		return;
 	}
 
-	$paccofacile_api = Paccofacile_Api::get_instance();
+	$paccofacile_api = PFWC_Paccofacile_Api::get_instance();
 
 	$response_credito      = $paccofacile_api->get( 'customers/credit', array(), array() );
 	$response_credito_data = $response_credito['data'];
@@ -1682,7 +1682,7 @@ function pfwc_validate_shipping_methods( $services_list ) {
  */
 function pfwc_quote_and_save_by_woo_order( $order, $action = null ) {
 
-	$paccofacile_api = Paccofacile_Api::get_instance();
+	$paccofacile_api = PFWC_Paccofacile_Api::get_instance();
 
 	$items  = $order->get_items();
 	$volume = 0;
@@ -1973,12 +1973,12 @@ function pfwc_save_shipping_option_to_products( $post_id ) {
 
 /*
 Save the data of the Meta field!
-add_action( 'save_post_shop_order', 'paccofacile_pay_order', 10, 1 );
-if ( ! function_exists( 'paccofacile_pay_order' ) ) {
-	function paccofacile_pay_order( $post_id ) {
+add_action( 'save_post_shop_order', 'pfwc_pay_order', 10, 1 );
+if ( ! function_exists( 'pfwc_pay_order' ) ) {
+	function pfwc_pay_order( $post_id ) {
 
 		if ( is_admin() ) {
-			$paccofacile_api = Paccofacile_Api::get_instance();
+			$paccofacile_api = PFWC_Paccofacile_Api::get_instance();
 
 			// Only for shop order
 			if ( array_key_exists( 'post_type', $_POST ) && $_POST[ 'post_type' ] != 'shop_order' )
@@ -2353,7 +2353,7 @@ add_filter( 'woocommerce_email_classes', 'pfwc_add_tracking_info_woocommerce_ema
  * @return array
  */
 function pfwc_search_locality( $iso_code, $city ) {
-	$paccofacile_api = Paccofacile_Api::get_instance();
+	$paccofacile_api = PFWC_Paccofacile_Api::get_instance();
 
 	$payload = array(
 		'iso_code' => $iso_code,
@@ -2419,7 +2419,7 @@ function pfwc_get_pickup_locker( $carrier_id ) {
  * @return array
  */
 function pfwc_get_lockers( $postcode, $city ) {
-	$paccofacile_api = Paccofacile_Api::get_instance();
+	$paccofacile_api = PFWC_Paccofacile_Api::get_instance();
 
 	// prendo le coordinate del comune indicato.
 	$locality = pfwc_get_location_info( $postcode, $city );
@@ -2452,7 +2452,7 @@ function pfwc_get_lockers( $postcode, $city ) {
  * @return array
  */
 function pfwc_get_location_info( $postcode, $city ) {
-	$paccofacile_api = Paccofacile_Api::get_instance();
+	$paccofacile_api = PFWC_Paccofacile_Api::get_instance();
 
 	$payload = array(
 		'postcode' => $postcode,

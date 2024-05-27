@@ -365,7 +365,7 @@
 		});
 
 
-		function paccofacileShippingConditionShowHideMinAmountFields( el ) {
+		function pfwcShippingConditionShowHideMinAmountFields( el ) {
 			var form = $( el ).closest( 'form' );
 			var activationConditionField = $( el ).closest( 'tr' );
 
@@ -449,7 +449,7 @@
 
 		}
 		
-		function paccofacileShippingConditionShowHidePriceVariationFields( el ) {
+		function pfwcShippingConditionShowHidePriceVariationFields( el ) {
 			var form = $( el ).closest( 'form' );
 
 			//console.log('form', form);
@@ -513,7 +513,7 @@
 			})
 		}
 		
-		function paccofacileShippingConditionShowHidePriceVariationTypeFields( el ) {
+		function pfwcShippingConditionShowHidePriceVariationTypeFields( el ) {
 			var form = $( el ).closest( 'form' );
 			
 			//var priceVariationField = $( '#woocommerce_paccofacile_shipping_method_price_variation', form );
@@ -564,15 +564,15 @@
 		}
 
 		$( document.body ).on( 'change', '#woocommerce_paccofacile_shipping_method_activation_condition', function() {
-			paccofacileShippingConditionShowHideMinAmountFields( this );
+			pfwcShippingConditionShowHideMinAmountFields( this );
 		});
 		
 		$( document.body ).on( 'change', '#woocommerce_paccofacile_shipping_method_price_variation, #woocommerce_paccofacile_shipping_method_price_variation_type', function() {
-			paccofacileShippingConditionShowHidePriceVariationFields( this );
+			pfwcShippingConditionShowHidePriceVariationFields( this );
 		});
 		
 		$( document.body ).on( 'change', '#woocommerce_paccofacile_shipping_method_price_variation_type', function() {
-			paccofacileShippingConditionShowHidePriceVariationTypeFields( this );
+			pfwcShippingConditionShowHidePriceVariationTypeFields( this );
 		});
 
 		// Change while load.
@@ -580,8 +580,8 @@
 		$( '#woocommerce_paccofacile_shipping_method_price_variation' ).trigger( 'change' );
 		$( document.body ).on( 'wc_backbone_modal_loaded', function( evt, target ) {
 			if ( 'wc-modal-shipping-method-settings' === target ) {
-				paccofacileShippingConditionShowHideMinAmountFields( $( '#wc-backbone-modal-dialog #woocommerce_paccofacile_shipping_method_activation_condition', evt.currentTarget ) );
-				paccofacileShippingConditionShowHidePriceVariationFields( $( '#wc-backbone-modal-dialog #woocommerce_paccofacile_shipping_method_price_variation', evt.currentTarget ) );
+				pfwcShippingConditionShowHideMinAmountFields( $( '#wc-backbone-modal-dialog #woocommerce_paccofacile_shipping_method_activation_condition', evt.currentTarget ) );
+				pfwcShippingConditionShowHidePriceVariationFields( $( '#wc-backbone-modal-dialog #woocommerce_paccofacile_shipping_method_price_variation', evt.currentTarget ) );
 			}
 		} );
 

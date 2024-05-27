@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 require_once PFWC_PACCOFACILE_PATH . '/includes/class-paccofacile-api.php';
-$paccofacile_api = Paccofacile_Api::get_instance();
+$paccofacile_api = PFWC_Paccofacile_Api::get_instance();
 
 ?>
 

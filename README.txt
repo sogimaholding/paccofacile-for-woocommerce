@@ -8,7 +8,7 @@ Stable tag: 1.1.3
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 
-Connect in few clicks your Paccofacile.it PRO\'s account and start saving money and time with our automatic shipping manager software.
+Connect in few clicks your Paccofacile.it PRO's account and start saving money and time with our automatic shipping manager software.
 
 == Description ==
 Il plugin Paccofacile.it per WooCommerce aggiunge la possibilità di fornire e gestire le spedizioni del tuo negozio online con i servizi di Paccofacile.it.

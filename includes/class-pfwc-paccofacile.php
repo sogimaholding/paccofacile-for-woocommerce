@@ -241,20 +241,20 @@ class PFWC_Paccofacile {
 
 		$plugin_admin = new PFWC_Paccofacile_Admin( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'pfwc_enqueue_styles' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'pfwc_enqueue_scripts' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'pfwc_register_settings' );
-		$this->loader->add_action( 'wp_ajax_paccofacile_pay_order', $plugin_admin, 'paccofacile_pay_order_ajax_handler' );
-		$this->loader->add_action( 'wp_ajax_paccofacile_ship_with', $plugin_admin, 'paccofacile_ship_with_ajax_handler' );
-		$this->loader->add_action( 'wp_ajax_add_carrier', $plugin_admin, 'add_carrier_ajax_handler' );
-		$this->loader->add_action( 'wp_ajax_delete_carrier', $plugin_admin, 'delete_carrier_ajax_handler' );
-		$this->loader->add_action( 'wp_ajax_add_box', $plugin_admin, 'add_box_ajax_handler' );
-		$this->loader->add_action( 'wp_ajax_edit_box', $plugin_admin, 'add_box_ajax_handler' );
-		$this->loader->add_action( 'wp_ajax_delete_box', $plugin_admin, 'delete_box_ajax_handler' );
-		$this->loader->add_action( 'wp_ajax_add_shipping_customes', $plugin_admin, 'add_shipping_customes_ajax_handler' );
-		$this->loader->add_action( 'wp_ajax_search_locality', $plugin_admin, 'search_locality_ajax_handler' );
-		$this->loader->add_action( 'wp_ajax_get_lockers', $plugin_admin, 'get_lockers_ajax_handler' );
-		$this->loader->add_action( 'wp_ajax_add_store_locker', $plugin_admin, 'add_store_locker_ajax_handler' );
+		$this->loader->add_action( 'wp_ajax_paccofacile_pay_order', $plugin_admin, 'pfwc_pay_order_ajax_handler' );
+		$this->loader->add_action( 'wp_ajax_paccofacile_ship_with', $plugin_admin, 'pfwc_ship_with_ajax_handler' );
+		$this->loader->add_action( 'wp_ajax_add_carrier', $plugin_admin, 'pfwc_add_carrier_ajax_handler' );
+		$this->loader->add_action( 'wp_ajax_delete_carrier', $plugin_admin, 'pfwc_delete_carrier_ajax_handler' );
+		$this->loader->add_action( 'wp_ajax_add_box', $plugin_admin, 'pfwc_add_box_ajax_handler' );
+		$this->loader->add_action( 'wp_ajax_edit_box', $plugin_admin, 'pfwc_add_box_ajax_handler' );
+		$this->loader->add_action( 'wp_ajax_delete_box', $plugin_admin, 'pfwc_delete_box_ajax_handler' );
+		$this->loader->add_action( 'wp_ajax_add_shipping_customes', $plugin_admin, 'pfwc_add_shipping_customes_ajax_handler' );
+		$this->loader->add_action( 'wp_ajax_search_locality', $plugin_admin, 'pfwc_search_locality_ajax_handler' );
+		$this->loader->add_action( 'wp_ajax_get_lockers', $plugin_admin, 'pfwc_get_lockers_ajax_handler' );
+		$this->loader->add_action( 'wp_ajax_add_store_locker', $plugin_admin, 'pfwc_add_store_locker_ajax_handler' );
 		$plugin_admin->load_admin_menu();
 	}
 
@@ -269,11 +269,11 @@ class PFWC_Paccofacile {
 
 		$plugin_public = new PFWC_Paccofacile_Public( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-		$this->loader->add_action( 'init', $this, 'paccofacile_register_session' );
-		$this->loader->add_filter( 'body_class', $plugin_public, 'paccofacile_body_classes' );
-		$this->loader->add_action( 'wp_ajax_get_lockers', $plugin_public, 'get_lockers_ajax_handler' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'pfwc_enqueue_styles' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'pfwc_enqueue_scripts' );
+		$this->loader->add_action( 'init', $this, 'pfwc_register_session' );
+		$this->loader->add_filter( 'body_class', $plugin_public, 'pfwc_body_classes' );
+		$this->loader->add_action( 'wp_ajax_get_lockers', $plugin_public, 'pfwc_get_lockers_ajax_handler' );
 		$this->loader->add_action( 'wp_ajax_get_city_coordinates', $plugin_public, 'get_city_coordinates_ajax_handler' );
 		$this->loader->add_action( 'wp_ajax_locker_id_session', $plugin_public, 'locker_id_session_ajax_handler' );
 	}
@@ -283,7 +283,7 @@ class PFWC_Paccofacile {
 	 *
 	 * @return void
 	 */
-	public function paccofacile_register_session() {
+	public function pfwc_register_session() {
 		if ( ! session_id() ) {
 			session_start();
 		}
@@ -336,7 +336,7 @@ class PFWC_Paccofacile {
 	 */
 	public function get_shipping_boxes() {
 
-		$paccofacile_api = Paccofacile_Api::get_instance();
+		$paccofacile_api = PFWC_Paccofacile_Api::get_instance();
 
 		$shipping_boxes = $paccofacile_api->get( 'packaging/list', array(), array() );
 
@@ -354,7 +354,7 @@ class PFWC_Paccofacile {
 	 * @return string
 	 */
 	public function get_package( $id ) {
-		$paccofacile_api = Paccofacile_Api::get_instance();
+		$paccofacile_api = PFWC_Paccofacile_Api::get_instance();
 
 		$package = $paccofacile_api->get( 'packaging/' . $id, array(), array() );
 
@@ -367,7 +367,7 @@ class PFWC_Paccofacile {
 	 * @return string
 	 */
 	public function get_package_types() {
-		$paccofacile_api = Paccofacile_Api::get_instance();
+		$paccofacile_api = PFWC_Paccofacile_Api::get_instance();
 
 		$types = $paccofacile_api->get( 'packaging/list_types', array(), array() );
 
@@ -381,7 +381,7 @@ class PFWC_Paccofacile {
 	 * @return string
 	 */
 	public function get_package_type_variation( $type ) {
-		$paccofacile_api = Paccofacile_Api::get_instance();
+		$paccofacile_api = PFWC_Paccofacile_Api::get_instance();
 
 		$variations = $paccofacile_api->get( 'packaging/list_variation/' . $type, array(), array() );
 
@@ -395,7 +395,7 @@ class PFWC_Paccofacile {
 	 * @return string
 	 */
 	public function delete_package( $id ) {
-		$paccofacile_api = Paccofacile_Api::get_instance();
+		$paccofacile_api = PFWC_Paccofacile_Api::get_instance();
 
 		$response = $paccofacile_api->delete( 'packaging/' . $id, array(), array() );
 
@@ -409,7 +409,7 @@ class PFWC_Paccofacile {
 	 * @return string
 	 */
 	public function create_package( $payload ) {
-		$paccofacile_api = Paccofacile_Api::get_instance();
+		$paccofacile_api = PFWC_Paccofacile_Api::get_instance();
 
 		$response = $paccofacile_api->post( 'packaging', array(), $payload );
 
@@ -424,7 +424,7 @@ class PFWC_Paccofacile {
 	 * @return string
 	 */
 	public function update_package( $id, $payload ) {
-		$paccofacile_api = Paccofacile_Api::get_instance();
+		$paccofacile_api = PFWC_Paccofacile_Api::get_instance();
 
 		$response = $paccofacile_api->put( 'packaging/' . $id, array(), $payload );
 

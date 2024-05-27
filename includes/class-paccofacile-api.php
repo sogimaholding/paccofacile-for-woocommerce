@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @subpackage Paccofacile/includes
  * @author     Francesco Barberini <supporto.tecnico@paccofacile.it>
  */
-class Paccofacile_Api {
+class PFWC_Paccofacile_Api {
 
 	/**
 	 * The class instance
@@ -332,11 +332,11 @@ class Paccofacile_Api {
 	 */
 	public static function get_instance() {
 		if ( null === self::$instance ) {
-			self::$instance = new Paccofacile_Api();
+			self::$instance = new PFWC_Paccofacile_Api();
 		}
 
 		return self::$instance;
 	}
 }
 
-$paccofacile_api = Paccofacile_Api::get_instance();
+$paccofacile_api = PFWC_Paccofacile_Api::get_instance();
