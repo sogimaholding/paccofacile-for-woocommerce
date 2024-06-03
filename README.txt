@@ -67,9 +67,13 @@ Configurazione
 - Naviga nella tab “imballi” e clicca sul bottone “Aggiungi imballo”.
 - Aggiungi tutti i tipi di imballi(*) che hai a disposizione per le tue spedizioni, dando loro un nome.
 
-== Disclaimer ==
+== Utilizzo di servizi esterni ==
 Il plugin fa uso di servizi di terze parti (Paccofacile.it - https://www.paccofacile.it) tramite chiamate API.
 I dati inviati dal plugin a tale servizio vengono utilizzati per lo scopo di configurare, salvare, gestire e pagare servizi di spedizione su Paccofacile.it e
 vengono utilizzati e memorizzati dal servizio nelle modalità indicate su termini e condizioni nella pagina https://www.paccofacile.it/termini-condizioni e 
 sono trattati secondo la privacy policy indicata nella pagina https://www.paccofacile.it/privacy-policy.
 La url utilizzata per la comunicazione con il servizio è https://paccofacile.tecnosogima.cloud/live/v1/service/.
+
+Il plugin integra la libreria OpenLayers (https://openlayers.org) per la visualizzazione di una mappa interattiva dei luoghi disponibili per la spedizione della merce.
+È disponibile il codice sorgente della libreria in uso al seguente link: https://github.com/openlayers/openlayers/releases/tag/v6.15.1.
+La libreria OpenLayers fa uso di servizi di terze parti verso il dominio https://www.openstreetmap.org per il recupero delle coordinate delle località da visualizzare e delle immagini per la visualizzazione della mappa.
