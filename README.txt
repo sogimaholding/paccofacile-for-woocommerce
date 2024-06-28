@@ -20,7 +20,7 @@ I prezzi forniti per tutti i corrieri messi a disposizione, sono gli stessi a te
 
 Gli ordini effettuati su WooCommerce, che abbiano come scelta nel metodo di spedizione un corriere fornito da Paccofacile.it, saranno visibili in automatico anche nella tua area riservata di Paccofacile.it. Sarà possibile anche confermare e acquistare la spedizione direttamente dalla gestione ordini di WooCommerce tramite il tuo credito residuo sull’account Paccofacile.it.
 
-= Principali funzionalità:
+= Principali funzionalità: =
 
 * Tariffe dedicate per le tue spedizioni con i migliori corrieri.
 * Libera scelta sui servizi dei corrieri da abilitare tra quelli offerti da Paccofacile.it
@@ -33,22 +33,22 @@ Gli ordini effettuati su WooCommerce, che abbiano come scelta nel metodo di sped
 
 
 == Installation ==
-= Installazione dalla directory dei plugin nella bacheca di WordPress
+= Installazione dalla directory dei plugin nella bacheca di WordPress =
 
-Andare al pulsante “Aggiungi Nuovo” nella sezione Plugin
-Cerca \"paccofacile.it for woocommerce”
-Clicca “Installa Ora”
-Attiva il plugin nella bacheca dei plugin
+* Andare al pulsante “Aggiungi Nuovo” nella sezione Plugin
+* Cerca "paccofacile.it for woocommerce”
+* Clicca “Installa Ora”
+* Attiva il plugin nella bacheca dei plugin
 
-= Caricamento del file .zip dalla bacheca di WordPress
+= Caricamento del file .zip dalla bacheca di WordPress =
 
-Andare al pulsante “Aggiungi Nuovo” nella bacheca dei plugin
-Vai nell’area “Upload”
-Seleziona “paccofacile.it for woocommerce.zip” dal tuo computer
-Clicca “Installa Ora”
-Attiva il plugin nella bacheca dei plugin
+* Andare al pulsante “Aggiungi Nuovo” nella bacheca dei plugin
+* Vai nell’area “Upload”
+* Seleziona “paccofacile.it for woocommerce.zip” dal tuo computer
+* Clicca “Installa Ora”
+* Attiva il plugin nella bacheca dei plugin
 
-= Caricamento manuale tramite FTP
+= Caricamento manuale tramite FTP =
 
 Scarica “paccofacile.it for woocommerce”
 Estrai la cartella “paccofacile.it for woocommerce” nel tuo computer
