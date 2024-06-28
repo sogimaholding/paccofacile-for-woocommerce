@@ -69,6 +69,14 @@ Attiva il plugin nella bacheca dei plugin
 
 https://www.youtube.com/watch?v=FC_rVHHnxwE
 
+== Screenshots ==
+
+1. Selezione dei servizi di spedizione preferiti
+2. Connessione delle credenziali API
+3. Creazione degli imballi preferiti
+4. Metodi di spedizione Paccofacile.it
+5. Impostazioni metodo di spedizione Paccofacile.it
+
 == Utilizzo di servizi esterni ==
 Il plugin fa uso di servizi di terze parti (Paccofacile.it - https://www.paccofacile.it) tramite chiamate API.
 I dati inviati dal plugin a tale servizio vengono utilizzati per lo scopo di configurare, salvare, gestire e pagare servizi di spedizione su Paccofacile.it e
