@@ -58,14 +58,13 @@ Attiva il plugin nella bacheca dei plugin
 == Configurazione ==
 
 1. Accedi al portale [Paccofacile.it](https://www.paccofacile.it) con il tuo account o registrati alla versione PRO
-2. Naviga nella sezione Integrazioni -> WooCommerce e SCARICA PLUGIN
-3. Genera le chiavi API cliccando su Integrazioni -> API PACCOFACILE.IT e cliccando su API KEY LIVE
-4. Nel pannello di controllo del tuo sito web, dopo aver attivato il plugin, naviga nella sua pagina di configurazione WooCommerce -> Paccofacile.it
-5. Incolla le tue credenziali API nei campi appositi e salva. 
-6. Naviga nella tab “Servizi di spedizione” e clicca sul bottone “Aggiungi servizio”
-7. Scegli quali servizi di spedizione attivare per il tuo negozio
-8. Naviga nella tab “imballi” e clicca sul bottone “Aggiungi imballo”.
-9. Aggiungi tutti i tipi di imballi che hai a disposizione per le tue spedizioni, dando loro un nome.
+2. Genera le chiavi API cliccando su Integrazioni -> API PACCOFACILE.IT e cliccando su API KEY LIVE
+3. Nel pannello di controllo del tuo sito web, dopo aver attivato il plugin, naviga nella sua pagina di configurazione WooCommerce -> Paccofacile.it
+4. Incolla le tue credenziali API nei campi appositi e salva. 
+5. Naviga nella tab “Servizi di spedizione” e clicca sul bottone “Aggiungi servizio”
+6. Scegli quali servizi di spedizione attivare per il tuo negozio
+7. Naviga nella tab “imballi” e clicca sul bottone “Aggiungi imballo”.
+8. Aggiungi tutti i tipi di imballi che hai a disposizione per le tue spedizioni, dando loro un nome.
 
 https://www.youtube.com/watch?v=FC_rVHHnxwE
 
